@@ -1,7 +1,6 @@
 import { useState } from 'react';
 import Preloader from '@/components/Preloader';
 import ParticleCanvas from '@/components/ParticleCanvas';
-import CustomCursor from '@/components/CustomCursor';
 import Navbar from '@/components/Navbar';
 import Hero from '@/components/Hero';
 import ServicesSection from '@/components/ServicesSection';
@@ -18,9 +17,6 @@ const Index = () => {
         <>
           {/* Noise overlay */}
           <div className="noise-overlay" />
-          
-          {/* Custom cursor */}
-          <CustomCursor />
           
           {/* Particle background */}
           <ParticleCanvas />
