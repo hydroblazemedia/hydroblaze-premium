@@ -200,10 +200,6 @@ const ParticleCanvas = () => {
     for (let i = 0; i < 60; i++) particles.push(createParticle('steam'));
     particlesRef.current = particles;
 
-    const handleMouseMove = (e: MouseEvent) => {
-      mouseRef.current = { x: e.clientX, y: e.clientY };
-    };
-
     let time = 0;
 
     const animate = () => {
@@ -213,7 +209,6 @@ const ParticleCanvas = () => {
       ctx.fillStyle = '#020206';
       ctx.fillRect(0, 0, width, height);
 
-      const mouse = mouseRef.current;
       const center = centerX();
 
       // Sort particles: steam on top
@@ -244,19 +239,6 @@ const ParticleCanvas = () => {
             steamP.y = p.y;
             particlesRef.current.push(steamP);
           }
-        }
-
-        // Mouse interaction
-        const dx = mouse.x - p.x;
-        const dy = mouse.y - p.y;
-        const dist = Math.sqrt(dx * dx + dy * dy);
-
-        if (dist < 180) {
-          const force = (180 - dist) / 180;
-          const angle = Math.atan2(dy, dx);
-          const swirl = angle + Math.PI / 2;
-          p.vx += Math.cos(swirl) * force * 1.5;
-          p.vy += Math.sin(swirl) * force * 1.5;
         }
 
         // Apply drag
@@ -332,12 +314,10 @@ const ParticleCanvas = () => {
 
     resize();
     window.addEventListener('resize', resize);
-    window.addEventListener('mousemove', handleMouseMove);
     animate();
 
     return () => {
       window.removeEventListener('resize', resize);
-      window.removeEventListener('mousemove', handleMouseMove);
       if (animationRef.current) {
         cancelAnimationFrame(animationRef.current);
       }
