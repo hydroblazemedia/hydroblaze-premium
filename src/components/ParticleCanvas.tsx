@@ -1,7 +1,7 @@
 import { useEffect, useRef } from 'react';
 
 interface Particle {
-  type: 'fire' | 'water';
+  type: 'fire' | 'water' | 'steam';
   x: number;
   y: number;
   vx: number;
@@ -11,6 +11,9 @@ interface Particle {
   maxAlpha: number;
   lifeSpeed: number;
   phase: 'in' | 'out';
+  rotation: number;
+  rotationSpeed: number;
+  flickerOffset: number;
 }
 
 const ParticleCanvas = () => {
@@ -18,6 +21,11 @@ const ParticleCanvas = () => {
   const particlesRef = useRef<Particle[]>([]);
   const mouseRef = useRef({ x: -1000, y: -1000 });
   const animationRef = useRef<number>();
+  const texturesRef = useRef<{
+    fire: HTMLCanvasElement[];
+    water: HTMLCanvasElement[];
+    steam: HTMLCanvasElement;
+  } | null>(null);
 
   useEffect(() => {
     const canvas = canvasRef.current;
@@ -36,63 +44,146 @@ const ParticleCanvas = () => {
       canvas.height = height;
     };
 
-    // Create textures
-    const createOrbTexture = (r: number, g: number, b: number, isFire: boolean) => {
+    // Create flame texture - organic, flickering shape
+    const createFlameTexture = (intensity: number) => {
+      const offscreen = document.createElement('canvas');
+      offscreen.width = 64;
+      offscreen.height = 96;
+      const offCtx = offscreen.getContext('2d')!;
+      
+      // Flame shape - teardrop pointing up
+      const gradient = offCtx.createRadialGradient(32, 60, 0, 32, 50, 40);
+      gradient.addColorStop(0, `rgba(255, 255, 220, ${0.9 * intensity})`);
+      gradient.addColorStop(0.2, `rgba(255, 200, 50, ${0.8 * intensity})`);
+      gradient.addColorStop(0.4, `rgba(255, 100, 0, ${0.6 * intensity})`);
+      gradient.addColorStop(0.7, `rgba(200, 50, 0, ${0.3 * intensity})`);
+      gradient.addColorStop(1, 'rgba(100, 20, 0, 0)');
+
+      offCtx.beginPath();
+      offCtx.moveTo(32, 5);
+      offCtx.bezierCurveTo(10, 40, 5, 70, 32, 90);
+      offCtx.bezierCurveTo(59, 70, 54, 40, 32, 5);
+      offCtx.fillStyle = gradient;
+      offCtx.fill();
+      
+      return offscreen;
+    };
+
+    // Create water stream texture - flowing, elongated
+    const createWaterTexture = (stretch: number) => {
+      const offscreen = document.createElement('canvas');
+      offscreen.width = 32;
+      offscreen.height = 80;
+      const offCtx = offscreen.getContext('2d')!;
+      
+      // Water stream - vertical elongated shape
+      const gradient = offCtx.createLinearGradient(16, 0, 16, 80);
+      gradient.addColorStop(0, 'rgba(150, 220, 255, 0)');
+      gradient.addColorStop(0.2, `rgba(100, 200, 255, ${0.4 * stretch})`);
+      gradient.addColorStop(0.5, `rgba(0, 242, 255, ${0.7 * stretch})`);
+      gradient.addColorStop(0.8, `rgba(100, 200, 255, ${0.4 * stretch})`);
+      gradient.addColorStop(1, 'rgba(150, 220, 255, 0)');
+
+      offCtx.beginPath();
+      offCtx.ellipse(16, 40, 8, 38, 0, 0, Math.PI * 2);
+      offCtx.fillStyle = gradient;
+      offCtx.fill();
+      
+      // Add highlight
+      const highlight = offCtx.createRadialGradient(12, 30, 0, 12, 30, 6);
+      highlight.addColorStop(0, 'rgba(255, 255, 255, 0.4)');
+      highlight.addColorStop(1, 'rgba(255, 255, 255, 0)');
+      offCtx.fillStyle = highlight;
+      offCtx.fillRect(0, 0, 32, 80);
+      
+      return offscreen;
+    };
+
+    // Create steam texture - wispy, ethereal
+    const createSteamTexture = () => {
       const offscreen = document.createElement('canvas');
       offscreen.width = 64;
       offscreen.height = 64;
       const offCtx = offscreen.getContext('2d')!;
-      const gradient = offCtx.createRadialGradient(32, 32, 0, 32, 32, 28);
-
-      if (isFire) {
-        gradient.addColorStop(0, `rgba(255, 255, 200, 1)`);
-        gradient.addColorStop(0.2, `rgba(${r}, ${g}, ${b}, 0.8)`);
-        gradient.addColorStop(0.6, `rgba(${r}, ${g}, ${b}, 0.1)`);
-        gradient.addColorStop(1, `rgba(0, 0, 0, 0)`);
-      } else {
-        gradient.addColorStop(0, `rgba(200, 255, 255, 0.8)`);
-        gradient.addColorStop(0.4, `rgba(${r}, ${g}, ${b}, 0.5)`);
-        gradient.addColorStop(1, `rgba(0, 0, 0, 0)`);
-      }
+      
+      const gradient = offCtx.createRadialGradient(32, 32, 0, 32, 32, 30);
+      gradient.addColorStop(0, 'rgba(200, 220, 240, 0.6)');
+      gradient.addColorStop(0.3, 'rgba(180, 200, 220, 0.3)');
+      gradient.addColorStop(0.6, 'rgba(160, 180, 200, 0.1)');
+      gradient.addColorStop(1, 'rgba(150, 170, 190, 0)');
 
       offCtx.fillStyle = gradient;
       offCtx.fillRect(0, 0, 64, 64);
+      
       return offscreen;
     };
 
-    const fireTexture = createOrbTexture(255, 72, 0, true);
-    const waterTexture = createOrbTexture(0, 242, 255, false);
+    // Generate texture variants
+    texturesRef.current = {
+      fire: [createFlameTexture(1), createFlameTexture(0.8), createFlameTexture(0.6)],
+      water: [createWaterTexture(1), createWaterTexture(0.8), createWaterTexture(0.6)],
+      steam: createSteamTexture(),
+    };
 
-    const createParticle = (): Particle => {
-      // Left half = fire, Right half = water
-      const xPos = Math.random() * width;
-      const type = xPos < width / 2 ? 'fire' : 'water';
+    const centerX = () => width / 2;
+
+    const createParticle = (forceType?: 'fire' | 'water' | 'steam'): Particle => {
+      const type = forceType || (Math.random() < 0.1 ? 'steam' : (Math.random() < 0.5 ? 'fire' : 'water'));
+      
+      if (type === 'steam') {
+        // Steam spawns at the center collision zone
+        return {
+          type,
+          x: centerX() + (Math.random() - 0.5) * 100,
+          y: height * 0.4 + Math.random() * height * 0.3,
+          vy: -(Math.random() * 1.5 + 0.5),
+          vx: (Math.random() - 0.5) * 2,
+          size: Math.random() * 40 + 25,
+          alpha: 0,
+          maxAlpha: Math.random() * 0.25 + 0.1,
+          lifeSpeed: 0.006,
+          phase: 'in',
+          rotation: Math.random() * Math.PI * 2,
+          rotationSpeed: (Math.random() - 0.5) * 0.02,
+          flickerOffset: Math.random() * 100,
+        };
+      }
       
       if (type === 'fire') {
+        // Fire on left side, rising flames
+        const xPos = Math.random() * (width * 0.45);
         return {
           type,
-          x: Math.random() * (width / 2), // Left half only
-          y: height + Math.random() * 50,
-          vy: -(Math.random() * 2.5 + 1.5),
-          vx: (Math.random() - 0.3) * 2, // Slight drift toward center
-          size: Math.random() * 30 + 15,
+          x: xPos,
+          y: height + Math.random() * 30,
+          vy: -(Math.random() * 4 + 2),
+          vx: (Math.random() - 0.3) * 1.5 + (xPos > width * 0.3 ? 0.5 : 0), // drift toward center
+          size: Math.random() * 35 + 20,
           alpha: 0,
-          maxAlpha: Math.random() * 0.5 + 0.25,
-          lifeSpeed: 0.01,
-          phase: 'in',
-        };
-      } else {
-        return {
-          type,
-          x: (width / 2) + Math.random() * (width / 2), // Right half only
-          y: -Math.random() * 50,
-          vy: Math.random() * 3.5 + 2,
-          vx: (Math.random() - 0.7) * 2, // Slight drift toward center
-          size: Math.random() * 22 + 8,
-          alpha: 0,
-          maxAlpha: Math.random() * 0.5 + 0.25,
+          maxAlpha: Math.random() * 0.6 + 0.3,
           lifeSpeed: 0.008,
           phase: 'in',
+          rotation: (Math.random() - 0.5) * 0.3,
+          rotationSpeed: (Math.random() - 0.5) * 0.05,
+          flickerOffset: Math.random() * 100,
+        };
+      } else {
+        // Water on right side, flowing down
+        const xPos = width * 0.55 + Math.random() * (width * 0.45);
+        return {
+          type,
+          x: xPos,
+          y: -Math.random() * 30,
+          vy: Math.random() * 5 + 3,
+          vx: (Math.random() - 0.7) * 1.5 - (xPos < width * 0.7 ? 0.5 : 0), // drift toward center
+          size: Math.random() * 30 + 15,
+          alpha: 0,
+          maxAlpha: Math.random() * 0.6 + 0.3,
+          lifeSpeed: 0.006,
+          phase: 'in',
+          rotation: 0,
+          rotationSpeed: 0,
+          flickerOffset: Math.random() * 100,
         };
       }
     };
@@ -102,40 +193,77 @@ const ParticleCanvas = () => {
       Object.assign(p, newP);
     };
 
-    // Initialize particles
-    particlesRef.current = Array.from({ length: 250 }, createParticle);
+    // Initialize particles - more fire and water, some steam
+    const particles: Particle[] = [];
+    for (let i = 0; i < 150; i++) particles.push(createParticle('fire'));
+    for (let i = 0; i < 150; i++) particles.push(createParticle('water'));
+    for (let i = 0; i < 60; i++) particles.push(createParticle('steam'));
+    particlesRef.current = particles;
 
     const handleMouseMove = (e: MouseEvent) => {
       mouseRef.current = { x: e.clientX, y: e.clientY };
     };
 
+    let time = 0;
+
     const animate = () => {
+      time += 0.016;
+      
       ctx.globalCompositeOperation = 'source-over';
       ctx.fillStyle = '#020206';
       ctx.fillRect(0, 0, width, height);
 
       const mouse = mouseRef.current;
+      const center = centerX();
 
-      for (const p of particlesRef.current) {
+      // Sort particles: steam on top
+      const sortedParticles = [...particlesRef.current].sort((a, b) => {
+        if (a.type === 'steam') return 1;
+        if (b.type === 'steam') return -1;
+        return 0;
+      });
+
+      for (const p of sortedParticles) {
+        // Physics
         p.x += p.vx;
         p.y += p.vy;
+        p.rotation += p.rotationSpeed;
 
-        // Mouse interaction - swirl effect
+        // Collision zone interaction - particles near center create more steam
+        const distFromCenter = Math.abs(p.x - center);
+        if (distFromCenter < 80 && p.type !== 'steam') {
+          // Particles slow down and fade faster at collision zone
+          p.vx *= 0.98;
+          p.vy *= 0.98;
+          p.lifeSpeed *= 1.001;
+          
+          // Small chance to spawn extra steam
+          if (Math.random() < 0.01) {
+            const steamP = createParticle('steam');
+            steamP.x = p.x;
+            steamP.y = p.y;
+            particlesRef.current.push(steamP);
+          }
+        }
+
+        // Mouse interaction
         const dx = mouse.x - p.x;
         const dy = mouse.y - p.y;
         const dist = Math.sqrt(dx * dx + dy * dy);
 
-        if (dist < 200) {
-          const force = (200 - dist) / 200;
+        if (dist < 180) {
+          const force = (180 - dist) / 180;
           const angle = Math.atan2(dy, dx);
           const swirl = angle + Math.PI / 2;
-          p.vx += Math.cos(swirl) * force * 1.2;
-          p.vy += Math.sin(swirl) * force * 1.2;
+          p.vx += Math.cos(swirl) * force * 1.5;
+          p.vy += Math.sin(swirl) * force * 1.5;
         }
 
-        // Apply friction
-        p.vx *= 0.99;
-        p.vy *= 0.99;
+        // Apply drag
+        p.vx *= 0.995;
+        if (p.type === 'fire') {
+          p.vy *= 0.99;
+        }
 
         // Life cycle
         if (p.phase === 'in') {
@@ -145,22 +273,58 @@ const ParticleCanvas = () => {
           p.alpha -= p.lifeSpeed;
         }
 
-        // Reset if needed
-        if (
+        // Reset conditions
+        const shouldReset = 
           p.alpha <= 0 ||
           p.x < -100 ||
           p.x > width + 100 ||
           (p.type === 'fire' && p.y < -100) ||
-          (p.type === 'water' && p.y > height + 100)
-        ) {
+          (p.type === 'water' && p.y > height + 100) ||
+          (p.type === 'steam' && p.y < -100);
+
+        if (shouldReset) {
           resetParticle(p);
         }
 
         // Draw
+        ctx.save();
         ctx.globalAlpha = p.alpha;
-        ctx.globalCompositeOperation = p.type === 'fire' ? 'lighter' : 'source-over';
-        const texture = p.type === 'fire' ? fireTexture : waterTexture;
-        ctx.drawImage(texture, p.x - p.size / 2, p.y - p.size / 2, p.size, p.size);
+        
+        if (p.type === 'fire') {
+          ctx.globalCompositeOperation = 'lighter';
+          const flicker = Math.sin(time * 10 + p.flickerOffset) * 0.2 + 0.8;
+          ctx.globalAlpha = p.alpha * flicker;
+          
+          const texIndex = Math.floor(time * 8 + p.flickerOffset) % 3;
+          const texture = texturesRef.current!.fire[texIndex];
+          
+          ctx.translate(p.x, p.y);
+          ctx.rotate(p.rotation);
+          ctx.drawImage(texture, -p.size / 2, -p.size, p.size, p.size * 1.5);
+        } else if (p.type === 'water') {
+          ctx.globalCompositeOperation = 'screen';
+          
+          const texIndex = Math.floor(p.flickerOffset) % 3;
+          const texture = texturesRef.current!.water[texIndex];
+          
+          ctx.translate(p.x, p.y);
+          ctx.drawImage(texture, -p.size / 4, -p.size, p.size / 2, p.size * 2.5);
+        } else {
+          // Steam
+          ctx.globalCompositeOperation = 'screen';
+          const texture = texturesRef.current!.steam;
+          
+          ctx.translate(p.x, p.y);
+          ctx.rotate(p.rotation);
+          ctx.drawImage(texture, -p.size / 2, -p.size / 2, p.size, p.size);
+        }
+        
+        ctx.restore();
+      }
+
+      // Clean up excess steam particles
+      if (particlesRef.current.length > 400) {
+        particlesRef.current = particlesRef.current.slice(0, 360);
       }
 
       animationRef.current = requestAnimationFrame(animate);
