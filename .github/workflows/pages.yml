@@ -25,7 +25,8 @@ jobs:
       - name: Configure Pages
         uses: actions/configure-pages@v3
       - name: Upload pages artifact
-        uses: actions/upload-pages-artifact@v2
+        # use v3 which depends on the artifact actions v4
+        uses: actions/upload-pages-artifact@v3
         with:
           path: ./dist
 
