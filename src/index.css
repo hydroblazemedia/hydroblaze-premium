@@ -6,33 +6,33 @@
 
 @layer base {
   :root {
-    /* Core brand colors - Water meets Fire */
-    --hydro: 187 100% 50%;
-    --hydro-glow: 187 100% 60%;
-    --blaze: 18 100% 50%;
-    --blaze-glow: 18 100% 60%;
+    /* Core brand colors - From logo */
+    --hydro: 197 100% 45%;
+    --hydro-glow: 197 100% 55%;
+    --blaze: 16 100% 50%;
+    --blaze-glow: 12 100% 55%;
     
     /* Premium dark theme */
-    --background: 240 20% 3%;
-    --background-elevated: 240 15% 6%;
+    --background: 220 25% 4%;
+    --background-elevated: 220 20% 7%;
     --foreground: 210 40% 98%;
     
-    --card: 240 15% 5%;
+    --card: 220 20% 6%;
     --card-foreground: 210 40% 98%;
     
-    --popover: 240 15% 5%;
+    --popover: 220 20% 6%;
     --popover-foreground: 210 40% 98%;
     
-    --primary: 187 100% 50%;
-    --primary-foreground: 240 20% 3%;
+    --primary: 197 100% 45%;
+    --primary-foreground: 220 25% 4%;
     
-    --secondary: 18 100% 50%;
-    --secondary-foreground: 240 20% 3%;
+    --secondary: 16 100% 50%;
+    --secondary-foreground: 220 25% 4%;
     
     --muted: 220 15% 15%;
     --muted-foreground: 215 20% 55%;
     
-    --accent: 240 10% 12%;
+    --accent: 220 15% 12%;
     --accent-foreground: 210 40% 98%;
     
     --destructive: 0 84% 60%;
@@ -40,7 +40,7 @@
     
     --border: 220 15% 15%;
     --input: 220 15% 15%;
-    --ring: 187 100% 50%;
+    --ring: 197 100% 45%;
     
     --radius: 1rem;
     
@@ -52,17 +52,17 @@
     --gradient-hydro-blaze: linear-gradient(135deg, hsl(var(--hydro)) 0%, hsl(0 0% 100%) 50%, hsl(var(--blaze)) 100%);
     --gradient-hydro: linear-gradient(135deg, hsl(var(--hydro)) 0%, hsl(var(--hydro-glow)) 100%);
     --gradient-blaze: linear-gradient(135deg, hsl(var(--blaze)) 0%, hsl(var(--blaze-glow)) 100%);
-    --gradient-surface: linear-gradient(180deg, hsl(240 15% 8%) 0%, hsl(240 15% 4%) 100%);
+    --gradient-surface: linear-gradient(180deg, hsl(220 20% 8%) 0%, hsl(220 20% 4%) 100%);
     
     /* Shadows */
-    --shadow-hydro: 0 0 60px -15px hsl(var(--hydro) / 0.4);
-    --shadow-blaze: 0 0 60px -15px hsl(var(--blaze) / 0.4);
+    --shadow-hydro: 0 0 60px -15px hsl(var(--hydro) / 0.5);
+    --shadow-blaze: 0 0 60px -15px hsl(var(--blaze) / 0.5);
     --shadow-card: 0 25px 50px -12px hsl(0 0% 0% / 0.5);
     --shadow-glow: 0 0 40px -10px hsl(var(--hydro) / 0.3), 0 0 40px -10px hsl(var(--blaze) / 0.3);
   }
 
   .dark {
-    --background: 240 20% 3%;
+    --background: 220 25% 4%;
     --foreground: 210 40% 98%;
   }
 }

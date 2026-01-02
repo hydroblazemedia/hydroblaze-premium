@@ -1,4 +1,5 @@
 import { motion } from 'framer-motion';
+import logo from '@/assets/logo.png';
 
 const Navbar = () => {
   return (
@@ -10,8 +11,11 @@ const Navbar = () => {
     >
       <div className="flex items-center justify-between max-w-7xl mx-auto">
         {/* Logo */}
-        <a href="#" className="font-display font-bold text-lg md:text-xl tracking-wider uppercase text-gradient">
-          HYDROBLAZE
+        <a href="#" className="flex items-center gap-3">
+          <img src={logo} alt="HydroBlaze" className="h-10 md:h-12 w-auto" />
+          <span className="font-display font-bold text-lg md:text-xl tracking-wider uppercase text-gradient">
+            HYDROBLAZE
+          </span>
         </a>
 
         {/* Navigation */}
