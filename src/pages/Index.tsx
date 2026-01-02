@@ -3,6 +3,7 @@ import Preloader from '@/components/Preloader';
 import Navbar from '@/components/Navbar';
 import Hero from '@/components/Hero';
 import ServicesSection from '@/components/ServicesSection';
+import PricingSection from '@/components/PricingSection';
 import Footer from '@/components/Footer';
 
 const Index = () => {
@@ -23,6 +24,7 @@ const Index = () => {
           <main>
             <Hero />
             <ServicesSection />
+            <PricingSection />
             <Footer />
           </main>
         </>
