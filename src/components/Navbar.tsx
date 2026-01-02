@@ -10,7 +10,7 @@ const Navbar = () => {
   }} transition={{
     duration: 0.6,
     delay: 0.2
-  }} className="fixed top-0 left-0 right-0 z-50 px-6 md:px-12 lg:px-16 py-6 md:py-8">
+  }} className="fixed top-0 left-0 right-0 z-50 px-6 md:px-12 lg:px-16 py-4 md:py-5 bg-background/80 backdrop-blur-xl border-b border-white/10">
       <div className="flex items-center justify-between max-w-7xl mx-auto">
         {/* Logo */}
         <a href="#" className="flex items-center gap-3">
