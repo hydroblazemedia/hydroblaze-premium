@@ -64,31 +64,33 @@ const ParticleCanvas = () => {
     const waterTexture = createOrbTexture(0, 242, 255, false);
 
     const createParticle = (): Particle => {
-      const type = Math.random() > 0.5 ? 'fire' : 'water';
+      // Left half = fire, Right half = water
+      const xPos = Math.random() * width;
+      const type = xPos < width / 2 ? 'fire' : 'water';
       
       if (type === 'fire') {
         return {
           type,
-          x: Math.random() * width,
+          x: Math.random() * (width / 2), // Left half only
           y: height + Math.random() * 50,
-          vy: -(Math.random() * 2 + 1),
-          vx: (Math.random() - 0.5) * 1.5,
-          size: Math.random() * 25 + 12,
+          vy: -(Math.random() * 2.5 + 1.5),
+          vx: (Math.random() - 0.3) * 2, // Slight drift toward center
+          size: Math.random() * 30 + 15,
           alpha: 0,
-          maxAlpha: Math.random() * 0.4 + 0.2,
-          lifeSpeed: 0.012,
+          maxAlpha: Math.random() * 0.5 + 0.25,
+          lifeSpeed: 0.01,
           phase: 'in',
         };
       } else {
         return {
           type,
-          x: Math.random() * width,
+          x: (width / 2) + Math.random() * (width / 2), // Right half only
           y: -Math.random() * 50,
-          vy: Math.random() * 3 + 2,
-          vx: (Math.random() - 0.5) * 0.5,
-          size: Math.random() * 18 + 6,
+          vy: Math.random() * 3.5 + 2,
+          vx: (Math.random() - 0.7) * 2, // Slight drift toward center
+          size: Math.random() * 22 + 8,
           alpha: 0,
-          maxAlpha: Math.random() * 0.4 + 0.2,
+          maxAlpha: Math.random() * 0.5 + 0.25,
           lifeSpeed: 0.008,
           phase: 'in',
         };
