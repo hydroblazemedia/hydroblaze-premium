@@ -1,24 +1,9 @@
-import { useState, useRef } from 'react';
 import { motion } from 'framer-motion';
-import HeroInteractive from './HeroInteractive';
 
 const Hero = () => {
-  const [mode, setMode] = useState<'hydro' | 'blaze'>('hydro');
-  const containerRef = useRef<HTMLElement>(null);
-
-  const toggleMode = () => {
-    setMode((prev) => (prev === 'hydro' ? 'blaze' : 'hydro'));
-  };
-
   return (
-    <section 
-      ref={containerRef}
-      className="relative min-h-screen flex items-center justify-center px-6 overflow-hidden"
-    >
-      {/* Interactive background elements */}
-      <HeroInteractive mode={mode} containerRef={containerRef} />
-
-      <div className="text-center max-w-5xl mx-auto relative z-10">
+    <section className="relative min-h-screen flex items-center justify-center px-6">
+      <div className="text-center max-w-5xl mx-auto">
         {/* Radial backdrop for readability */}
         <div 
           className="absolute inset-0 -z-10"
@@ -27,39 +12,14 @@ const Hero = () => {
           }}
         />
         
-        {/* Interactive Badge */}
+        {/* Badge */}
         <motion.div
           initial={{ opacity: 0, y: 20 }}
           animate={{ opacity: 1, y: 0 }}
           transition={{ duration: 0.6, delay: 0.3 }}
           className="mb-8"
         >
-          <motion.button
-            onClick={toggleMode}
-            className={`badge-glow cursor-pointer transition-all duration-300 ${
-              mode === 'hydro' ? 'badge-hydro' : 'badge-blaze'
-            }`}
-            whileHover={{ scale: 1.05 }}
-            whileTap={{ scale: 0.98 }}
-          >
-            <span className="relative z-10 flex items-center gap-2">
-              <motion.span
-                animate={{ rotate: mode === 'hydro' ? 0 : 180 }}
-                transition={{ duration: 0.4 }}
-                className="inline-block"
-              >
-                ✦
-              </motion.span>
-              Digital Alchemy
-              <motion.span
-                animate={{ rotate: mode === 'hydro' ? 0 : -180 }}
-                transition={{ duration: 0.4 }}
-                className="inline-block"
-              >
-                ✦
-              </motion.span>
-            </span>
-          </motion.button>
+          <span className="badge-glow">Digital Alchemy</span>
         </motion.div>
 
         {/* Heading */}
@@ -71,13 +31,7 @@ const Hero = () => {
         >
           Where Fluid Design
           <br />
-          <motion.span 
-            className={mode === 'hydro' ? 'text-gradient-hydro' : 'text-gradient-blaze'}
-            animate={{ opacity: 1 }}
-            transition={{ duration: 0.3 }}
-          >
-            Ignites Growth
-          </motion.span>
+          <span className="text-gradient">Ignites Growth</span>
         </motion.h1>
 
         {/* Subtitle */}
@@ -112,30 +66,12 @@ const Hero = () => {
           </button>
         </motion.div>
 
-        {/* Mode indicator */}
-        <motion.div
-          initial={{ opacity: 0 }}
-          animate={{ opacity: 1 }}
-          transition={{ duration: 0.6, delay: 0.8 }}
-          className="mt-8 text-xs text-foreground/40 uppercase tracking-widest"
-        >
-          <span className="opacity-60">Click badge to toggle:</span>{' '}
-          <motion.span
-            key={mode}
-            initial={{ opacity: 0, y: 5 }}
-            animate={{ opacity: 1, y: 0 }}
-            className={mode === 'hydro' ? 'text-hydro' : 'text-blaze'}
-          >
-            {mode} mode
-          </motion.span>
-        </motion.div>
-
         {/* Scroll indicator */}
         <motion.div
           initial={{ opacity: 0 }}
           animate={{ opacity: 1 }}
           transition={{ duration: 0.6, delay: 1.2 }}
-          className="absolute -bottom-24 left-1/2 -translate-x-1/2"
+          className="absolute bottom-12 left-1/2 -translate-x-1/2"
         >
           <motion.div
             animate={{ y: [0, 8, 0] }}
