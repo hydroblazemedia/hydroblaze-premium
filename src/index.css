@@ -159,6 +159,36 @@
   .badge-glow {
     @apply inline-block px-4 py-2 rounded-full text-xs uppercase tracking-widest;
     @apply border border-hydro/30 bg-hydro/5 text-hydro backdrop-blur-sm;
+    @apply transition-all duration-300;
+  }
+  
+  .badge-glow:hover {
+    @apply shadow-lg;
+  }
+  
+  .badge-hydro {
+    @apply border-hydro/40 bg-hydro/10 text-hydro;
+    box-shadow: 0 0 20px hsl(var(--hydro) / 0.2);
+  }
+  
+  .badge-blaze {
+    @apply border-blaze/40 bg-blaze/10 text-blaze;
+    box-shadow: 0 0 20px hsl(var(--blaze) / 0.2);
+  }
+  
+  /* Orb styles */
+  .orb-hydro {
+    background: radial-gradient(circle at 30% 30%, 
+      hsl(var(--hydro-glow)) 0%, 
+      hsl(var(--hydro)) 40%, 
+      hsl(var(--hydro) / 0.6) 100%);
+  }
+  
+  .orb-blaze {
+    background: radial-gradient(circle at 30% 30%, 
+      hsl(var(--blaze-glow)) 0%, 
+      hsl(var(--blaze)) 40%, 
+      hsl(var(--blaze) / 0.6) 100%);
   }
   
   /* Section line */
