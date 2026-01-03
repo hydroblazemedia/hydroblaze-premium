@@ -1,9 +1,13 @@
 import { motion } from 'framer-motion';
+import HydroBlazeDuality from './HydroBlazeDuality';
 
 const Hero = () => {
   return (
     <section className="relative min-h-screen flex items-center justify-center px-6">
-      <div className="text-center max-w-5xl mx-auto">
+      {/* Interactive Hydro-Blaze Orbs */}
+      <HydroBlazeDuality />
+      
+      <div className="text-center max-w-5xl mx-auto relative z-10">
         {/* Radial backdrop for readability */}
         <div 
           className="absolute inset-0 -z-10"
