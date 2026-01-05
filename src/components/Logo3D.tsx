@@ -1,51 +1,183 @@
-import { useRef, useState, useEffect } from 'react';
-import { Canvas, useFrame, useThree } from '@react-three/fiber';
-import { Float, useTexture } from '@react-three/drei';
+import { useRef, useState, useEffect, useMemo } from 'react';
+import { Canvas, useFrame } from '@react-three/fiber';
+import { useTexture } from '@react-three/drei';
 import * as THREE from 'three';
 import logoImage from '@/assets/hydroblaze-logo-3d.png';
 
+// Water particle system
+const WaterParticles = () => {
+  const particlesRef = useRef<THREE.Points>(null);
+  const count = 60;
+  
+  const [positions, velocities] = useMemo(() => {
+    const pos = new Float32Array(count * 3);
+    const vel = new Float32Array(count * 3);
+    
+    for (let i = 0; i < count; i++) {
+      // Position particles on the left side (water/hydro)
+      pos[i * 3] = -1.2 + (Math.random() - 0.5) * 0.8;
+      pos[i * 3 + 1] = (Math.random() - 0.5) * 2;
+      pos[i * 3 + 2] = (Math.random() - 0.5) * 0.5;
+      
+      // Upward flowing velocity for water
+      vel[i * 3] = (Math.random() - 0.5) * 0.01;
+      vel[i * 3 + 1] = 0.01 + Math.random() * 0.02;
+      vel[i * 3 + 2] = (Math.random() - 0.5) * 0.01;
+    }
+    return [pos, vel];
+  }, []);
+
+  useFrame((state) => {
+    if (!particlesRef.current) return;
+    const positions = particlesRef.current.geometry.attributes.position.array as Float32Array;
+    
+    for (let i = 0; i < count; i++) {
+      positions[i * 3] += velocities[i * 3];
+      positions[i * 3 + 1] += velocities[i * 3 + 1];
+      positions[i * 3 + 2] += velocities[i * 3 + 2];
+      
+      // Reset particle when it goes too high
+      if (positions[i * 3 + 1] > 1.5) {
+        positions[i * 3] = -1.2 + (Math.random() - 0.5) * 0.8;
+        positions[i * 3 + 1] = -1.5;
+        positions[i * 3 + 2] = (Math.random() - 0.5) * 0.5;
+      }
+    }
+    
+    particlesRef.current.geometry.attributes.position.needsUpdate = true;
+    particlesRef.current.rotation.y = state.clock.elapsedTime * 0.1;
+  });
+
+  return (
+    <points ref={particlesRef}>
+      <bufferGeometry>
+        <bufferAttribute
+          attach="attributes-position"
+          count={count}
+          array={positions}
+          itemSize={3}
+        />
+      </bufferGeometry>
+      <pointsMaterial
+        size={0.08}
+        color="#00b4d8"
+        transparent
+        opacity={0.8}
+        blending={THREE.AdditiveBlending}
+        depthWrite={false}
+      />
+    </points>
+  );
+};
+
+// Fire particle system
+const FireParticles = () => {
+  const particlesRef = useRef<THREE.Points>(null);
+  const count = 60;
+  
+  const [positions, velocities, colors] = useMemo(() => {
+    const pos = new Float32Array(count * 3);
+    const vel = new Float32Array(count * 3);
+    const col = new Float32Array(count * 3);
+    
+    for (let i = 0; i < count; i++) {
+      // Position particles on the right side (fire/blaze)
+      pos[i * 3] = 1.2 + (Math.random() - 0.5) * 0.8;
+      pos[i * 3 + 1] = (Math.random() - 0.5) * 2;
+      pos[i * 3 + 2] = (Math.random() - 0.5) * 0.5;
+      
+      // Upward velocity for fire with more variation
+      vel[i * 3] = (Math.random() - 0.5) * 0.02;
+      vel[i * 3 + 1] = 0.02 + Math.random() * 0.03;
+      vel[i * 3 + 2] = (Math.random() - 0.5) * 0.02;
+      
+      // Orange to red gradient
+      const t = Math.random();
+      col[i * 3] = 1; // R
+      col[i * 3 + 1] = 0.3 + t * 0.4; // G
+      col[i * 3 + 2] = 0; // B
+    }
+    return [pos, vel, col];
+  }, []);
+
+  useFrame((state) => {
+    if (!particlesRef.current) return;
+    const positions = particlesRef.current.geometry.attributes.position.array as Float32Array;
+    
+    for (let i = 0; i < count; i++) {
+      positions[i * 3] += velocities[i * 3] + Math.sin(state.clock.elapsedTime * 3 + i) * 0.003;
+      positions[i * 3 + 1] += velocities[i * 3 + 1];
+      positions[i * 3 + 2] += velocities[i * 3 + 2];
+      
+      // Reset particle when it goes too high
+      if (positions[i * 3 + 1] > 1.5) {
+        positions[i * 3] = 1.2 + (Math.random() - 0.5) * 0.8;
+        positions[i * 3 + 1] = -1.5;
+        positions[i * 3 + 2] = (Math.random() - 0.5) * 0.5;
+      }
+    }
+    
+    particlesRef.current.geometry.attributes.position.needsUpdate = true;
+    particlesRef.current.rotation.y = -state.clock.elapsedTime * 0.1;
+  });
+
+  return (
+    <points ref={particlesRef}>
+      <bufferGeometry>
+        <bufferAttribute
+          attach="attributes-position"
+          count={count}
+          array={positions}
+          itemSize={3}
+        />
+        <bufferAttribute
+          attach="attributes-color"
+          count={count}
+          array={colors}
+          itemSize={3}
+        />
+      </bufferGeometry>
+      <pointsMaterial
+        size={0.1}
+        vertexColors
+        transparent
+        opacity={0.9}
+        blending={THREE.AdditiveBlending}
+        depthWrite={false}
+      />
+    </points>
+  );
+};
+
 interface LogoMeshProps {
-  mousePosition: { x: number; y: number };
+  rotation: { x: number; y: number };
 }
 
-const LogoMesh = ({ mousePosition }: LogoMeshProps) => {
-  const meshRef = useRef<THREE.Mesh>(null);
+const LogoMesh = ({ rotation }: LogoMeshProps) => {
+  const groupRef = useRef<THREE.Group>(null);
   const texture = useTexture(logoImage);
-  const targetRotation = useRef({ x: 0, y: 0 });
   
   texture.colorSpace = THREE.SRGBColorSpace;
   
-  useFrame((state) => {
-    if (meshRef.current) {
-      // Calculate target rotation based on mouse position
-      targetRotation.current.y = mousePosition.x * 0.4;
-      targetRotation.current.x = -mousePosition.y * 0.3;
-      
-      // Add subtle floating animation
-      const floatY = Math.sin(state.clock.elapsedTime * 0.5) * 0.02;
-      const floatX = Math.sin(state.clock.elapsedTime * 0.3) * 0.01;
-      
-      // Smooth interpolation (lerp) for natural movement
-      meshRef.current.rotation.y = THREE.MathUtils.lerp(
-        meshRef.current.rotation.y,
-        targetRotation.current.y + floatY,
+  useFrame(() => {
+    if (groupRef.current) {
+      // Smooth interpolation to target rotation
+      groupRef.current.rotation.y = THREE.MathUtils.lerp(
+        groupRef.current.rotation.y,
+        rotation.y,
         0.08
       );
-      meshRef.current.rotation.x = THREE.MathUtils.lerp(
-        meshRef.current.rotation.x,
-        targetRotation.current.x + floatX,
+      groupRef.current.rotation.x = THREE.MathUtils.lerp(
+        groupRef.current.rotation.x,
+        rotation.x,
         0.08
       );
     }
   });
 
   return (
-    <Float
-      speed={1.5}
-      rotationIntensity={0.1}
-      floatIntensity={0.3}
-    >
-      <mesh ref={meshRef}>
+    <group ref={groupRef}>
+      <mesh>
         <planeGeometry args={[3, 3]} />
         <meshBasicMaterial
           map={texture}
@@ -55,53 +187,108 @@ const LogoMesh = ({ mousePosition }: LogoMeshProps) => {
           toneMapped={false}
         />
       </mesh>
-    </Float>
+      
+      {/* Water particles on left */}
+      <WaterParticles />
+      
+      {/* Fire particles on right */}
+      <FireParticles />
+    </group>
   );
 };
 
 const Logo3D = () => {
   const containerRef = useRef<HTMLDivElement>(null);
-  const [mousePosition, setMousePosition] = useState({ x: 0, y: 0 });
+  const [rotation, setRotation] = useState({ x: 0, y: 0 });
+  const [isDragging, setIsDragging] = useState(false);
+  const lastMousePos = useRef({ x: 0, y: 0 });
+  const totalRotation = useRef({ x: 0, y: 0 });
 
   useEffect(() => {
-    const handleMouseMove = (e: MouseEvent) => {
-      if (!containerRef.current) return;
-      
-      const rect = containerRef.current.getBoundingClientRect();
-      const centerX = rect.left + rect.width / 2;
-      const centerY = rect.top + rect.height / 2;
-      
-      // Normalize mouse position relative to container center (-1 to 1)
-      const x = (e.clientX - centerX) / (rect.width / 2);
-      const y = (e.clientY - centerY) / (rect.height / 2);
-      
-      // Clamp values
-      setMousePosition({
-        x: Math.max(-1, Math.min(1, x)),
-        y: Math.max(-1, Math.min(1, y))
-      });
+    const container = containerRef.current;
+    if (!container) return;
+
+    const handleMouseDown = (e: MouseEvent) => {
+      setIsDragging(true);
+      lastMousePos.current = { x: e.clientX, y: e.clientY };
     };
 
+    const handleMouseMove = (e: MouseEvent) => {
+      if (!isDragging) return;
+      
+      const deltaX = e.clientX - lastMousePos.current.x;
+      const deltaY = e.clientY - lastMousePos.current.y;
+      
+      // Full 360° rotation - accumulate rotation
+      totalRotation.current.y += deltaX * 0.01;
+      totalRotation.current.x += deltaY * 0.01;
+      
+      // Clamp vertical rotation to prevent flipping
+      totalRotation.current.x = Math.max(-Math.PI / 3, Math.min(Math.PI / 3, totalRotation.current.x));
+      
+      setRotation({ ...totalRotation.current });
+      lastMousePos.current = { x: e.clientX, y: e.clientY };
+    };
+
+    const handleMouseUp = () => {
+      setIsDragging(false);
+    };
+
+    const handleTouchStart = (e: TouchEvent) => {
+      setIsDragging(true);
+      lastMousePos.current = { x: e.touches[0].clientX, y: e.touches[0].clientY };
+    };
+
+    const handleTouchMove = (e: TouchEvent) => {
+      if (!isDragging) return;
+      
+      const deltaX = e.touches[0].clientX - lastMousePos.current.x;
+      const deltaY = e.touches[0].clientY - lastMousePos.current.y;
+      
+      totalRotation.current.y += deltaX * 0.01;
+      totalRotation.current.x += deltaY * 0.01;
+      totalRotation.current.x = Math.max(-Math.PI / 3, Math.min(Math.PI / 3, totalRotation.current.x));
+      
+      setRotation({ ...totalRotation.current });
+      lastMousePos.current = { x: e.touches[0].clientX, y: e.touches[0].clientY };
+    };
+
+    const handleTouchEnd = () => {
+      setIsDragging(false);
+    };
+
+    container.addEventListener('mousedown', handleMouseDown);
     window.addEventListener('mousemove', handleMouseMove);
-    return () => window.removeEventListener('mousemove', handleMouseMove);
-  }, []);
+    window.addEventListener('mouseup', handleMouseUp);
+    container.addEventListener('touchstart', handleTouchStart);
+    window.addEventListener('touchmove', handleTouchMove);
+    window.addEventListener('touchend', handleTouchEnd);
+
+    return () => {
+      container.removeEventListener('mousedown', handleMouseDown);
+      window.removeEventListener('mousemove', handleMouseMove);
+      window.removeEventListener('mouseup', handleMouseUp);
+      container.removeEventListener('touchstart', handleTouchStart);
+      window.removeEventListener('touchmove', handleTouchMove);
+      window.removeEventListener('touchend', handleTouchEnd);
+    };
+  }, [isDragging]);
 
   return (
     <div 
       ref={containerRef}
-      className="w-full h-[300px] md:h-[400px] lg:h-[450px] cursor-pointer"
+      className={`w-full h-[300px] md:h-[400px] lg:h-[450px] ${isDragging ? 'cursor-grabbing' : 'cursor-grab'}`}
     >
       <Canvas
         camera={{ position: [0, 0, 5], fov: 45 }}
         gl={{ alpha: true, antialias: true }}
         style={{ background: 'transparent' }}
       >
-        <ambientLight intensity={0.6} />
-        <directionalLight position={[5, 5, 5]} intensity={1} color="#ffffff" />
-        <pointLight position={[-3, 2, 2]} intensity={0.8} color="#00b4d8" />
-        <pointLight position={[3, -2, 2]} intensity={0.8} color="#ff6b35" />
+        <ambientLight intensity={0.8} />
+        <pointLight position={[-3, 2, 2]} intensity={1.5} color="#00b4d8" />
+        <pointLight position={[3, -2, 2]} intensity={1.5} color="#ff6b35" />
         
-        <LogoMesh mousePosition={mousePosition} />
+        <LogoMesh rotation={rotation} />
       </Canvas>
     </div>
   );
