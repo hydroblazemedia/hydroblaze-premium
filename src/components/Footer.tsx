@@ -34,14 +34,23 @@ const Footer = () => {
             transition={{ duration: 0.6, delay: 0.1 }}
             className="flex flex-col md:items-end justify-end"
           >
-            <div className="flex gap-6 mb-8">
-              {['Twitter', 'LinkedIn', 'Instagram'].map((social) => (
+            <div className="flex flex-wrap gap-4 md:gap-6 mb-8">
+              {[
+                { name: 'Instagram', url: 'https://www.instagram.com/hydroblaze_media' },
+                { name: 'X', url: 'https://x.com/HydroBlazeMedia' },
+                { name: 'Facebook', url: 'https://www.facebook.com/share/1EPQequMaK/' },
+                { name: 'YouTube', url: 'https://www.youtube.com/@HydroBlazeMedia' },
+                { name: 'Threads', url: 'https://www.threads.com/@hydroblaze_media' },
+                { name: 'Pinterest', url: 'https://www.pinterest.com/03tdqyod14r7zkytlhuqodo679g983' },
+              ].map((social) => (
                 <a
-                  key={social}
-                  href="#"
+                  key={social.name}
+                  href={social.url}
+                  target="_blank"
+                  rel="noopener noreferrer"
                   className="text-sm text-muted-foreground hover:text-foreground transition-colors duration-300"
                 >
-                  {social}
+                  {social.name}
                 </a>
               ))}
             </div>
