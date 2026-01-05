@@ -47,13 +47,12 @@ const LogoMesh = ({ mousePosition }: LogoMeshProps) => {
     >
       <mesh ref={meshRef}>
         <planeGeometry args={[3, 3]} />
-        <meshStandardMaterial
+        <meshBasicMaterial
           map={texture}
           transparent
           alphaTest={0.1}
           side={THREE.DoubleSide}
-          emissive="#ffffff"
-          emissiveIntensity={0.15}
+          toneMapped={false}
         />
       </mesh>
     </Float>
