@@ -1,4 +1,5 @@
 import { motion } from 'framer-motion';
+import Logo3D from './Logo3D';
 
 const Hero = () => {
   return (
@@ -12,11 +13,21 @@ const Hero = () => {
           }}
         />
         
+        {/* 3D Logo */}
+        <motion.div
+          initial={{ opacity: 0, scale: 0.8 }}
+          animate={{ opacity: 1, scale: 1 }}
+          transition={{ duration: 1, delay: 0.2 }}
+          className="mb-4"
+        >
+          <Logo3D />
+        </motion.div>
+
         {/* Badge */}
         <motion.div
           initial={{ opacity: 0, y: 20 }}
           animate={{ opacity: 1, y: 0 }}
-          transition={{ duration: 0.6, delay: 0.3 }}
+          transition={{ duration: 0.6, delay: 0.5 }}
           className="mb-8"
         >
           <span className="badge-glow">Digital Alchemy</span>
@@ -26,7 +37,7 @@ const Hero = () => {
         <motion.h1
           initial={{ opacity: 0, y: 30 }}
           animate={{ opacity: 1, y: 0 }}
-          transition={{ duration: 0.8, delay: 0.4 }}
+          transition={{ duration: 0.8, delay: 0.6 }}
           className="font-display font-bold text-4xl md:text-6xl lg:text-7xl xl:text-8xl leading-[1.05] tracking-tight mb-8"
         >
           Where Fluid Design
@@ -38,7 +49,7 @@ const Hero = () => {
         <motion.p
           initial={{ opacity: 0, y: 20 }}
           animate={{ opacity: 1, y: 0 }}
-          transition={{ duration: 0.6, delay: 0.5 }}
+          transition={{ duration: 0.6, delay: 0.7 }}
           className="text-lg md:text-xl text-foreground/80 max-w-xl mx-auto leading-relaxed mb-12"
           style={{ textShadow: '0 2px 10px rgba(0,0,0,0.5)' }}
         >
@@ -49,7 +60,7 @@ const Hero = () => {
         <motion.div
           initial={{ opacity: 0, y: 20 }}
           animate={{ opacity: 1, y: 0 }}
-          transition={{ duration: 0.6, delay: 0.6 }}
+          transition={{ duration: 0.6, delay: 0.8 }}
         >
           <button className="btn-primary group">
             <span className="flex items-center gap-3">
@@ -70,7 +81,7 @@ const Hero = () => {
         <motion.div
           initial={{ opacity: 0 }}
           animate={{ opacity: 1 }}
-          transition={{ duration: 0.6, delay: 1.2 }}
+          transition={{ duration: 0.6, delay: 1.4 }}
           className="absolute bottom-12 left-1/2 -translate-x-1/2"
         >
           <motion.div
