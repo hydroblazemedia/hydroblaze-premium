@@ -27,7 +27,7 @@ const Navbar = () => {
       <div className="flex items-center justify-between max-w-7xl mx-auto">
         {/* Logo */}
         <a href="#" className="flex items-center gap-3">
-          <img src={logo} alt="HydroBlaze" className="h-14 md:h-16 w-auto" />
+          <img src={logo} alt="HydroBlaze" className="h-18 md:h-20 w-auto" />
           
         </a>
 
