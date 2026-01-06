@@ -1,153 +1,8 @@
-import { useRef, useState, useEffect, useMemo } from 'react';
+import { useRef, useState, useEffect } from 'react';
 import { Canvas, useFrame } from '@react-three/fiber';
 import { useTexture } from '@react-three/drei';
 import * as THREE from 'three';
 import logoImage from '@/assets/hydroblaze-logo-3d.png';
-
-// Water particle system
-const WaterParticles = () => {
-  const particlesRef = useRef<THREE.Points>(null);
-  const count = 60;
-  
-  const [positions, velocities] = useMemo(() => {
-    const pos = new Float32Array(count * 3);
-    const vel = new Float32Array(count * 3);
-    
-    for (let i = 0; i < count; i++) {
-      // Position particles on the left side (water/hydro)
-      pos[i * 3] = -1.2 + (Math.random() - 0.5) * 0.8;
-      pos[i * 3 + 1] = (Math.random() - 0.5) * 2;
-      pos[i * 3 + 2] = (Math.random() - 0.5) * 0.5;
-      
-      // Upward flowing velocity for water
-      vel[i * 3] = (Math.random() - 0.5) * 0.01;
-      vel[i * 3 + 1] = 0.01 + Math.random() * 0.02;
-      vel[i * 3 + 2] = (Math.random() - 0.5) * 0.01;
-    }
-    return [pos, vel];
-  }, []);
-
-  useFrame((state) => {
-    if (!particlesRef.current) return;
-    const positions = particlesRef.current.geometry.attributes.position.array as Float32Array;
-    
-    for (let i = 0; i < count; i++) {
-      positions[i * 3] += velocities[i * 3];
-      positions[i * 3 + 1] += velocities[i * 3 + 1];
-      positions[i * 3 + 2] += velocities[i * 3 + 2];
-      
-      // Reset particle when it goes too high
-      if (positions[i * 3 + 1] > 1.5) {
-        positions[i * 3] = -1.2 + (Math.random() - 0.5) * 0.8;
-        positions[i * 3 + 1] = -1.5;
-        positions[i * 3 + 2] = (Math.random() - 0.5) * 0.5;
-      }
-    }
-    
-    particlesRef.current.geometry.attributes.position.needsUpdate = true;
-    particlesRef.current.rotation.y = state.clock.elapsedTime * 0.1;
-  });
-
-  return (
-    <points ref={particlesRef}>
-      <bufferGeometry>
-        <bufferAttribute
-          attach="attributes-position"
-          count={count}
-          array={positions}
-          itemSize={3}
-        />
-      </bufferGeometry>
-      <pointsMaterial
-        size={0.08}
-        color="#00b4d8"
-        transparent
-        opacity={0.8}
-        blending={THREE.AdditiveBlending}
-        depthWrite={false}
-      />
-    </points>
-  );
-};
-
-// Fire particle system
-const FireParticles = () => {
-  const particlesRef = useRef<THREE.Points>(null);
-  const count = 60;
-  
-  const [positions, velocities, colors] = useMemo(() => {
-    const pos = new Float32Array(count * 3);
-    const vel = new Float32Array(count * 3);
-    const col = new Float32Array(count * 3);
-    
-    for (let i = 0; i < count; i++) {
-      // Position particles on the right side (fire/blaze)
-      pos[i * 3] = 1.2 + (Math.random() - 0.5) * 0.8;
-      pos[i * 3 + 1] = (Math.random() - 0.5) * 2;
-      pos[i * 3 + 2] = (Math.random() - 0.5) * 0.5;
-      
-      // Upward velocity for fire with more variation
-      vel[i * 3] = (Math.random() - 0.5) * 0.02;
-      vel[i * 3 + 1] = 0.02 + Math.random() * 0.03;
-      vel[i * 3 + 2] = (Math.random() - 0.5) * 0.02;
-      
-      // Orange to red gradient
-      const t = Math.random();
-      col[i * 3] = 1; // R
-      col[i * 3 + 1] = 0.3 + t * 0.4; // G
-      col[i * 3 + 2] = 0; // B
-    }
-    return [pos, vel, col];
-  }, []);
-
-  useFrame((state) => {
-    if (!particlesRef.current) return;
-    const positions = particlesRef.current.geometry.attributes.position.array as Float32Array;
-    
-    for (let i = 0; i < count; i++) {
-      positions[i * 3] += velocities[i * 3] + Math.sin(state.clock.elapsedTime * 3 + i) * 0.003;
-      positions[i * 3 + 1] += velocities[i * 3 + 1];
-      positions[i * 3 + 2] += velocities[i * 3 + 2];
-      
-      // Reset particle when it goes too high
-      if (positions[i * 3 + 1] > 1.5) {
-        positions[i * 3] = 1.2 + (Math.random() - 0.5) * 0.8;
-        positions[i * 3 + 1] = -1.5;
-        positions[i * 3 + 2] = (Math.random() - 0.5) * 0.5;
-      }
-    }
-    
-    particlesRef.current.geometry.attributes.position.needsUpdate = true;
-    particlesRef.current.rotation.y = -state.clock.elapsedTime * 0.1;
-  });
-
-  return (
-    <points ref={particlesRef}>
-      <bufferGeometry>
-        <bufferAttribute
-          attach="attributes-position"
-          count={count}
-          array={positions}
-          itemSize={3}
-        />
-        <bufferAttribute
-          attach="attributes-color"
-          count={count}
-          array={colors}
-          itemSize={3}
-        />
-      </bufferGeometry>
-      <pointsMaterial
-        size={0.1}
-        vertexColors
-        transparent
-        opacity={0.9}
-        blending={THREE.AdditiveBlending}
-        depthWrite={false}
-      />
-    </points>
-  );
-};
 
 interface LogoMeshProps {
   rotation: { x: number; y: number };
@@ -161,7 +16,6 @@ const LogoMesh = ({ rotation }: LogoMeshProps) => {
   
   useFrame(() => {
     if (groupRef.current) {
-      // Smooth interpolation to target rotation
       groupRef.current.rotation.y = THREE.MathUtils.lerp(
         groupRef.current.rotation.y,
         rotation.y,
@@ -187,12 +41,6 @@ const LogoMesh = ({ rotation }: LogoMeshProps) => {
           toneMapped={false}
         />
       </mesh>
-      
-      {/* Water particles on left */}
-      <WaterParticles />
-      
-      {/* Fire particles on right */}
-      <FireParticles />
     </group>
   );
 };
