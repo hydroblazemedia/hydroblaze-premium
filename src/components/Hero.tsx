@@ -1,5 +1,4 @@
 import { motion } from 'framer-motion';
-import Logo3D from './Logo3D';
 
 const Hero = () => {
   return (
@@ -12,16 +11,6 @@ const Hero = () => {
             background: 'radial-gradient(circle at center, rgba(0,0,0,0.7) 0%, transparent 70%)',
           }}
         />
-        
-        {/* 3D Logo */}
-        <motion.div
-          initial={{ opacity: 0, scale: 0.8 }}
-          animate={{ opacity: 1, scale: 1 }}
-          transition={{ duration: 1, delay: 0.2 }}
-          className="mb-4"
-        >
-          <Logo3D />
-        </motion.div>
 
         {/* Badge */}
         <motion.div
