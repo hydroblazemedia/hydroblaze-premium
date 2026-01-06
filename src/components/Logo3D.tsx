@@ -149,71 +149,6 @@ const FireParticles = () => {
   );
 };
 
-// Pulsing aura ring
-const AuraRing = () => {
-  const ringRef = useRef<THREE.Mesh>(null);
-  const materialRef = useRef<THREE.ShaderMaterial>(null);
-  
-  const shaderData = useMemo(() => ({
-    uniforms: {
-      uTime: { value: 0 },
-      uHydroColor: { value: new THREE.Color('#00b4d8') },
-      uBlazeColor: { value: new THREE.Color('#ff6b35') },
-    },
-    vertexShader: `
-      varying vec2 vUv;
-      void main() {
-        vUv = uv;
-        gl_Position = projectionMatrix * modelViewMatrix * vec4(position, 1.0);
-      }
-    `,
-    fragmentShader: `
-      uniform float uTime;
-      uniform vec3 uHydroColor;
-      uniform vec3 uBlazeColor;
-      varying vec2 vUv;
-      
-      void main() {
-        float pulse = sin(uTime * 1.5) * 0.5 + 0.5;
-        vec3 color = mix(uHydroColor, uBlazeColor, pulse);
-        
-        // Create ring glow effect
-        float dist = abs(vUv.y - 0.5) * 2.0;
-        float glow = 1.0 - smoothstep(0.0, 1.0, dist);
-        glow = pow(glow, 2.0);
-        
-        // Add shimmer
-        float shimmer = sin(vUv.x * 20.0 + uTime * 3.0) * 0.1 + 0.9;
-        
-        gl_FragColor = vec4(color * shimmer, glow * 0.7);
-      }
-    `,
-  }), []);
-
-  useFrame((state) => {
-    if (materialRef.current) {
-      materialRef.current.uniforms.uTime.value = state.clock.elapsedTime;
-    }
-    if (ringRef.current) {
-      ringRef.current.rotation.z = state.clock.elapsedTime * 0.2;
-    }
-  });
-
-  return (
-    <mesh ref={ringRef} position={[0, 0, -0.1]}>
-      <torusGeometry args={[1.8, 0.15, 16, 64]} />
-      <shaderMaterial
-        ref={materialRef}
-        {...shaderData}
-        transparent
-        side={THREE.DoubleSide}
-        blending={THREE.AdditiveBlending}
-        depthWrite={false}
-      />
-    </mesh>
-  );
-};
-
 interface LogoMeshProps {
   rotation: { x: number; y: number };
 }
@@ -252,9 +187,6 @@ const LogoMesh = ({ rotation }: LogoMeshProps) => {
           toneMapped={false}
         />
       </mesh>
-      
-      {/* Pulsing aura ring */}
-      <AuraRing />
       
       {/* Water particles on left */}
       <WaterParticles />
