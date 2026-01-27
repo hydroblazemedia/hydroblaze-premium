@@ -1,9 +1,11 @@
 import { useState, useEffect } from 'react';
 import { motion } from 'framer-motion';
+import { Link, useLocation } from 'react-router-dom';
 import logo from '@/assets/logo.png';
 
 const Navbar = () => {
   const [isScrolled, setIsScrolled] = useState(false);
+  const location = useLocation();
 
   useEffect(() => {
     const handleScroll = () => {
@@ -12,6 +14,8 @@ const Navbar = () => {
     window.addEventListener('scroll', handleScroll);
     return () => window.removeEventListener('scroll', handleScroll);
   }, []);
+
+  const isActive = (path: string) => location.pathname === path;
 
   return (
     <motion.nav
@@ -26,19 +30,28 @@ const Navbar = () => {
     >
       <div className="flex items-center justify-between max-w-7xl mx-auto">
         {/* Logo */}
-        <a href="#" className="flex items-center gap-3">
+        <Link to="/" className="flex items-center gap-3">
           <img src={logo} alt="HydroBlaze" className="h-18 md:h-20 w-auto" />
-          
-        </a>
+        </Link>
 
         {/* Navigation */}
         <div className="flex items-center gap-6 md:gap-10">
-          <a href="#work" className="hidden md:block text-sm text-muted-foreground hover:text-foreground transition-colors duration-300 hover:drop-shadow-[0_0_8px_hsl(var(--hydro))]">
-            Work
-          </a>
-          <a href="#services" className="hidden md:block text-sm text-muted-foreground hover:text-foreground transition-colors duration-300 hover:drop-shadow-[0_0_8px_hsl(var(--hydro))]">
+          <Link 
+            to="/services" 
+            className={`hidden md:block text-sm transition-colors duration-300 hover:drop-shadow-[0_0_8px_hsl(var(--hydro))] ${
+              isActive('/services') ? 'text-foreground drop-shadow-[0_0_8px_hsl(var(--hydro))]' : 'text-muted-foreground hover:text-foreground'
+            }`}
+          >
             Services
-          </a>
+          </Link>
+          <Link 
+            to="/pricing" 
+            className={`hidden md:block text-sm transition-colors duration-300 hover:drop-shadow-[0_0_8px_hsl(var(--hydro))] ${
+              isActive('/pricing') ? 'text-foreground drop-shadow-[0_0_8px_hsl(var(--hydro))]' : 'text-muted-foreground hover:text-foreground'
+            }`}
+          >
+            Pricing
+          </Link>
           <a href="#contact" className="group relative px-5 py-2.5 rounded-full text-sm border border-foreground/20 text-foreground transition-all duration-300 hover:border-blaze hover:shadow-[0_0_20px_hsl(var(--blaze)/0.4)]">
             Start Project
           </a>
@@ -47,4 +60,5 @@ const Navbar = () => {
     </motion.nav>
   );
 };
+
 export default Navbar;
