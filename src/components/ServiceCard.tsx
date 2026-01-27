@@ -2,14 +2,28 @@ import { motion } from 'framer-motion';
 import { useRef, useState } from 'react';
 
 interface ServiceCardProps {
-  number: string;
+  icon: string;
   title: string;
-  description: string;
-  tags: string[];
+  tagline: string;
+  description: string[];
+  whatWeDo: string[];
+  whatYouGet: string[];
+  bestFor: string;
+  keywords: string[];
   index: number;
 }
 
-const ServiceCard = ({ number, title, description, tags, index }: ServiceCardProps) => {
+const ServiceCard = ({ 
+  icon, 
+  title, 
+  tagline, 
+  description, 
+  whatWeDo, 
+  whatYouGet, 
+  bestFor, 
+  keywords, 
+  index 
+}: ServiceCardProps) => {
   const cardRef = useRef<HTMLDivElement>(null);
   const [mousePosition, setMousePosition] = useState({ x: 0, y: 0 });
 
@@ -30,7 +44,7 @@ const ServiceCard = ({ number, title, description, tags, index }: ServiceCardPro
       viewport={{ once: true, margin: '-100px' }}
       transition={{ duration: 0.6, delay: index * 0.1 }}
       onMouseMove={handleMouseMove}
-      className="glass-card h-[400px] md:h-[420px] relative group"
+      className="glass-card relative group"
       style={{
         ['--mouse-x' as string]: `${mousePosition.x}px`,
         ['--mouse-y' as string]: `${mousePosition.y}px`,
@@ -47,31 +61,67 @@ const ServiceCard = ({ number, title, description, tags, index }: ServiceCardPro
         }}
       />
 
-      <div className="relative z-10 p-8 md:p-10 h-full flex flex-col">
-        {/* Top row */}
-        <div className="flex items-center justify-between mb-auto">
-          <span className="text-sm text-muted-foreground font-display">{number}</span>
-          <span className="text-muted-foreground group-hover:text-hydro transition-colors duration-300">↗</span>
+      <div className="relative z-10 p-6 md:p-8">
+        {/* Header */}
+        <div className="flex items-center gap-3 mb-4">
+          <span className="text-3xl">{icon}</span>
+          <h3 className="font-display text-xl md:text-2xl font-medium">{title}</h3>
         </div>
 
-        {/* Content */}
-        <div className="mt-auto">
-          <h3 className="font-display text-2xl md:text-3xl font-medium mb-4">{title}</h3>
-          <p className="text-muted-foreground text-sm md:text-base leading-relaxed mb-6">
-            {description}
-          </p>
+        {/* Tagline */}
+        <p className="text-hydro font-medium text-sm md:text-base mb-4">{tagline}</p>
 
-          {/* Tags */}
-          <div className="flex flex-wrap gap-2">
-            {tags.map((tag) => (
-              <span
-                key={tag}
-                className="text-xs px-3 py-1.5 rounded-full border border-foreground/10 text-muted-foreground uppercase tracking-wider"
-              >
-                {tag}
-              </span>
+        {/* Description */}
+        <div className="space-y-2 mb-6">
+          {description.map((para, i) => (
+            <p key={i} className="text-muted-foreground text-sm leading-relaxed">
+              {para}
+            </p>
+          ))}
+        </div>
+
+        {/* What we do */}
+        <div className="mb-5">
+          <h4 className="text-xs uppercase tracking-wider text-foreground/70 mb-3 font-medium">What we do</h4>
+          <ul className="space-y-1.5">
+            {whatWeDo.map((item, i) => (
+              <li key={i} className="text-sm text-muted-foreground flex items-start gap-2">
+                <span className="text-hydro mt-1">•</span>
+                {item}
+              </li>
             ))}
-          </div>
+          </ul>
+        </div>
+
+        {/* What you get */}
+        <div className="mb-5">
+          <h4 className="text-xs uppercase tracking-wider text-foreground/70 mb-3 font-medium">What you get</h4>
+          <ul className="space-y-1.5">
+            {whatYouGet.map((item, i) => (
+              <li key={i} className="text-sm text-muted-foreground flex items-start gap-2">
+                <span className="text-blaze mt-1">•</span>
+                {item}
+              </li>
+            ))}
+          </ul>
+        </div>
+
+        {/* Best for */}
+        <div className="mb-6 p-3 rounded-lg bg-foreground/5 border border-foreground/10">
+          <p className="text-xs uppercase tracking-wider text-foreground/70 mb-1 font-medium">Best for</p>
+          <p className="text-sm text-foreground/90">{bestFor}</p>
+        </div>
+
+        {/* Keywords */}
+        <div className="flex flex-wrap gap-2">
+          {keywords.map((tag) => (
+            <span
+              key={tag}
+              className="text-xs px-3 py-1.5 rounded-full border border-foreground/10 text-muted-foreground uppercase tracking-wider"
+            >
+              {tag}
+            </span>
+          ))}
         </div>
       </div>
     </motion.div>
