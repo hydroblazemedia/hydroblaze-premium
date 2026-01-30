@@ -2,6 +2,7 @@ import { useState } from 'react';
 import Preloader from '@/components/Preloader';
 import Navbar from '@/components/Navbar';
 import Hero from '@/components/Hero';
+import PagePreviewSection from '@/components/PagePreviewSection';
 import Footer from '@/components/Footer';
 
 const Index = () => {
@@ -21,6 +22,7 @@ const Index = () => {
           
           <main>
             <Hero />
+            <PagePreviewSection />
             <Footer />
           </main>
         </>
