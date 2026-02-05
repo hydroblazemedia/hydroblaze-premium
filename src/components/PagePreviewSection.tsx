@@ -276,55 +276,6 @@ const PagePreviewSection = () => {
           </motion.div>
         </div>
       </section>
- 
-       {/* Quick Links Section */}
-       <section className="py-16 md:py-24 px-6 md:px-12 lg:px-16">
-         <div className="max-w-7xl mx-auto">
-           <motion.div
-             initial={{ opacity: 0, y: 20 }}
-             whileInView={{ opacity: 1, y: 0 }}
-             viewport={{ once: true }}
-             transition={{ duration: 0.6 }}
-             className="text-center"
-           >
-             <h2 className="font-display text-2xl md:text-3xl font-bold mb-8">
-               Explore <span className="text-gradient">HydroBlaze</span>
-             </h2>
-             <div className="flex flex-wrap justify-center gap-4">
-               <Link
-                 to="/services"
-                 className="px-6 py-3 rounded-full text-sm font-medium bg-hydro/10 text-hydro border border-hydro/20 hover:bg-hydro hover:text-white transition-all duration-300"
-               >
-                 🚀 Services
-               </Link>
-               <Link
-                 to="/pricing"
-                 className="px-6 py-3 rounded-full text-sm font-medium bg-blaze/10 text-blaze border border-blaze/20 hover:bg-blaze hover:text-white transition-all duration-300"
-               >
-                 💎 Pricing
-               </Link>
-               <Link
-                 to="/about"
-                 className="px-6 py-3 rounded-full text-sm font-medium bg-foreground/5 border border-foreground/20 hover:bg-foreground/10 transition-all duration-300"
-               >
-                 💧🔥 About Us
-               </Link>
-               <Link
-                 to="/careers"
-                 className="px-6 py-3 rounded-full text-sm font-medium bg-foreground/5 border border-foreground/20 hover:bg-foreground/10 transition-all duration-300"
-               >
-                 🌟 Careers
-               </Link>
-               <Link
-                 to="/blog"
-                 className="px-6 py-3 rounded-full text-sm font-medium bg-blaze/10 text-blaze border border-blaze/20 hover:bg-blaze hover:text-white transition-all duration-300"
-               >
-                 📚 Blog
-               </Link>
-             </div>
-           </motion.div>
-         </div>
-       </section>
     </div>
   );
 };
