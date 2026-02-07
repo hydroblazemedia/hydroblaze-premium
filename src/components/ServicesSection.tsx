@@ -5,79 +5,66 @@ const services = [
   {
     icon: '💧',
     title: 'Hydro Strategy',
-    tagline: 'Data-first marketing that flows where your customers are',
-    description: [
-      'We design adaptive marketing strategies rooted in data, not guesswork.',
-      'Every move is intentional, measurable, and built to evolve with your brand.',
-    ],
-    whatWeDo: [
-      'Marketing & content strategy',
-      'Funnel & customer journey mapping',
-      'Platform-specific growth planning',
+    tagline: 'Clarity before execution',
+    description: 'We build data-backed strategies that guide content, ads, and engagement — so every action has purpose.',
+    includes: [
+      'Brand & market analysis',
       'Audience & competitor research',
+      'Content & platform strategy',
+      'Funnel & lead journey planning',
+      'Monthly performance review & optimisation',
     ],
-    whatYouGet: [
-      'Clear monthly content roadmap',
-      'Platform-wise growth plan (Instagram, Meta, Google)',
-      'Defined KPIs & performance benchmarks',
-      'Strategy aligned with your business goals',
-    ],
-    bestFor: 'Brands that want clarity, consistency, and predictable growth.',
-    keywords: ['SEO', 'Funnel Architecture', 'Analytics', 'Growth Strategy'],
+    outcome: 'A clear roadmap aligned with your business goals.',
   },
   {
     icon: '🔥',
     title: 'Blaze Creative',
-    tagline: 'Scroll-stopping visuals that burn into memory',
-    description: [
-      'Attention is currency — and we help you earn it.',
-      'Our creative is designed to stop the scroll, build brand recall, and drive action.',
-    ],
-    whatWeDo: [
-      'Brand identity & visual systems',
-      'Social media content (static, reels, short-form video)',
+    tagline: 'Content designed to perform',
+    description: 'We create scroll-stopping creatives built specifically for social platforms and paid distribution.',
+    includes: [
+      'Social media posts (static & reels)',
+      'Short-form video editing',
       'Ad creatives & thumbnails',
-      'Motion graphics & reel editing',
+      'Brand-aligned visual consistency',
+      'Performance-focused content formats',
     ],
-    whatYouGet: [
-      'High-impact content designed for reach & engagement',
-      'Trend-aware reels that don\'t look generic',
-      'Consistent brand look across platforms',
-      'Creatives optimized for ads & organic growth',
-    ],
-    bestFor: 'Brands that want to stand out, not blend in.',
-    keywords: ['Brand Design', 'Reels', 'Motion', 'Viral Content'],
+    outcome: 'Higher engagement, stronger brand recall, and content that converts.',
   },
   {
-    icon: '⚙️',
-    title: 'Fusion Tech',
-    tagline: 'Where performance meets experience',
-    description: [
-      'Design without performance is art.',
-      'Performance without design is boring.',
-      'We build fast, beautiful, conversion-focused digital experiences.',
+    icon: '📸',
+    title: 'Content Production',
+    tagline: 'Shoot with intent. Create at scale.',
+    description: 'We handle on-ground shoots designed for reels, ads, and high-performing content.',
+    includes: [
+      'On-location photo & video shoots',
+      'Reel-first shooting approach',
+      'Product & service shoots',
+      'Content shortlisting & editing',
+      'Multi-format outputs for social platforms',
     ],
-    whatWeDo: [
-      'Website & landing page design',
-      'Conversion-focused UI/UX',
-      'Performance optimization',
-      'Tracking, pixels & integrations',
+    outcome: 'High-quality raw content ready for consistent posting and ads.',
+  },
+  {
+    icon: '📈',
+    title: 'Performance Marketing',
+    tagline: 'Paid growth with structure & accountability',
+    description: 'We manage paid campaigns with strict control to ensure sustainable scaling.',
+    includes: [
+      'Meta ads strategy & setup',
+      'Audience testing & optimisation',
+      'Creative iteration & scaling',
+      'Performance tracking & reporting',
+      'Lead quality & funnel alignment',
     ],
-    whatYouGet: [
-      'Websites that load fast and look premium',
-      'Landing pages built to convert traffic into leads',
-      'Clean code + scalable structure',
-      'Analytics & pixel setup for ads',
-    ],
-    bestFor: 'Brands that want their website to work like a sales machine.',
-    keywords: ['Web Design', 'Performance', 'React', 'Conversion'],
+    outcome: 'Predictable lead flow with controlled ad spend.',
   },
 ];
 
-const combinations = [
-  { combo: 'Strategy + Creative', purpose: 'for organic growth' },
-  { combo: 'Creative + Ads', purpose: 'for performance marketing' },
-  { combo: 'All three', purpose: 'for full-stack brand scaling' },
+const howWeWork = [
+  'Clear scopes & timelines',
+  'Structured execution',
+  'Data-driven decisions',
+  'Long-term partnerships',
 ];
 
 const ServicesSection = () => {
@@ -92,23 +79,19 @@ const ServicesSection = () => {
           transition={{ duration: 0.6 }}
           className="text-center mb-16"
         >
-          <span className="text-4xl mb-4 block">🚀</span>
           <h2 className="font-display text-3xl md:text-4xl lg:text-5xl font-medium mb-4">
             Our Services
           </h2>
           <p className="text-xl md:text-2xl text-muted-foreground mb-6">
-            Three elements. One growth engine.
+            Focused execution. Scalable growth. No distractions.
           </p>
-          <div className="max-w-xl mx-auto space-y-2">
-            <p className="text-muted-foreground">We don't sell random services.</p>
-            <p className="text-foreground font-medium">
-              We build systems that attract attention, convert interest, and scale revenue.
-            </p>
-          </div>
+          <p className="text-muted-foreground max-w-2xl mx-auto">
+            At HydroBlaze Media, we deliberately focus on services we can execute at the highest level today — ensuring consistent quality, speed, and measurable results.
+          </p>
         </motion.div>
 
         {/* Cards grid */}
-        <div className="grid grid-cols-1 lg:grid-cols-3 gap-6 mb-20">
+        <div className="grid grid-cols-1 md:grid-cols-2 gap-6 mb-20">
           {services.map((service, index) => (
             <ServiceCard
               key={service.title}
@@ -118,7 +101,7 @@ const ServicesSection = () => {
           ))}
         </div>
 
-        {/* How It Comes Together */}
+        {/* How We Work */}
         <motion.div
           initial={{ opacity: 0, y: 30 }}
           whileInView={{ opacity: 1, y: 0 }}
@@ -126,38 +109,33 @@ const ServicesSection = () => {
           transition={{ duration: 0.6 }}
           className="glass-card p-8 md:p-12 text-center mb-12"
         >
-          <span className="text-3xl mb-4 block">⚡</span>
+          <span className="text-3xl mb-4 block">🤝</span>
           <h3 className="font-display text-2xl md:text-3xl font-medium mb-4">
-            How It Comes Together
+            How We Work
           </h3>
-          <p className="text-muted-foreground mb-8 max-w-lg mx-auto">
-            Most brands don't need one service — they need alignment.
-            <br />
-            That's why our clients often combine:
-          </p>
+          <p className="text-muted-foreground mb-8">We believe in:</p>
           
           <div className="flex flex-wrap justify-center gap-4 mb-8">
-            {combinations.map((item, i) => (
+            {howWeWork.map((item, i) => (
               <motion.div
-                key={item.combo}
+                key={item}
                 initial={{ opacity: 0, scale: 0.9 }}
                 whileInView={{ opacity: 1, scale: 1 }}
                 viewport={{ once: true }}
                 transition={{ duration: 0.4, delay: i * 0.1 }}
                 className="px-5 py-3 rounded-full border border-foreground/20 bg-foreground/5"
               >
-                <span className="text-foreground font-medium">{item.combo}</span>
-                <span className="text-muted-foreground"> {item.purpose}</span>
+                <span className="text-foreground font-medium">{item}</span>
               </motion.div>
             ))}
           </div>
           
-          <p className="text-lg">
-            👉 That's where <span className="text-hydro font-medium">Hydro</span><span className="text-blaze font-medium">Blaze</span> truly ignites.
+          <p className="text-muted-foreground italic">
+            We take on limited clients to maintain quality — not volume.
           </p>
         </motion.div>
 
-        {/* Discovery Call CTA */}
+        {/* What's Coming Next */}
         <motion.div
           initial={{ opacity: 0, y: 30 }}
           whileInView={{ opacity: 1, y: 0 }}
@@ -165,16 +143,15 @@ const ServicesSection = () => {
           transition={{ duration: 0.6, delay: 0.2 }}
           className="glass-card p-8 md:p-12 text-center bg-gradient-to-br from-hydro/5 to-blaze/5"
         >
-          <span className="text-3xl mb-4 block">🔥</span>
+          <span className="text-3xl mb-4 block">🚀</span>
           <h3 className="font-display text-2xl md:text-3xl font-medium mb-4">
-            Not sure what you need?
+            What's Coming Next
           </h3>
-          <p className="text-lg text-foreground mb-2">We'll help you figure it out.</p>
-          <p className="text-muted-foreground mb-8 max-w-lg mx-auto">
-            Start with a free discovery call — we'll audit your brand, content, and growth gaps before recommending anything.
+          <p className="text-muted-foreground mb-2">
+            We're currently focused on content, performance, and growth systems.
           </p>
-          <p className="text-muted-foreground italic">
-            👉 No pressure. No fluff. Just clarity.
+          <p className="text-foreground font-medium">
+            Advanced website and conversion-focused builds will be introduced soon.
           </p>
         </motion.div>
       </div>
