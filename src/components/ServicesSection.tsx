@@ -88,85 +88,95 @@ const ServicesSection = () => {
           </p>
         </motion.div>
 
-        {/* How We Work - Framework */}
-        <motion.div
-          initial={{ opacity: 0, y: 30 }}
-          whileInView={{ opacity: 1, y: 0 }}
-          viewport={{ once: true }}
-          transition={{ duration: 0.6 }}
-          className="mb-20"
-        >
-          <div className="text-center mb-10">
-            <span className="inline-block px-4 py-1.5 rounded-full text-xs font-medium bg-foreground/10 text-foreground border border-foreground/20 mb-4">
-              ⚙️ How We Work
-            </span>
-            <h3 className="font-display text-2xl md:text-3xl font-medium">
-              Our internal growth framework
-            </h3>
-          </div>
+        {/* How We Work */}
+        <div className="text-center mb-10">
+          <span className="inline-block px-4 py-1.5 rounded-full text-xs font-medium bg-foreground/10 text-foreground border border-foreground/20 mb-4">
+            ⚙️ How We Work
+          </span>
+        </div>
 
-          <div className="grid md:grid-cols-2 gap-6">
-            {/* Hydro Strategy */}
-            <motion.div
-              initial={{ opacity: 0, x: -20 }}
-              whileInView={{ opacity: 1, x: 0 }}
-              viewport={{ once: true }}
-              transition={{ duration: 0.5 }}
-              className="glass-card p-6 md:p-8 bg-gradient-to-br from-hydro/5 to-transparent"
-            >
-              <div className="flex items-center gap-3 mb-2">
-                <span className="text-3xl">💧</span>
-                <h4 className="font-display text-xl md:text-2xl font-medium">Hydro Strategy</h4>
+        <div className="grid md:grid-cols-2 gap-6 mb-20">
+          {/* Hydro Strategy */}
+          <motion.div
+            initial={{ opacity: 0, y: 30 }}
+            whileInView={{ opacity: 1, y: 0 }}
+            viewport={{ once: true }}
+            transition={{ duration: 0.5 }}
+            className="relative overflow-hidden rounded-2xl border border-hydro/20"
+          >
+            {/* Top accent bar */}
+            <div className="h-1.5 w-full bg-gradient-to-r from-hydro to-hydro/40" />
+            <div className="p-6 md:p-8">
+              <div className="flex items-center gap-4 mb-5">
+                <div className="w-14 h-14 rounded-xl bg-hydro/10 border border-hydro/20 flex items-center justify-center text-2xl">
+                  💧
+                </div>
+                <div>
+                  <h4 className="font-display text-xl md:text-2xl font-medium">Hydro Strategy</h4>
+                  <p className="text-hydro text-sm font-medium">The thinking layer behind everything</p>
+                </div>
               </div>
-              <p className="text-hydro font-medium text-sm italic mb-4">The thinking layer behind everything</p>
-              <p className="text-muted-foreground text-sm mb-5">
+
+              <p className="text-muted-foreground text-sm leading-relaxed mb-6">
                 Before execution, we define what to do, where to focus, and why it matters.
               </p>
-              <h5 className="text-xs uppercase tracking-wider text-foreground/70 mb-3 font-medium">Our strategy approach includes</h5>
-              <ul className="space-y-1.5 mb-6">
-                {['Brand & market analysis', 'Audience & competitor research', 'Platform-specific growth planning', 'Funnel & lead journey mapping', 'Performance benchmarks & KPIs'].map((item, i) => (
-                  <li key={i} className="text-sm text-muted-foreground flex items-start gap-2">
-                    <span className="text-hydro mt-1">•</span>{item}
-                  </li>
-                ))}
-              </ul>
-              <div className="p-3 rounded-lg bg-hydro/5 border border-hydro/10">
-                <p className="text-xs uppercase tracking-wider text-foreground/70 mb-1 font-medium">Why it matters</p>
-                <p className="text-sm text-foreground/90">Strategy prevents wasted effort and ensures every action drives a business outcome.</p>
-              </div>
-            </motion.div>
 
-            {/* Blaze Creative */}
-            <motion.div
-              initial={{ opacity: 0, x: 20 }}
-              whileInView={{ opacity: 1, x: 0 }}
-              viewport={{ once: true }}
-              transition={{ duration: 0.5 }}
-              className="glass-card p-6 md:p-8 bg-gradient-to-br from-blaze/5 to-transparent"
-            >
-              <div className="flex items-center gap-3 mb-2">
-                <span className="text-3xl">🔥</span>
-                <h4 className="font-display text-xl md:text-2xl font-medium">Blaze Creative</h4>
+              <div className="space-y-3 mb-6">
+                {['Brand & market analysis', 'Audience & competitor research', 'Platform-specific growth planning', 'Funnel & lead journey mapping', 'Performance benchmarks & KPIs'].map((item, i) => (
+                  <div key={i} className="flex items-center gap-3 text-sm">
+                    <div className="w-1.5 h-1.5 rounded-full bg-hydro flex-shrink-0" />
+                    <span className="text-foreground/80">{item}</span>
+                  </div>
+                ))}
               </div>
-              <p className="text-blaze font-medium text-sm italic mb-4">The execution engine</p>
-              <p className="text-muted-foreground text-sm mb-5">
+
+              <div className="rounded-xl bg-hydro/5 border border-hydro/10 p-4">
+                <p className="text-xs uppercase tracking-wider text-hydro mb-1 font-semibold">Why it matters</p>
+                <p className="text-sm text-foreground/80">Strategy prevents wasted effort and ensures every action drives a business outcome.</p>
+              </div>
+            </div>
+          </motion.div>
+
+          {/* Blaze Creative */}
+          <motion.div
+            initial={{ opacity: 0, y: 30 }}
+            whileInView={{ opacity: 1, y: 0 }}
+            viewport={{ once: true }}
+            transition={{ duration: 0.5, delay: 0.1 }}
+            className="relative overflow-hidden rounded-2xl border border-blaze/20"
+          >
+            <div className="h-1.5 w-full bg-gradient-to-r from-blaze to-blaze/40" />
+            <div className="p-6 md:p-8">
+              <div className="flex items-center gap-4 mb-5">
+                <div className="w-14 h-14 rounded-xl bg-blaze/10 border border-blaze/20 flex items-center justify-center text-2xl">
+                  🔥
+                </div>
+                <div>
+                  <h4 className="font-display text-xl md:text-2xl font-medium">Blaze Creative</h4>
+                  <p className="text-blaze text-sm font-medium">The execution engine</p>
+                </div>
+              </div>
+
+              <p className="text-muted-foreground text-sm leading-relaxed mb-6">
                 Once strategy is clear, we turn insights into content that performs.
               </p>
-              <h5 className="text-xs uppercase tracking-wider text-foreground/70 mb-3 font-medium">Our creative approach includes</h5>
-              <ul className="space-y-1.5 mb-6">
+
+              <div className="space-y-3 mb-6">
                 {['Scroll-stopping visual concepts', 'Platform-native content formats', 'Performance-driven ad creatives', 'Brand-consistent visual systems', 'Continuous creative optimisation'].map((item, i) => (
-                  <li key={i} className="text-sm text-muted-foreground flex items-start gap-2">
-                    <span className="text-blaze mt-1">•</span>{item}
-                  </li>
+                  <div key={i} className="flex items-center gap-3 text-sm">
+                    <div className="w-1.5 h-1.5 rounded-full bg-blaze flex-shrink-0" />
+                    <span className="text-foreground/80">{item}</span>
+                  </div>
                 ))}
-              </ul>
-              <div className="p-3 rounded-lg bg-blaze/5 border border-blaze/10">
-                <p className="text-xs uppercase tracking-wider text-foreground/70 mb-1 font-medium">Why it matters</p>
-                <p className="text-sm text-foreground/90">Great creative is what captures attention and converts it into action.</p>
               </div>
-            </motion.div>
-          </div>
-        </motion.div>
+
+              <div className="rounded-xl bg-blaze/5 border border-blaze/10 p-4">
+                <p className="text-xs uppercase tracking-wider text-blaze mb-1 font-semibold">Why it matters</p>
+                <p className="text-sm text-foreground/80">Great creative is what captures attention and converts it into action.</p>
+              </div>
+            </div>
+          </motion.div>
+        </div>
 
         {/* Core Services header */}
         <motion.div
