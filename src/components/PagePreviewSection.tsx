@@ -64,10 +64,10 @@ const PagePreviewSection = () => {
                 🚀 Services
               </span>
               <h2 className="font-display text-3xl md:text-4xl font-bold mb-4">
-                Three Elements. <span className="text-gradient">One Growth Engine.</span>
+                Powered by Strategy. <span className="text-gradient">Executed with Creative Precision.</span>
               </h2>
               <p className="text-muted-foreground mb-6">
-                Strategy, Creative, and Tech that work together seamlessly. We build systems that attract, convert, and scale—so your brand doesn't just grow, it dominates.
+                Every service follows our Hydro Strategy + Blaze Creative framework — ensuring consistency, performance, and scalable results across all engagements.
               </p>
               <Link
                 to="/services"
