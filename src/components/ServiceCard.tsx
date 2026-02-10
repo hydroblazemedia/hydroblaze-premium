@@ -1,28 +1,26 @@
 import { motion } from 'framer-motion';
 import { useRef, useState } from 'react';
-import type { LucideIcon } from 'lucide-react';
 
 interface ServiceCardProps {
-  Icon: LucideIcon;
+  icon: string;
   title: string;
   tagline: string;
   description: string;
   includes: string[];
   index: number;
-  color: 'hydro' | 'blaze';
 }
 
 const ServiceCard = ({ 
-  Icon, 
+  icon, 
   title, 
   tagline, 
   description, 
   includes, 
-  index,
-  color,
+  index 
 }: ServiceCardProps) => {
   const cardRef = useRef<HTMLDivElement>(null);
   const [mousePosition, setMousePosition] = useState({ x: 0, y: 0 });
+  const [isHovered, setIsHovered] = useState(false);
 
   const handleMouseMove = (e: React.MouseEvent) => {
     if (!cardRef.current) return;
@@ -34,7 +32,6 @@ const ServiceCard = ({
   };
 
   const cardNumber = String(index + 1).padStart(2, '0');
-  const isHydro = color === 'hydro';
 
   return (
     <motion.div
@@ -44,15 +41,18 @@ const ServiceCard = ({
       viewport={{ once: true, margin: '-80px' }}
       transition={{ duration: 0.7, delay: index * 0.15, ease: [0.22, 1, 0.36, 1] }}
       onMouseMove={handleMouseMove}
+      onMouseEnter={() => setIsHovered(true)}
+      onMouseLeave={() => setIsHovered(false)}
       className="relative group rounded-2xl overflow-hidden h-full"
     >
       {/* Animated border glow */}
       <div 
         className="absolute inset-0 rounded-2xl opacity-0 group-hover:opacity-100 transition-opacity duration-700 -z-0"
         style={{
-          background: isHydro
-            ? `conic-gradient(from 180deg at 50% 50%, hsl(var(--hydro) / 0.4), hsl(var(--hydro) / 0.1), hsl(var(--hydro) / 0.4))`
-            : `conic-gradient(from 180deg at 50% 50%, hsl(var(--blaze) / 0.4), hsl(var(--blaze) / 0.1), hsl(var(--blaze) / 0.4))`,
+          background: `conic-gradient(from 180deg at 50% 50%, 
+            hsl(var(--hydro) / 0.4), 
+            hsl(var(--blaze) / 0.4), 
+            hsl(var(--hydro) / 0.4))`,
           padding: '1px',
         }}
       />
@@ -64,27 +64,27 @@ const ServiceCard = ({
           className="absolute inset-0 rounded-2xl opacity-0 group-hover:opacity-100 transition-opacity duration-500 pointer-events-none"
           style={{
             background: `radial-gradient(500px circle at ${mousePosition.x}px ${mousePosition.y}px, 
-              hsl(var(--${color}) / 0.08), 
+              hsl(var(--hydro) / 0.08), 
               transparent 50%)`
           }}
         />
 
         {/* Top gradient line */}
-        <div className={`h-[2px] w-full bg-gradient-to-r from-transparent ${isHydro ? 'via-hydro/50' : 'via-blaze/50'} to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-500`} />
+        <div className="h-[2px] w-full bg-gradient-to-r from-transparent via-hydro/50 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-500" />
 
         <div className="relative z-10 p-7 md:p-9 flex-1 flex flex-col">
           {/* Header with number badge */}
           <div className="flex items-start justify-between mb-5">
             <div className="flex items-center gap-4">
               <motion.div 
-                className={`w-14 h-14 rounded-2xl ${isHydro ? 'bg-gradient-to-br from-hydro/15 to-hydro/5 border-hydro/20' : 'bg-gradient-to-br from-blaze/15 to-blaze/5 border-blaze/20'} border flex items-center justify-center`}
+                className="w-14 h-14 rounded-2xl bg-gradient-to-br from-hydro/15 to-blaze/10 border border-white/10 flex items-center justify-center text-2xl"
                 whileHover={{ rotate: [0, -10, 10, 0], transition: { duration: 0.5 } }}
               >
-                <Icon className={`w-6 h-6 ${isHydro ? 'text-hydro' : 'text-blaze'}`} />
+                {icon}
               </motion.div>
               <div>
                 <h3 className="font-display text-xl md:text-2xl font-semibold tracking-tight">{title}</h3>
-                <p className={`${isHydro ? 'text-hydro' : 'text-blaze'} font-medium text-sm mt-0.5`}>{tagline}</p>
+                <p className="text-hydro font-medium text-sm mt-0.5">{tagline}</p>
               </div>
             </div>
             <span className="font-display text-3xl font-bold text-foreground/[0.06] select-none leading-none">
@@ -107,8 +107,8 @@ const ServiceCard = ({
                   transition={{ duration: 0.4, delay: index * 0.1 + i * 0.05 }}
                   className="flex items-center gap-3 text-sm group/item"
                 >
-                  <div className={`w-5 h-5 rounded-md ${isHydro ? 'bg-hydro/10 border-hydro/20 group-hover/item:bg-hydro/20' : 'bg-blaze/10 border-blaze/20 group-hover/item:bg-blaze/20'} border flex items-center justify-center flex-shrink-0 transition-colors`}>
-                    <div className={`w-1.5 h-1.5 rounded-full ${isHydro ? 'bg-hydro' : 'bg-blaze'}`} />
+                  <div className="w-5 h-5 rounded-md bg-hydro/10 border border-hydro/20 flex items-center justify-center flex-shrink-0 group-hover/item:bg-hydro/20 transition-colors">
+                    <div className="w-1.5 h-1.5 rounded-full bg-hydro" />
                   </div>
                   <span className="text-foreground/70 group-hover/item:text-foreground/90 transition-colors">{item}</span>
                 </motion.div>
