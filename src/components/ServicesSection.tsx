@@ -1,17 +1,21 @@
 import { motion, useScroll, useTransform } from 'framer-motion';
-import { ArrowRight, Sparkles } from 'lucide-react';
+import { ArrowRight, Sparkles, Target, ClipboardList, Zap, Sprout, Handshake, Rocket, Settings } from 'lucide-react';
 import { Link } from 'react-router-dom';
 import { useRef } from 'react';
 import ServiceCard from './ServiceCard';
 import hydroLogo from '@/assets/hydro-logo.png';
 import blazeLogo from '@/assets/blaze-logo.png';
 
+import { Smartphone, Camera, TrendingUp, Palette } from 'lucide-react';
+import type { LucideIcon } from 'lucide-react';
+
 const coreServices = [
   {
-    icon: '📱',
+    Icon: Smartphone,
     title: 'Social Media Management',
     tagline: 'Consistent presence. Structured execution.',
     description: 'End-to-end management of your social platforms — from planning to publishing.',
+    color: 'hydro' as const,
     includes: [
       'Content planning & monthly calendars',
       'Scheduling & posting',
@@ -21,10 +25,11 @@ const coreServices = [
     ],
   },
   {
-    icon: '📸',
+    Icon: Camera,
     title: 'Content Production',
     tagline: 'High-quality shoots built for digital performance',
     description: 'We produce on-ground content designed specifically for reels, ads, and scalable content libraries.',
+    color: 'blaze' as const,
     includes: [
       'Photo & video shoots',
       'Reel-first shooting approach',
@@ -34,10 +39,11 @@ const coreServices = [
     ],
   },
   {
-    icon: '📈',
+    Icon: TrendingUp,
     title: 'Performance Marketing',
     tagline: 'Paid growth with control & accountability',
     description: 'We manage ad campaigns with structured testing and optimisation.',
+    color: 'hydro' as const,
     includes: [
       'Meta ads strategy & setup',
       'Audience & creative testing',
@@ -47,10 +53,11 @@ const coreServices = [
     ],
   },
   {
-    icon: '🎨',
+    Icon: Palette,
     title: 'Branding & Creatives',
     tagline: 'Build a brand that looks professional and credible',
     description: 'We design brand assets that create consistency and trust across all touchpoints.',
+    color: 'blaze' as const,
     includes: [
       'Logo design',
       'Brand kits & visual guidelines',
@@ -62,10 +69,10 @@ const coreServices = [
 ];
 
 const whyClients = [
-  { label: 'Strategy-led execution', icon: '🎯' },
-  { label: 'Clear scopes & timelines', icon: '📋' },
-  { label: 'Performance-focused creatives', icon: '⚡' },
-  { label: 'Sustainable growth systems', icon: '🌱' },
+  { label: 'Strategy-led execution', Icon: Target },
+  { label: 'Clear scopes & timelines', Icon: ClipboardList },
+  { label: 'Performance-focused creatives', Icon: Zap },
+  { label: 'Sustainable growth systems', Icon: Sprout },
 ];
 
 const hydroItems = ['Brand & market analysis', 'Audience & competitor research', 'Platform-specific growth planning', 'Funnel & lead journey mapping', 'Performance benchmarks & KPIs'];
@@ -126,7 +133,7 @@ const ServicesSection = () => {
           className="text-center mb-12"
         >
           <span className="inline-flex items-center gap-2 px-5 py-2 rounded-full text-xs font-medium bg-foreground/5 text-foreground/80 border border-foreground/10">
-            ⚙️ How We Work
+            <Settings className="w-3.5 h-3.5" /> How We Work
           </span>
         </motion.div>
 
@@ -258,7 +265,7 @@ const ServicesSection = () => {
           className="text-center mb-12"
         >
           <span className="inline-flex items-center gap-2 px-5 py-2 rounded-full text-xs font-medium bg-blaze/10 text-blaze border border-blaze/20 mb-5">
-            🧩 What We Do
+            <Sparkles className="w-3.5 h-3.5" /> What We Do
           </span>
           <h3 className="font-display text-3xl md:text-4xl font-semibold tracking-tight">
             Our core service offerings
@@ -284,15 +291,15 @@ const ServicesSection = () => {
           <div className="absolute inset-0 bg-gradient-to-br from-hydro/10 via-transparent to-blaze/10 rounded-3xl" />
           <div className="relative bg-black/60 backdrop-blur-2xl border border-white/10 rounded-3xl p-10 md:p-14">
             <div className="text-center mb-10">
-              <motion.span
+              <motion.div
                 initial={{ opacity: 0, scale: 0 }}
                 whileInView={{ opacity: 1, scale: 1 }}
                 viewport={{ once: true }}
                 transition={{ type: 'spring', stiffness: 200, delay: 0.2 }}
-                className="text-4xl mb-4 block"
+                className="mb-4 block"
               >
-                🤝
-              </motion.span>
+                <Handshake className="w-10 h-10 text-hydro mx-auto" />
+              </motion.div>
               <h3 className="font-display text-3xl md:text-4xl font-semibold tracking-tight mb-3">
                 Why Clients Choose <span className="text-gradient">HydroBlaze</span>
               </h3>
@@ -310,13 +317,13 @@ const ServicesSection = () => {
                   whileHover={{ scale: 1.05, y: -5 }}
                   className="group text-center p-5 rounded-2xl border border-white/5 bg-white/[0.02] hover:bg-white/[0.06] hover:border-hydro/20 hover:shadow-[0_8px_30px_hsl(var(--hydro)/0.15)] transition-all duration-500 cursor-default"
                 >
-                  <motion.span 
-                    className="text-2xl mb-3 block"
+                  <motion.div 
+                    className="mb-3 block"
                     whileHover={{ scale: 1.2, rotate: [0, -10, 10, 0] }}
                     transition={{ duration: 0.4 }}
                   >
-                    {item.icon}
-                  </motion.span>
+                    <item.Icon className="w-6 h-6 text-hydro mx-auto" />
+                  </motion.div>
                   <span className="text-foreground/90 font-medium text-sm leading-tight block group-hover:text-foreground transition-colors">{item.label}</span>
                 </motion.div>
               ))}
@@ -343,9 +350,9 @@ const ServicesSection = () => {
               whileInView={{ scale: 1 }}
               viewport={{ once: true }}
               transition={{ type: 'spring', stiffness: 200, delay: 0.3 }}
-              className="w-16 h-16 rounded-2xl bg-gradient-to-br from-hydro/20 to-blaze/20 border border-white/10 flex items-center justify-center text-3xl mx-auto mb-6"
+              className="w-16 h-16 rounded-2xl bg-gradient-to-br from-hydro/20 to-blaze/20 border border-white/10 flex items-center justify-center mx-auto mb-6"
             >
-              🚀
+              <Rocket className="w-8 h-8 text-foreground" />
             </motion.div>
             <h3 className="font-display text-3xl md:text-4xl font-semibold tracking-tight mb-4">
               Not Sure Where to Start?
