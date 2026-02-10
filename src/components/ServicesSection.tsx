@@ -126,7 +126,7 @@ const ServicesSection = () => {
           className="text-center mb-12"
         >
           <span className="inline-flex items-center gap-2 px-5 py-2 rounded-full text-xs font-medium bg-foreground/5 text-foreground/80 border border-foreground/10">
-            ⚙️ How We Work
+             How We Work
           </span>
         </motion.div>
 
@@ -258,7 +258,7 @@ const ServicesSection = () => {
           className="text-center mb-12"
         >
           <span className="inline-flex items-center gap-2 px-5 py-2 rounded-full text-xs font-medium bg-blaze/10 text-blaze border border-blaze/20 mb-5">
-            🧩 What We Do
+             What We Do
           </span>
           <h3 className="font-display text-3xl md:text-4xl font-semibold tracking-tight">
             Our core service offerings
