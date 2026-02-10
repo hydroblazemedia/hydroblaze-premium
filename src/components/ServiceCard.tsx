@@ -43,7 +43,7 @@ const ServiceCard = ({
       onMouseMove={handleMouseMove}
       onMouseEnter={() => setIsHovered(true)}
       onMouseLeave={() => setIsHovered(false)}
-      className="relative group rounded-2xl overflow-hidden"
+      className="relative group rounded-2xl overflow-hidden h-full"
     >
       {/* Animated border glow */}
       <div 
@@ -58,7 +58,7 @@ const ServiceCard = ({
       />
 
       {/* Card inner */}
-      <div className="relative bg-black/50 backdrop-blur-xl border border-white/10 rounded-2xl group-hover:border-white/5 transition-all duration-500">
+      <div className="relative bg-black/50 backdrop-blur-xl border border-white/10 rounded-2xl group-hover:border-white/5 transition-all duration-500 h-full flex flex-col">
         {/* Mouse-follow radial */}
         <div 
           className="absolute inset-0 rounded-2xl opacity-0 group-hover:opacity-100 transition-opacity duration-500 pointer-events-none"
@@ -72,7 +72,7 @@ const ServiceCard = ({
         {/* Top gradient line */}
         <div className="h-[2px] w-full bg-gradient-to-r from-transparent via-hydro/50 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-500" />
 
-        <div className="relative z-10 p-7 md:p-9">
+        <div className="relative z-10 p-7 md:p-9 flex-1 flex flex-col">
           {/* Header with number badge */}
           <div className="flex items-start justify-between mb-5">
             <div className="flex items-center gap-4">
@@ -95,7 +95,7 @@ const ServiceCard = ({
           <p className="text-muted-foreground text-sm leading-relaxed mb-7">{description}</p>
 
           {/* Includes with animated reveal */}
-          <div>
+          <div className="mt-auto">
             <h4 className="text-[10px] uppercase tracking-[0.2em] text-foreground/50 mb-4 font-semibold">What's included</h4>
             <div className="space-y-2.5">
               {includes.map((item, i) => (
