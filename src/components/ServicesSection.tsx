@@ -305,10 +305,17 @@ const ServicesSection = () => {
                   whileInView={{ opacity: 1, y: 0 }}
                   viewport={{ once: true }}
                   transition={{ duration: 0.5, delay: i * 0.1 }}
-                  className="group text-center p-5 rounded-2xl border border-white/5 bg-white/[0.02] hover:bg-white/[0.05] hover:border-white/10 transition-all duration-400"
+                  whileHover={{ scale: 1.05, y: -5 }}
+                  className="group text-center p-5 rounded-2xl border border-white/5 bg-white/[0.02] hover:bg-white/[0.06] hover:border-hydro/20 hover:shadow-[0_8px_30px_hsl(var(--hydro)/0.15)] transition-all duration-500 cursor-default"
                 >
-                  <span className="text-2xl mb-3 block">{item.icon}</span>
-                  <span className="text-foreground/90 font-medium text-sm leading-tight block">{item.label}</span>
+                  <motion.span 
+                    className="text-2xl mb-3 block"
+                    whileHover={{ scale: 1.2, rotate: [0, -10, 10, 0] }}
+                    transition={{ duration: 0.4 }}
+                  >
+                    {item.icon}
+                  </motion.span>
+                  <span className="text-foreground/90 font-medium text-sm leading-tight block group-hover:text-foreground transition-colors">{item.label}</span>
                 </motion.div>
               ))}
             </div>
