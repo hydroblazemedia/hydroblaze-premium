@@ -3,6 +3,8 @@ import { ArrowRight, Sparkles } from 'lucide-react';
 import { Link } from 'react-router-dom';
 import { useRef } from 'react';
 import ServiceCard from './ServiceCard';
+import hydroLogo from '@/assets/hydro-logo.png';
+import blazeLogo from '@/assets/blaze-logo.png';
 
 const coreServices = [
   {
@@ -147,11 +149,11 @@ const ServicesSection = () => {
             <div className="relative p-7 md:p-9">
               <div className="flex items-center gap-4 mb-6">
                 <motion.div 
-                  className="w-16 h-16 rounded-2xl bg-hydro/10 border border-hydro/20 flex items-center justify-center text-3xl"
+                  className="w-16 h-16 rounded-2xl bg-hydro/10 border border-hydro/20 flex items-center justify-center overflow-hidden"
                   whileHover={{ scale: 1.1, rotate: 5 }}
                   transition={{ type: 'spring', stiffness: 300 }}
                 >
-                  💧
+                  <img src={hydroLogo} alt="Hydro Strategy" className="w-12 h-12 object-contain" />
                 </motion.div>
                 <div>
                   <h4 className="font-display text-2xl md:text-3xl font-semibold tracking-tight">Hydro Strategy</h4>
@@ -205,11 +207,11 @@ const ServicesSection = () => {
             <div className="relative p-7 md:p-9">
               <div className="flex items-center gap-4 mb-6">
                 <motion.div 
-                  className="w-16 h-16 rounded-2xl bg-blaze/10 border border-blaze/20 flex items-center justify-center text-3xl"
+                  className="w-16 h-16 rounded-2xl bg-blaze/10 border border-blaze/20 flex items-center justify-center overflow-hidden"
                   whileHover={{ scale: 1.1, rotate: -5 }}
                   transition={{ type: 'spring', stiffness: 300 }}
                 >
-                  🔥
+                  <img src={blazeLogo} alt="Blaze Creative" className="w-12 h-12 object-contain" />
                 </motion.div>
                 <div>
                   <h4 className="font-display text-2xl md:text-3xl font-semibold tracking-tight">Blaze Creative</h4>
