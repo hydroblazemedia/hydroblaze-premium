@@ -141,7 +141,7 @@ const PricingSection = () => {
                 </div>
                 <span className="text-hydro font-bold">₹18,000+</span>
               </div>
-              <p className="text-xs text-muted-foreground mt-4">📌 Travel charges extra if outside city</p>
+              <p className="text-xs text-muted-foreground mt-4">Travel charges extra if outside city</p>
             </div>
           </motion.div>
 
@@ -258,7 +258,7 @@ const PricingSection = () => {
         >
           <div className="flex items-center gap-3 mb-4">
             <Zap className="w-6 h-6 text-blaze" />
-            <h3 className="font-display text-xl md:text-2xl">💡 Recommended Combo</h3>
+            <h3 className="font-display text-xl md:text-2xl">Recommended Combo</h3>
           </div>
           <div className="flex flex-col md:flex-row md:items-center md:justify-between gap-6">
             <div>
@@ -274,7 +274,7 @@ const PricingSection = () => {
               </ul>
             </div>
             <div className="text-right">
-              <p className="text-sm text-muted-foreground mb-2">👉 This is your sweet spot retainer</p>
+              <p className="text-sm text-muted-foreground mb-2">This is your sweet spot retainer</p>
               <a href="#contact" className="btn-primary inline-block">Get Started</a>
             </div>
           </div>
