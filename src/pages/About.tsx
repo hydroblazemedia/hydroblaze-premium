@@ -4,9 +4,10 @@ import Footer from '@/components/Footer';
 
 const About = () => {
   const team = [
-    { name: 'Alex Rivera', role: 'Founder & Strategy Lead', emoji: '🔥' },
-    { name: 'Jordan Chen', role: 'Creative Director', emoji: '💧' },
-    { name: 'Sam Williams', role: 'Tech Lead', emoji: '⚙️' },
+    { name: 'Vikas K S', role: 'Founder & Strategy Lead', emoji: '🔥' },
+    { name: 'Sree Thilak', role: 'Creative Director', emoji: '💧' },
+    { name: 'Umme Kulsum', role: 'Tech Lead', emoji: '⚙️' },
+    { name: 'Nagdeep', role: 'Marketing Lead', emoji: '🎯' },
   ];
 
   const values = [
@@ -115,7 +116,7 @@ const About = () => {
               <h2 className="font-display text-3xl md:text-4xl font-bold text-center mb-12">
                 Meet the <span className="text-gradient-blaze">Team</span>
               </h2>
-              <div className="grid sm:grid-cols-3 gap-8">
+              <div className="grid sm:grid-cols-2 lg:grid-cols-4 gap-8">
                 {team.map((member, index) => (
                   <motion.div
                     key={member.name}
