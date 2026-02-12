@@ -1,8 +1,10 @@
 import { motion } from 'framer-motion';
 import { useRef, useState } from 'react';
+import { LucideIcon } from 'lucide-react';
 
 interface ServiceCardProps {
   icon: string;
+  lucideIcon?: LucideIcon;
   title: string;
   tagline: string;
   description: string;
@@ -12,6 +14,7 @@ interface ServiceCardProps {
 
 const ServiceCard = ({ 
   icon, 
+  lucideIcon: LucideIconComp,
   title, 
   tagline, 
   description, 
@@ -77,10 +80,14 @@ const ServiceCard = ({
           <div className="flex items-start justify-between mb-5">
             <div className="flex items-center gap-4">
               <motion.div 
-                className="w-14 h-14 rounded-2xl bg-gradient-to-br from-hydro/15 to-blaze/10 border border-white/10 flex items-center justify-center text-2xl"
+                className="w-14 h-14 rounded-2xl bg-gradient-to-br from-hydro/15 to-blaze/10 border border-white/10 flex items-center justify-center"
                 whileHover={{ rotate: [0, -10, 10, 0], transition: { duration: 0.5 } }}
               >
-                {icon}
+                {LucideIconComp ? (
+                  <LucideIconComp className="w-7 h-7 text-hydro" />
+                ) : (
+                  <span className="text-2xl">{icon}</span>
+                )}
               </motion.div>
               <div>
                 <h3 className="font-display text-xl md:text-2xl font-semibold tracking-tight">{title}</h3>

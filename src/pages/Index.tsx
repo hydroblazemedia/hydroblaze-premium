@@ -2,6 +2,7 @@ import { useState } from 'react';
 import Preloader from '@/components/Preloader';
 import Navbar from '@/components/Navbar';
 import Hero from '@/components/Hero';
+import StatsCounter from '@/components/StatsCounter';
 import PagePreviewSection from '@/components/PagePreviewSection';
 import Footer from '@/components/Footer';
 
@@ -14,14 +15,12 @@ const Index = () => {
       
       {isLoaded && (
         <>
-          {/* Noise overlay */}
           <div className="noise-overlay" />
-          
-          {/* Main content */}
           <Navbar />
           
           <main>
             <Hero />
+            <StatsCounter />
             <PagePreviewSection />
             <Footer />
           </main>

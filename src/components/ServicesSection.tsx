@@ -1,5 +1,5 @@
 import { motion, useScroll, useTransform } from 'framer-motion';
-import { ArrowRight, Sparkles } from 'lucide-react';
+import { ArrowRight, Sparkles, Smartphone, Camera, TrendingUp, Palette, Target, ClipboardList, Zap, Sprout, Handshake, Rocket } from 'lucide-react';
 import { Link } from 'react-router-dom';
 import { useRef } from 'react';
 import ServiceCard from './ServiceCard';
@@ -9,6 +9,7 @@ import blazeLogo from '@/assets/blaze-logo.png';
 const coreServices = [
   {
     icon: '📱',
+    lucideIcon: Smartphone,
     title: 'Social Media Management',
     tagline: 'Consistent presence. Structured execution.',
     description: 'End-to-end management of your social platforms — from planning to publishing.',
@@ -22,6 +23,7 @@ const coreServices = [
   },
   {
     icon: '📸',
+    lucideIcon: Camera,
     title: 'Content Production',
     tagline: 'High-quality shoots built for digital performance',
     description: 'We produce on-ground content designed specifically for reels, ads, and scalable content libraries.',
@@ -35,6 +37,7 @@ const coreServices = [
   },
   {
     icon: '📈',
+    lucideIcon: TrendingUp,
     title: 'Performance Marketing',
     tagline: 'Paid growth with control & accountability',
     description: 'We manage ad campaigns with structured testing and optimisation.',
@@ -48,6 +51,7 @@ const coreServices = [
   },
   {
     icon: '🎨',
+    lucideIcon: Palette,
     title: 'Branding & Creatives',
     tagline: 'Build a brand that looks professional and credible',
     description: 'We design brand assets that create consistency and trust across all touchpoints.',
@@ -62,10 +66,10 @@ const coreServices = [
 ];
 
 const whyClients = [
-  { label: 'Strategy-led execution', icon: '🎯' },
-  { label: 'Clear scopes & timelines', icon: '📋' },
-  { label: 'Performance-focused creatives', icon: '⚡' },
-  { label: 'Sustainable growth systems', icon: '🌱' },
+  { label: 'Strategy-led execution', icon: Target },
+  { label: 'Clear scopes & timelines', icon: ClipboardList },
+  { label: 'Performance-focused creatives', icon: Zap },
+  { label: 'Sustainable growth systems', icon: Sprout },
 ];
 
 const hydroItems = ['Brand & market analysis', 'Audience & competitor research', 'Platform-specific growth planning', 'Funnel & lead journey mapping', 'Performance benchmarks & KPIs'];
@@ -140,12 +144,9 @@ const ServicesSection = () => {
             className="relative group overflow-hidden rounded-2xl border border-hydro/20 bg-gradient-to-b from-hydro/[0.03] to-transparent hover:border-hydro/40 transition-all duration-500"
           >
             <div className="h-1 w-full bg-gradient-to-r from-hydro via-hydro-glow to-hydro/20" />
-            
-            {/* Hover glow */}
             <div className="absolute top-0 left-0 w-full h-full opacity-0 group-hover:opacity-100 transition-opacity duration-700 pointer-events-none">
               <div className="absolute top-0 left-1/2 -translate-x-1/2 w-2/3 h-32 bg-hydro/10 blur-3xl" />
             </div>
-
             <div className="relative p-7 md:p-9">
               <div className="flex items-center gap-4 mb-6">
                 <motion.div 
@@ -160,21 +161,12 @@ const ServicesSection = () => {
                   <p className="text-hydro text-sm font-medium mt-0.5">The thinking layer behind everything</p>
                 </div>
               </div>
-
               <p className="text-muted-foreground text-sm leading-relaxed mb-7">
                 Before execution, we define what to do, where to focus, and why it matters.
               </p>
-
               <div className="space-y-3 mb-7">
                 {hydroItems.map((item, i) => (
-                  <motion.div
-                    key={i}
-                    initial={{ opacity: 0, x: -15 }}
-                    whileInView={{ opacity: 1, x: 0 }}
-                    viewport={{ once: true }}
-                    transition={{ duration: 0.4, delay: i * 0.07 }}
-                    className="flex items-center gap-3 text-sm"
-                  >
+                  <motion.div key={i} initial={{ opacity: 0, x: -15 }} whileInView={{ opacity: 1, x: 0 }} viewport={{ once: true }} transition={{ duration: 0.4, delay: i * 0.07 }} className="flex items-center gap-3 text-sm">
                     <div className="w-6 h-6 rounded-lg bg-hydro/10 border border-hydro/15 flex items-center justify-center flex-shrink-0">
                       <div className="w-1.5 h-1.5 rounded-full bg-hydro" />
                     </div>
@@ -182,7 +174,6 @@ const ServicesSection = () => {
                   </motion.div>
                 ))}
               </div>
-
               <div className="rounded-xl bg-hydro/5 border border-hydro/15 p-5">
                 <p className="text-[10px] uppercase tracking-[0.2em] text-hydro mb-1.5 font-bold">Why it matters</p>
                 <p className="text-sm text-foreground/70 leading-relaxed">Strategy prevents wasted effort and ensures every action drives a business outcome.</p>
@@ -199,11 +190,9 @@ const ServicesSection = () => {
             className="relative group overflow-hidden rounded-2xl border border-blaze/20 bg-gradient-to-b from-blaze/[0.03] to-transparent hover:border-blaze/40 transition-all duration-500"
           >
             <div className="h-1 w-full bg-gradient-to-r from-blaze via-blaze-glow to-blaze/20" />
-            
             <div className="absolute top-0 left-0 w-full h-full opacity-0 group-hover:opacity-100 transition-opacity duration-700 pointer-events-none">
               <div className="absolute top-0 left-1/2 -translate-x-1/2 w-2/3 h-32 bg-blaze/10 blur-3xl" />
             </div>
-
             <div className="relative p-7 md:p-9">
               <div className="flex items-center gap-4 mb-6">
                 <motion.div 
@@ -218,21 +207,12 @@ const ServicesSection = () => {
                   <p className="text-blaze text-sm font-medium mt-0.5">The execution engine</p>
                 </div>
               </div>
-
               <p className="text-muted-foreground text-sm leading-relaxed mb-7">
                 Once strategy is clear, we turn insights into content that performs.
               </p>
-
               <div className="space-y-3 mb-7">
                 {blazeItems.map((item, i) => (
-                  <motion.div
-                    key={i}
-                    initial={{ opacity: 0, x: -15 }}
-                    whileInView={{ opacity: 1, x: 0 }}
-                    viewport={{ once: true }}
-                    transition={{ duration: 0.4, delay: i * 0.07 }}
-                    className="flex items-center gap-3 text-sm"
-                  >
+                  <motion.div key={i} initial={{ opacity: 0, x: -15 }} whileInView={{ opacity: 1, x: 0 }} viewport={{ once: true }} transition={{ duration: 0.4, delay: i * 0.07 }} className="flex items-center gap-3 text-sm">
                     <div className="w-6 h-6 rounded-lg bg-blaze/10 border border-blaze/15 flex items-center justify-center flex-shrink-0">
                       <div className="w-1.5 h-1.5 rounded-full bg-blaze" />
                     </div>
@@ -240,7 +220,6 @@ const ServicesSection = () => {
                   </motion.div>
                 ))}
               </div>
-
               <div className="rounded-xl bg-blaze/5 border border-blaze/15 p-5">
                 <p className="text-[10px] uppercase tracking-[0.2em] text-blaze mb-1.5 font-bold">Why it matters</p>
                 <p className="text-sm text-foreground/70 leading-relaxed">Great creative is what captures attention and converts it into action.</p>
@@ -280,19 +259,18 @@ const ServicesSection = () => {
           transition={{ duration: 0.7 }}
           className="relative rounded-3xl overflow-hidden mb-12"
         >
-          {/* Background with gradient border effect */}
           <div className="absolute inset-0 bg-gradient-to-br from-hydro/10 via-transparent to-blaze/10 rounded-3xl" />
           <div className="relative bg-black/60 backdrop-blur-2xl border border-white/10 rounded-3xl p-10 md:p-14">
             <div className="text-center mb-10">
-              <motion.span
+              <motion.div
                 initial={{ opacity: 0, scale: 0 }}
                 whileInView={{ opacity: 1, scale: 1 }}
                 viewport={{ once: true }}
                 transition={{ type: 'spring', stiffness: 200, delay: 0.2 }}
-                className="text-4xl mb-4 block"
+                className="w-14 h-14 rounded-2xl bg-gradient-to-br from-hydro/15 to-blaze/10 border border-white/10 flex items-center justify-center mx-auto mb-4"
               >
-                🤝
-              </motion.span>
+                <Handshake className="w-7 h-7 text-hydro" />
+              </motion.div>
               <h3 className="font-display text-3xl md:text-4xl font-semibold tracking-tight mb-3">
                 Why Clients Choose <span className="text-gradient">HydroBlaze</span>
               </h3>
@@ -310,13 +288,13 @@ const ServicesSection = () => {
                   whileHover={{ scale: 1.05, y: -5 }}
                   className="group text-center p-5 rounded-2xl border border-white/5 bg-white/[0.02] hover:bg-white/[0.06] hover:border-hydro/20 hover:shadow-[0_8px_30px_hsl(var(--hydro)/0.15)] transition-all duration-500 cursor-default"
                 >
-                  <motion.span 
-                    className="text-2xl mb-3 block"
+                  <motion.div 
+                    className="w-10 h-10 mx-auto mb-3 rounded-xl bg-hydro/10 border border-hydro/20 flex items-center justify-center"
                     whileHover={{ scale: 1.2, rotate: [0, -10, 10, 0] }}
                     transition={{ duration: 0.4 }}
                   >
-                    {item.icon}
-                  </motion.span>
+                    <item.icon className="w-5 h-5 text-hydro" />
+                  </motion.div>
                   <span className="text-foreground/90 font-medium text-sm leading-tight block group-hover:text-foreground transition-colors">{item.label}</span>
                 </motion.div>
               ))}
@@ -343,9 +321,9 @@ const ServicesSection = () => {
               whileInView={{ scale: 1 }}
               viewport={{ once: true }}
               transition={{ type: 'spring', stiffness: 200, delay: 0.3 }}
-              className="w-16 h-16 rounded-2xl bg-gradient-to-br from-hydro/20 to-blaze/20 border border-white/10 flex items-center justify-center text-3xl mx-auto mb-6"
+              className="w-16 h-16 rounded-2xl bg-gradient-to-br from-hydro/20 to-blaze/20 border border-white/10 flex items-center justify-center mx-auto mb-6"
             >
-              🚀
+              <Rocket className="w-8 h-8 text-blaze" />
             </motion.div>
             <h3 className="font-display text-3xl md:text-4xl font-semibold tracking-tight mb-4">
               Not Sure Where to Start?
