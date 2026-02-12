@@ -4,7 +4,7 @@ import Footer from '@/components/Footer';
 
 const About = () => {
   const team = [
-    { name: 'Vikas K S', role: 'Founder & Strategy Lead', emoji: '🔥' },
+    { name: 'Vikas K S', role: 'Strategy Lead', emoji: '🔥' },
     { name: 'Sree Thilak', role: 'Creative Director', emoji: '💧' },
     { name: 'Umme Kulsum', role: 'Tech Lead', emoji: '⚙️' },
     { name: 'Nagdeep', role: 'Marketing Lead', emoji: '🎯' },
