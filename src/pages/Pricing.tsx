@@ -1,6 +1,7 @@
 import Navbar from '@/components/Navbar';
 import PricingSection from '@/components/PricingSection';
 import ServiceComparison from '@/components/ServiceComparison';
+import ContactForm from '@/components/ContactForm';
 import Footer from '@/components/Footer';
 import PageTransition from '@/components/PageTransition';
 
@@ -16,6 +17,7 @@ const Pricing = () => {
             <ServiceComparison />
           </div>
         </section>
+        <ContactForm />
         <Footer />
       </main>
     </PageTransition>

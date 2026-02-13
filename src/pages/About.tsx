@@ -1,6 +1,7 @@
 import { motion } from 'framer-motion';
 import { BarChart3, Sparkles, Target, Search, Flame, Droplets, Settings, Crosshair } from 'lucide-react';
 import Navbar from '@/components/Navbar';
+import ContactForm from '@/components/ContactForm';
 import Footer from '@/components/Footer';
 import PageTransition from '@/components/PageTransition';
 
@@ -145,6 +146,7 @@ const About = () => {
           </div>
         </section>
 
+        <ContactForm />
         <Footer />
       </main>
     </PageTransition>
