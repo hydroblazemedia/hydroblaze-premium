@@ -1,10 +1,20 @@
 import { motion, useScroll, useTransform } from 'framer-motion';
 import { ArrowRight, Sparkles, Smartphone, Camera, TrendingUp, Palette, Target, ClipboardList, Zap, Sprout, Handshake, Rocket } from 'lucide-react';
-import { Link } from 'react-router-dom';
 import { useRef } from 'react';
+import { useContactDialog } from '@/components/ContactFormDialog';
 import ServiceCard from './ServiceCard';
 import hydroLogo from '@/assets/hydro-logo.png';
 import blazeLogo from '@/assets/blaze-logo.png';
+
+const DiscoveryCallButton = () => {
+  const { open } = useContactDialog();
+  return (
+    <button onClick={open} className="group inline-flex items-center gap-3 px-8 py-4 rounded-full text-sm font-semibold bg-gradient-to-r from-hydro to-blaze text-white hover:shadow-[0_0_40px_hsl(var(--hydro)/0.4)] transition-all duration-500 hover:scale-105">
+      Book a Discovery Call
+      <ArrowRight className="w-4 h-4 transition-transform group-hover:translate-x-1.5" />
+    </button>
+  );
+};
 
 const coreServices = [
   {
@@ -334,13 +344,7 @@ const ServicesSection = () => {
             <p className="text-foreground/80 font-medium mb-8 max-w-xl mx-auto">
               We'll audit your brand, content, and growth gaps — then recommend the right mix of services.
             </p>
-            <Link
-              to="/contact"
-              className="group inline-flex items-center gap-3 px-8 py-4 rounded-full text-sm font-semibold bg-gradient-to-r from-hydro to-blaze text-white hover:shadow-[0_0_40px_hsl(var(--hydro)/0.4)] transition-all duration-500 hover:scale-105"
-            >
-              Book a Discovery Call
-              <ArrowRight className="w-4 h-4 transition-transform group-hover:translate-x-1.5" />
-            </Link>
+            <DiscoveryCallButton />
           </div>
         </motion.div>
       </div>

@@ -3,6 +3,7 @@ import { motion, AnimatePresence } from 'framer-motion';
 import { Link, useLocation } from 'react-router-dom';
 import { Menu, X } from 'lucide-react';
 import logo from '@/assets/logo.png';
+import { useContactDialog } from '@/components/ContactFormDialog';
 
 const navLinks = [
   { path: '/services', label: 'Services' },
@@ -16,6 +17,7 @@ const Navbar = () => {
   const [isScrolled, setIsScrolled] = useState(false);
   const [isMobileOpen, setIsMobileOpen] = useState(false);
   const location = useLocation();
+  const { open: openContact } = useContactDialog();
 
   useEffect(() => {
     const handleScroll = () => setIsScrolled(window.scrollY > 50);
@@ -60,9 +62,9 @@ const Navbar = () => {
                 {link.label}
               </Link>
             ))}
-            <a href="#contact" className="hidden md:block group relative px-5 py-2.5 rounded-full text-sm border border-foreground/20 text-foreground transition-all duration-300 hover:border-blaze hover:shadow-[0_0_20px_hsl(var(--blaze)/0.4)]">
+            <button onClick={openContact} className="hidden md:block group relative px-5 py-2.5 rounded-full text-sm border border-foreground/20 text-foreground transition-all duration-300 hover:border-blaze hover:shadow-[0_0_20px_hsl(var(--blaze)/0.4)]">
               Start Project
-            </a>
+            </button>
 
             {/* Mobile hamburger */}
             <button
@@ -126,13 +128,12 @@ const Navbar = () => {
                 animate={{ opacity: 1, y: 0 }}
                 transition={{ duration: 0.4, delay: 0.5 }}
               >
-                <a
-                  href="#contact"
-                  onClick={() => setIsMobileOpen(false)}
+                <button
+                  onClick={() => { setIsMobileOpen(false); openContact(); }}
                   className="inline-block px-8 py-3 rounded-full text-sm font-semibold bg-gradient-to-r from-hydro to-blaze text-white hover:shadow-[0_0_30px_hsl(var(--hydro)/0.4)] transition-all duration-300"
                 >
                   Start Project
-                </a>
+                </button>
               </motion.div>
             </motion.div>
           </motion.div>

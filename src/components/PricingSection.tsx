@@ -1,5 +1,11 @@
 import { motion } from 'framer-motion';
 import { Check, X, Sparkles, Camera, Target, Palette, Globe, Zap } from 'lucide-react';
+import { useContactDialog } from '@/components/ContactFormDialog';
+
+const GetStartedButton = () => {
+  const { open } = useContactDialog();
+  return <button onClick={open} className="btn-primary inline-block">Get Started</button>;
+};
 
 const PricingSection = () => {
   return (
@@ -275,7 +281,7 @@ const PricingSection = () => {
             </div>
             <div className="text-right">
               <p className="text-sm text-muted-foreground mb-2">This is your sweet spot retainer</p>
-              <a href="#contact" className="btn-primary inline-block">Get Started</a>
+              <GetStartedButton />
             </div>
           </div>
         </motion.div>

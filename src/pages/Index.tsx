@@ -4,7 +4,7 @@ import Navbar from '@/components/Navbar';
 import Hero from '@/components/Hero';
 import StatsCounter from '@/components/StatsCounter';
 import PagePreviewSection from '@/components/PagePreviewSection';
-import ContactForm from '@/components/ContactForm';
+
 import Footer from '@/components/Footer';
 
 const Index = () => {
@@ -23,7 +23,7 @@ const Index = () => {
             <Hero />
             <StatsCounter />
             <PagePreviewSection />
-            <ContactForm />
+            
             <Footer />
           </main>
         </>
