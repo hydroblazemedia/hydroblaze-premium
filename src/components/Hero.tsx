@@ -1,6 +1,9 @@
 import { motion } from 'framer-motion';
+import { useContactDialog } from '@/components/ContactFormDialog';
 
 const Hero = () => {
+  const { open } = useContactDialog();
+
   return (
     <section className="relative min-h-screen flex items-center justify-center px-6">
       <div className="text-center max-w-5xl mx-auto">
@@ -51,7 +54,7 @@ const Hero = () => {
           animate={{ opacity: 1, y: 0 }}
           transition={{ duration: 0.6, delay: 0.8 }}
         >
-          <button className="btn-primary group">
+          <button onClick={open} className="btn-primary group">
             <span className="flex items-center gap-3">
               Ignite Your Brand
               <svg 
