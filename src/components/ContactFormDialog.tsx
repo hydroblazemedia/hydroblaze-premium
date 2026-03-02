@@ -1,8 +1,11 @@
 import { createContext, useContext, useState, useCallback } from 'react';
 import { Dialog, DialogContent, DialogHeader, DialogTitle, DialogDescription } from '@/components/ui/dialog';
-import { Send, CheckCircle, AlertCircle } from 'lucide-react';
+import { Send, CheckCircle, AlertCircle, Loader2 } from 'lucide-react';
 import { z } from 'zod';
 import { motion } from 'framer-motion';
+
+// TODO: Replace with your deployed Google Apps Script Web App URL
+const GOOGLE_SHEET_URL = 'PASTE_YOUR_GOOGLE_APPS_SCRIPT_URL_HERE';
 
 const contactSchema = z.object({
   name: z.string().trim().min(1, 'Name is required').max(100, 'Name must be under 100 characters'),
@@ -23,6 +26,7 @@ export const ContactDialogProvider = ({ children }: { children: React.ReactNode 
   const [formData, setFormData] = useState<ContactFormData>({ name: '', email: '', phone: '', message: '' });
   const [errors, setErrors] = useState<FormErrors>({});
   const [submitted, setSubmitted] = useState(false);
+  const [isSubmitting, setIsSubmitting] = useState(false);
   const [source, setSource] = useState<string>('');
 
   const open = useCallback((src?: string) => {
@@ -38,7 +42,7 @@ export const ContactDialogProvider = ({ children }: { children: React.ReactNode 
     if (errors[field]) setErrors(prev => ({ ...prev, [field]: undefined }));
   };
 
-  const handleSubmit = (e: React.FormEvent) => {
+  const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
     const result = contactSchema.safeParse(formData);
     if (!result.success) {
@@ -50,8 +54,29 @@ export const ContactDialogProvider = ({ children }: { children: React.ReactNode 
       setErrors(fieldErrors);
       return;
     }
+
+    setIsSubmitting(true);
+
+    // Send to Google Sheets (fire and forget with no-cors)
+    if (GOOGLE_SHEET_URL !== 'PASTE_YOUR_GOOGLE_APPS_SCRIPT_URL_HERE') {
+      fetch(GOOGLE_SHEET_URL, {
+        method: 'POST',
+        mode: 'no-cors',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({
+          name: result.data.name,
+          email: result.data.email,
+          phone: result.data.phone,
+          message: result.data.message,
+          source,
+        }),
+      }).catch(() => {});
+    }
+
+    // WhatsApp redirect
     const text = `Hi, I'm ${encodeURIComponent(result.data.name)}.%0A%0AEmail: ${encodeURIComponent(result.data.email)}%0APhone: ${encodeURIComponent(result.data.phone)}%0ASource: ${encodeURIComponent(source)}%0A%0A${encodeURIComponent(result.data.message)}`;
     window.open(`https://wa.me/919999999999?text=${text}`, '_blank');
+    setIsSubmitting(false);
     setSubmitted(true);
   };
 
@@ -106,8 +131,8 @@ export const ContactDialogProvider = ({ children }: { children: React.ReactNode 
                 {errors.message && <p className="mt-1.5 text-xs text-destructive flex items-center gap-1"><AlertCircle className="w-3 h-3" /> {errors.message}</p>}
               </div>
 
-              <button type="submit" className="w-full py-4 rounded-xl font-display font-semibold text-sm bg-gradient-to-r from-hydro to-blaze text-white hover:shadow-[0_0_30px_hsl(var(--hydro)/0.4)] transition-all duration-300 flex items-center justify-center gap-2">
-                Send Message <Send className="w-4 h-4" />
+              <button type="submit" disabled={isSubmitting} className="w-full py-4 rounded-xl font-display font-semibold text-sm bg-gradient-to-r from-hydro to-blaze text-white hover:shadow-[0_0_30px_hsl(var(--hydro)/0.4)] transition-all duration-300 flex items-center justify-center gap-2 disabled:opacity-60 disabled:cursor-not-allowed">
+                {isSubmitting ? <><Loader2 className="w-4 h-4 animate-spin" /> Sending...</> : <>Send Message <Send className="w-4 h-4" /></>}
               </button>
             </form>
           )}
