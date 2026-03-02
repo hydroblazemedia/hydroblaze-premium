@@ -54,7 +54,7 @@ const Hero = () => {
           animate={{ opacity: 1, y: 0 }}
           transition={{ duration: 0.6, delay: 0.8 }}
         >
-          <button onClick={open} className="btn-primary group">
+          <button onClick={() => open("Ignite Your Brand")} className="btn-primary group">
             <span className="flex items-center gap-3">
               Ignite Your Brand
               <svg 

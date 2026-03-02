@@ -4,7 +4,7 @@ import { useContactDialog } from '@/components/ContactFormDialog';
 
 const GetStartedButton = () => {
   const { open } = useContactDialog();
-  return <button onClick={open} className="btn-primary inline-block">Get Started</button>;
+  return <button onClick={() => open("Get Started - Pricing")} className="btn-primary inline-block">Get Started</button>;
 };
 
 const PricingSection = () => {

@@ -62,7 +62,7 @@ const Navbar = () => {
                 {link.label}
               </Link>
             ))}
-            <button onClick={openContact} className="hidden md:block group relative px-5 py-2.5 rounded-full text-sm border border-foreground/20 text-foreground transition-all duration-300 hover:border-blaze hover:shadow-[0_0_20px_hsl(var(--blaze)/0.4)]">
+            <button onClick={() => openContact("Start Project")} className="hidden md:block group relative px-5 py-2.5 rounded-full text-sm border border-foreground/20 text-foreground transition-all duration-300 hover:border-blaze hover:shadow-[0_0_20px_hsl(var(--blaze)/0.4)]">
               Start Project
             </button>
 
@@ -129,7 +129,7 @@ const Navbar = () => {
                 transition={{ duration: 0.4, delay: 0.5 }}
               >
                 <button
-                  onClick={() => { setIsMobileOpen(false); openContact(); }}
+                  onClick={() => { setIsMobileOpen(false); openContact("Start Project"); }}
                   className="inline-block px-8 py-3 rounded-full text-sm font-semibold bg-gradient-to-r from-hydro to-blaze text-white hover:shadow-[0_0_30px_hsl(var(--hydro)/0.4)] transition-all duration-300"
                 >
                   Start Project

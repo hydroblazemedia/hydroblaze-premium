@@ -14,7 +14,7 @@ const contactSchema = z.object({
 type ContactFormData = z.infer<typeof contactSchema>;
 type FormErrors = Partial<Record<keyof ContactFormData, string>>;
 
-type ContactDialogContextType = { open: () => void };
+type ContactDialogContextType = { open: (source?: string) => void };
 const ContactDialogContext = createContext<ContactDialogContextType>({ open: () => {} });
 export const useContactDialog = () => useContext(ContactDialogContext);
 
@@ -23,10 +23,12 @@ export const ContactDialogProvider = ({ children }: { children: React.ReactNode 
   const [formData, setFormData] = useState<ContactFormData>({ name: '', email: '', phone: '', message: '' });
   const [errors, setErrors] = useState<FormErrors>({});
   const [submitted, setSubmitted] = useState(false);
+  const [source, setSource] = useState<string>('');
 
-  const open = useCallback(() => {
+  const open = useCallback((src?: string) => {
     setIsOpen(true);
     setSubmitted(false);
+    setSource(src || 'Direct');
     setFormData({ name: '', email: '', phone: '', message: '' });
     setErrors({});
   }, []);
@@ -48,7 +50,7 @@ export const ContactDialogProvider = ({ children }: { children: React.ReactNode 
       setErrors(fieldErrors);
       return;
     }
-    const text = `Hi, I'm ${encodeURIComponent(result.data.name)}.%0A%0AEmail: ${encodeURIComponent(result.data.email)}%0APhone: ${encodeURIComponent(result.data.phone)}%0A%0A${encodeURIComponent(result.data.message)}`;
+    const text = `Hi, I'm ${encodeURIComponent(result.data.name)}.%0A%0AEmail: ${encodeURIComponent(result.data.email)}%0APhone: ${encodeURIComponent(result.data.phone)}%0ASource: ${encodeURIComponent(source)}%0A%0A${encodeURIComponent(result.data.message)}`;
     window.open(`https://wa.me/919999999999?text=${text}`, '_blank');
     setSubmitted(true);
   };
