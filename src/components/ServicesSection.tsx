@@ -9,7 +9,7 @@ import blazeLogo from '@/assets/blaze-logo.png';
 const DiscoveryCallButton = () => {
   const { open } = useContactDialog();
   return (
-    <button onClick={open} className="group inline-flex items-center gap-3 px-8 py-4 rounded-full text-sm font-semibold bg-gradient-to-r from-hydro to-blaze text-white hover:shadow-[0_0_40px_hsl(var(--hydro)/0.4)] transition-all duration-500 hover:scale-105">
+    <button onClick={() => open("Book a Discovery Call")} className="group inline-flex items-center gap-3 px-8 py-4 rounded-full text-sm font-semibold bg-gradient-to-r from-hydro to-blaze text-white hover:shadow-[0_0_40px_hsl(var(--hydro)/0.4)] transition-all duration-500 hover:scale-105">
       Book a Discovery Call
       <ArrowRight className="w-4 h-4 transition-transform group-hover:translate-x-1.5" />
     </button>
