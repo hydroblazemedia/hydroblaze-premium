@@ -73,9 +73,6 @@ export const ContactDialogProvider = ({ children }: { children: React.ReactNode 
       }).catch(() => {});
     }
 
-    // WhatsApp redirect
-    const text = `Hi, I'm ${encodeURIComponent(result.data.name)}.%0A%0AEmail: ${encodeURIComponent(result.data.email)}%0APhone: ${encodeURIComponent(result.data.phone)}%0ASource: ${encodeURIComponent(source)}%0A%0A${encodeURIComponent(result.data.message)}`;
-    window.open(`https://wa.me/919999999999?text=${text}`, '_blank');
     setIsSubmitting(false);
     setSubmitted(true);
   };
