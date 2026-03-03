@@ -38,10 +38,10 @@ const Navbar = () => {
         initial={{ opacity: 0, y: -20 }}
         animate={{ opacity: 1, y: 0 }}
         transition={{ duration: 0.6, delay: 0.2 }}
-        className={`fixed top-0 left-0 right-0 z-50 px-6 md:px-12 lg:px-16 transition-all duration-300 ${
+        className={`fixed top-4 left-4 right-4 z-50 px-6 md:px-10 lg:px-14 rounded-2xl transition-all duration-500 ${
           isScrolled
-            ? 'py-3 bg-background/95 backdrop-blur-xl border-b border-hydro/20 shadow-[0_4px_30px_hsl(var(--hydro)/0.15)]'
-            : 'py-4 md:py-5 bg-background/80 backdrop-blur-xl border-b border-white/10'
+            ? 'py-3 bg-white/[0.08] backdrop-blur-2xl border border-white/[0.15] shadow-[0_8px_32px_rgba(0,0,0,0.4),inset_0_1px_0_rgba(255,255,255,0.1),inset_0_-1px_0_rgba(255,255,255,0.05)]'
+            : 'py-4 md:py-5 bg-white/[0.05] backdrop-blur-2xl border border-white/[0.08] shadow-[0_4px_24px_rgba(0,0,0,0.2),inset_0_1px_0_rgba(255,255,255,0.06)]'
         }`}
       >
         <div className="flex items-center justify-between max-w-7xl mx-auto">
