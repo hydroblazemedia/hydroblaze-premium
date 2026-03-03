@@ -5,7 +5,7 @@ import { z } from 'zod';
 import { motion } from 'framer-motion';
 
 // TODO: Replace with your deployed Google Apps Script Web App URL
-const GOOGLE_SHEET_URL = 'PASTE_YOUR_GOOGLE_APPS_SCRIPT_URL_HERE';
+const GOOGLE_SHEET_URL = 'https://script.google.com/macros/s/AKfycbxDs3H3G1-GgxVCtDRmL-89_zg8-YO8T_yrhpkT-yrkUW9XseP6mIwsleTkU-TVWJuQhA/exec';
 
 const contactSchema = z.object({
   name: z.string().trim().min(1, 'Name is required').max(100, 'Name must be under 100 characters'),
@@ -58,7 +58,7 @@ export const ContactDialogProvider = ({ children }: { children: React.ReactNode 
     setIsSubmitting(true);
 
     // Send to Google Sheets (fire and forget with no-cors)
-    if (GOOGLE_SHEET_URL !== 'PASTE_YOUR_GOOGLE_APPS_SCRIPT_URL_HERE') {
+    if (GOOGLE_SHEET_URL) {
       fetch(GOOGLE_SHEET_URL, {
         method: 'POST',
         mode: 'no-cors',
