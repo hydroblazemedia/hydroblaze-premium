@@ -1,11 +1,18 @@
 import { motion } from 'framer-motion';
 import { useState, useEffect } from 'react';
 import { Link } from 'react-router-dom';
-import { ArrowRight, ChevronLeft, ChevronRight, Rocket, Gem, Droplets, Flame, BookOpen } from 'lucide-react';
+import { ArrowRight, ArrowUpRight, ChevronLeft, ChevronRight, Rocket, Gem, Droplets, Flame, BookOpen, Smartphone, Camera, TrendingUp, Palette } from 'lucide-react';
 import servicesPreview from '@/assets/services-preview.jpg';
 import pricingPreview from '@/assets/pricing-preview.jpg';
 import aboutPreview from '@/assets/about-preview.jpg';
 import blogPreview from '@/assets/blog-preview.jpg';
+
+const quickServices = [
+  { icon: Smartphone, label: 'Social Media', color: 'hydro' },
+  { icon: Camera, label: 'Content', color: 'blaze' },
+  { icon: TrendingUp, label: 'Performance Ads', color: 'hydro' },
+  { icon: Palette, label: 'Branding', color: 'blaze' },
+];
 
 const blogPosts = [
   { title: "10 Growth Hacks for 2024", excerpt: "Discover the latest strategies to accelerate your brand's digital presence.", category: "Growth", date: "Feb 1, 2024" },
@@ -29,56 +36,106 @@ const PagePreviewSection = () => {
 
   return (
     <div className="relative z-10">
-      {/* Services Section */}
-      <section className="py-16 md:py-24 px-6 md:px-12 lg:px-16 border-b border-foreground/5">
+
+      {/* === Bento Services Section === */}
+      <section className="py-20 md:py-28 px-6 md:px-12 lg:px-16">
         <div className="max-w-7xl mx-auto">
-          <motion.div initial={{ opacity: 0, y: 20 }} whileInView={{ opacity: 1, y: 0 }} viewport={{ once: true }} transition={{ duration: 0.6 }} className="grid md:grid-cols-2 gap-12 items-center">
-            <div>
-              <span className="inline-flex items-center gap-2 px-4 py-1.5 rounded-full text-xs font-medium bg-hydro/10 text-hydro border border-hydro/20 mb-4">
-                <Rocket className="w-3.5 h-3.5" />
-                Services
-              </span>
-              <h2 className="font-display text-3xl md:text-4xl font-bold mb-4">
-                Powered by Strategy. <span className="text-gradient">Executed with Creative Precision.</span>
+          <motion.div
+            initial={{ opacity: 0, y: 20 }}
+            whileInView={{ opacity: 1, y: 0 }}
+            viewport={{ once: true }}
+            transition={{ duration: 0.6 }}
+            className="mb-14"
+          >
+            <span className="inline-flex items-center gap-2 px-4 py-1.5 rounded-full text-xs font-medium bg-hydro/10 text-hydro border border-hydro/20 mb-5">
+              <Rocket className="w-3.5 h-3.5" />
+              Services
+            </span>
+            <div className="flex flex-col md:flex-row md:items-end md:justify-between gap-4">
+              <h2 className="font-display text-3xl md:text-5xl font-bold leading-[1.1]">
+                Powered by Strategy.
+                <br />
+                <span className="text-gradient">Executed with Precision.</span>
               </h2>
-              <p className="text-muted-foreground mb-6">
-                Every service follows our Hydro Strategy + Blaze Creative framework — ensuring consistency, performance, and scalable results across all engagements.
-              </p>
-              <Link to="/services" className="group inline-flex items-center gap-2 px-6 py-3 rounded-full text-sm font-medium bg-gradient-to-r from-hydro to-hydro/80 text-white hover:shadow-[0_0_30px_hsl(var(--hydro)/0.4)] transition-all duration-300">
-                Explore Services
-                <ArrowRight className="w-4 h-4 transition-transform group-hover:translate-x-1" />
+              <Link to="/services" className="group inline-flex items-center gap-2 text-sm text-hydro hover:text-hydro-glow transition-colors shrink-0">
+                View all services
+                <ArrowUpRight className="w-4 h-4 transition-transform group-hover:-translate-y-0.5 group-hover:translate-x-0.5" />
               </Link>
             </div>
-            <div className="relative">
-              <div className="aspect-video rounded-2xl overflow-hidden border border-foreground/10">
-                <img src={servicesPreview} alt="Digital marketing services visualization" className="w-full h-full object-cover" />
+          </motion.div>
+
+          {/* Bento grid */}
+          <div className="grid grid-cols-2 md:grid-cols-4 gap-3 md:gap-4 mb-6">
+            {quickServices.map((service, i) => (
+              <motion.div
+                key={service.label}
+                initial={{ opacity: 0, y: 20 }}
+                whileInView={{ opacity: 1, y: 0 }}
+                viewport={{ once: true }}
+                transition={{ duration: 0.5, delay: i * 0.08 }}
+                whileHover={{ y: -4, transition: { duration: 0.25 } }}
+                className={`group relative p-5 md:p-6 rounded-2xl border border-foreground/10 bg-card/50 backdrop-blur-sm hover:border-${service.color}/30 transition-all duration-400 cursor-pointer`}
+              >
+                <div className={`absolute inset-0 rounded-2xl opacity-0 group-hover:opacity-100 transition-opacity duration-500 bg-gradient-to-b from-${service.color}/5 to-transparent pointer-events-none`} />
+                <service.icon className={`w-7 h-7 mb-3 text-${service.color} opacity-70 group-hover:opacity-100 transition-opacity`} />
+                <p className="font-display font-semibold text-sm">{service.label}</p>
+              </motion.div>
+            ))}
+          </div>
+
+          {/* Large image card */}
+          <motion.div
+            initial={{ opacity: 0, y: 20 }}
+            whileInView={{ opacity: 1, y: 0 }}
+            viewport={{ once: true }}
+            transition={{ duration: 0.6, delay: 0.2 }}
+          >
+            <Link to="/services" className="group block relative rounded-2xl overflow-hidden border border-foreground/10 hover:border-hydro/30 transition-all duration-500">
+              <div className="aspect-[21/9] md:aspect-[3/1]">
+                <img src={servicesPreview} alt="Services" className="w-full h-full object-cover transition-transform duration-700 group-hover:scale-105" />
+                <div className="absolute inset-0 bg-gradient-to-t from-background via-background/40 to-transparent" />
               </div>
-              <div className="absolute -bottom-4 -right-4 w-32 h-32 bg-hydro/20 rounded-full blur-3xl" />
-            </div>
+              <div className="absolute bottom-0 left-0 right-0 p-6 md:p-8">
+                <p className="text-muted-foreground text-sm mb-2">Hydro Strategy + Blaze Creative</p>
+                <div className="flex items-center gap-2 font-display font-semibold text-lg">
+                  Explore our framework
+                  <ArrowRight className="w-4 h-4 transition-transform group-hover:translate-x-1" />
+                </div>
+              </div>
+            </Link>
           </motion.div>
         </div>
       </section>
 
-      {/* Pricing Section */}
-      <section className="py-16 md:py-24 px-6 md:px-12 lg:px-16 border-b border-foreground/5">
+      {/* === Pricing === */}
+      <section className="py-20 md:py-28 px-6 md:px-12 lg:px-16 border-t border-foreground/5">
         <div className="max-w-7xl mx-auto">
-          <motion.div initial={{ opacity: 0, y: 20 }} whileInView={{ opacity: 1, y: 0 }} viewport={{ once: true }} transition={{ duration: 0.6 }} className="grid md:grid-cols-2 gap-12 items-center">
-            <div className="order-2 md:order-1 relative">
-              <div className="aspect-video rounded-2xl overflow-hidden border border-foreground/10">
-                <img src={pricingPreview} alt="Premium pricing tiers visualization" className="w-full h-full object-cover" />
-              </div>
-              <div className="absolute -bottom-4 -left-4 w-32 h-32 bg-blaze/20 rounded-full blur-3xl" />
+          <motion.div
+            initial={{ opacity: 0, y: 20 }}
+            whileInView={{ opacity: 1, y: 0 }}
+            viewport={{ once: true }}
+            transition={{ duration: 0.6 }}
+            className="grid md:grid-cols-2 gap-12 items-center"
+          >
+            <div className="order-2 md:order-1 relative group">
+              <Link to="/pricing" className="block">
+                <div className="aspect-[4/3] rounded-2xl overflow-hidden border border-foreground/10 group-hover:border-blaze/30 transition-all duration-500">
+                  <img src={pricingPreview} alt="Pricing tiers" className="w-full h-full object-cover transition-transform duration-700 group-hover:scale-105" />
+                </div>
+              </Link>
             </div>
             <div className="order-1 md:order-2">
-              <span className="inline-flex items-center gap-2 px-4 py-1.5 rounded-full text-xs font-medium bg-blaze/10 text-blaze border border-blaze/20 mb-4">
+              <span className="inline-flex items-center gap-2 px-4 py-1.5 rounded-full text-xs font-medium bg-blaze/10 text-blaze border border-blaze/20 mb-5">
                 <Gem className="w-3.5 h-3.5" />
                 Pricing
               </span>
-              <h2 className="font-display text-3xl md:text-4xl font-bold mb-4">
-                Transparent Pricing. <span className="text-gradient-blaze">No Surprises.</span>
+              <h2 className="font-display text-3xl md:text-4xl font-bold mb-4 leading-[1.1]">
+                Transparent Pricing.
+                <br />
+                <span className="text-gradient-blaze">No Surprises.</span>
               </h2>
-              <p className="text-muted-foreground mb-6">
-                Every stage of growth deserves the right support. Choose the plan that fits your needs—no hidden fees, no long-term contracts, just results.
+              <p className="text-muted-foreground mb-8 leading-relaxed">
+                Every stage of growth deserves the right support. Choose the plan that fits — no hidden fees, no long-term contracts.
               </p>
               <Link to="/pricing" className="group inline-flex items-center gap-2 px-6 py-3 rounded-full text-sm font-medium bg-gradient-to-r from-blaze to-blaze/80 text-white hover:shadow-[0_0_30px_hsl(var(--blaze)/0.4)] transition-all duration-300">
                 View Pricing
@@ -89,55 +146,65 @@ const PagePreviewSection = () => {
         </div>
       </section>
 
-      {/* About Section */}
-      <section className="py-16 md:py-24 px-6 md:px-12 lg:px-16 border-b border-foreground/5">
+      {/* === About === */}
+      <section className="py-20 md:py-28 px-6 md:px-12 lg:px-16 border-t border-foreground/5">
         <div className="max-w-7xl mx-auto">
-          <motion.div initial={{ opacity: 0, y: 20 }} whileInView={{ opacity: 1, y: 0 }} viewport={{ once: true }} transition={{ duration: 0.6 }} className="grid md:grid-cols-2 gap-12 items-center">
+          <motion.div
+            initial={{ opacity: 0, y: 20 }}
+            whileInView={{ opacity: 1, y: 0 }}
+            viewport={{ once: true }}
+            transition={{ duration: 0.6 }}
+            className="grid md:grid-cols-2 gap-12 items-center"
+          >
             <div>
-              <span className="inline-flex items-center gap-2 px-4 py-1.5 rounded-full text-xs font-medium bg-hydro/10 text-hydro border border-hydro/20 mb-4">
+              <span className="inline-flex items-center gap-2 px-4 py-1.5 rounded-full text-xs font-medium bg-hydro/10 text-hydro border border-hydro/20 mb-5">
                 <Droplets className="w-3.5 h-3.5" />
                 <Flame className="w-3.5 h-3.5 text-blaze" />
                 About Us
               </span>
-              <h2 className="font-display text-3xl md:text-4xl font-bold mb-4">
+              <h2 className="font-display text-3xl md:text-4xl font-bold mb-4 leading-[1.1]">
                 Where <span className="text-gradient">Water</span> Meets <span className="text-gradient-blaze">Fire</span>
               </h2>
-              <p className="text-muted-foreground mb-6">
-                We're a digital marketing agency that combines the fluidity of data-driven strategy with the intensity of scroll-stopping creative. Learn about our story, values, and the team behind HydroBlaze.
+              <p className="text-muted-foreground mb-8 leading-relaxed">
+                A digital marketing agency that combines fluid, data-driven strategy with the intensity of scroll-stopping creative. Meet the team behind HydroBlaze.
               </p>
               <Link to="/about" className="group inline-flex items-center gap-2 px-6 py-3 rounded-full text-sm font-medium border border-foreground/20 hover:border-hydro hover:shadow-[0_0_20px_hsl(var(--hydro)/0.3)] transition-all duration-300">
                 Meet the Team
                 <ArrowRight className="w-4 h-4 transition-transform group-hover:translate-x-1" />
               </Link>
             </div>
-            <div className="relative">
-              <div className="aspect-video rounded-2xl overflow-hidden border border-foreground/10">
-                <img src={aboutPreview} alt="Water meets fire concept art" className="w-full h-full object-cover" />
-              </div>
-              <div className="absolute -bottom-4 -right-4 w-24 h-24 bg-gradient-to-br from-hydro to-blaze rounded-full blur-3xl opacity-30" />
+            <div className="relative group">
+              <Link to="/about" className="block">
+                <div className="aspect-[4/3] rounded-2xl overflow-hidden border border-foreground/10 group-hover:border-hydro/30 transition-all duration-500">
+                  <img src={aboutPreview} alt="About HydroBlaze" className="w-full h-full object-cover transition-transform duration-700 group-hover:scale-105" />
+                </div>
+              </Link>
             </div>
           </motion.div>
         </div>
       </section>
 
-      {/* Blog Section */}
-      <section className="py-16 md:py-24 px-6 md:px-12 lg:px-16 border-b border-foreground/5">
+      {/* === Blog === */}
+      <section className="py-20 md:py-28 px-6 md:px-12 lg:px-16 border-t border-foreground/5">
         <div className="max-w-7xl mx-auto">
           <motion.div initial={{ opacity: 0, y: 20 }} whileInView={{ opacity: 1, y: 0 }} viewport={{ once: true }} transition={{ duration: 0.6 }}>
-            <div className="text-center mb-12">
-              <span className="inline-flex items-center gap-2 px-4 py-1.5 rounded-full text-xs font-medium bg-blaze/10 text-blaze border border-blaze/20 mb-4">
-                <BookOpen className="w-3.5 h-3.5" />
-                Blog
-              </span>
-              <h2 className="font-display text-3xl md:text-4xl font-bold mb-4 mx-auto">
-                Insights & <span className="text-gradient-blaze">Strategies</span>
-              </h2>
-              <p className="text-muted-foreground max-w-2xl mx-auto">
-                Stay ahead of the curve with our latest insights on digital marketing, growth strategies, and industry trends.
-              </p>
+            <div className="flex flex-col md:flex-row md:items-end md:justify-between gap-4 mb-12">
+              <div>
+                <span className="inline-flex items-center gap-2 px-4 py-1.5 rounded-full text-xs font-medium bg-blaze/10 text-blaze border border-blaze/20 mb-5">
+                  <BookOpen className="w-3.5 h-3.5" />
+                  Blog
+                </span>
+                <h2 className="font-display text-3xl md:text-4xl font-bold">
+                  Insights & <span className="text-gradient-blaze">Strategies</span>
+                </h2>
+              </div>
+              <Link to="/blog" className="group inline-flex items-center gap-2 text-sm text-blaze hover:text-blaze-glow transition-colors shrink-0">
+                All articles
+                <ArrowUpRight className="w-4 h-4 transition-transform group-hover:-translate-y-0.5 group-hover:translate-x-0.5" />
+              </Link>
             </div>
 
-            {/* Carousel */}
+            {/* Blog carousel */}
             <div className="relative">
               <div className="overflow-hidden rounded-2xl">
                 <div className="flex transition-transform duration-500 ease-out" style={{ transform: `translateX(-${currentSlide * 100}%)` }}>
@@ -152,9 +219,9 @@ const PagePreviewSection = () => {
                           <h3 className="font-display text-2xl md:text-3xl font-bold mb-3">{post.title}</h3>
                           <p className="text-muted-foreground mb-4">{post.excerpt}</p>
                           <p className="text-sm text-muted-foreground/60 mb-6">{post.date}</p>
-                          <Link to="/blog" className="group inline-flex items-center gap-2 text-blaze hover:underline">
+                          <Link to="/blog" className="group/link inline-flex items-center gap-2 text-blaze hover:underline">
                             Read More
-                            <ArrowRight className="w-4 h-4 transition-transform group-hover:translate-x-1" />
+                            <ArrowRight className="w-4 h-4 transition-transform group-hover/link:translate-x-1" />
                           </Link>
                         </div>
                       </div>
@@ -175,13 +242,6 @@ const PagePreviewSection = () => {
                   <button key={index} onClick={() => setCurrentSlide(index)} className={`w-2 h-2 rounded-full transition-all ${index === currentSlide ? 'w-6 bg-blaze' : 'bg-foreground/20 hover:bg-foreground/40'}`} />
                 ))}
               </div>
-            </div>
-            
-            <div className="text-center mt-8">
-              <Link to="/blog" className="group inline-flex items-center gap-2 px-6 py-3 rounded-full text-sm font-medium bg-gradient-to-r from-blaze to-blaze/80 text-white hover:shadow-[0_0_30px_hsl(var(--blaze)/0.4)] transition-all duration-300">
-                View All Articles
-                <ArrowRight className="w-4 h-4 transition-transform group-hover:translate-x-1" />
-              </Link>
             </div>
           </motion.div>
         </div>
