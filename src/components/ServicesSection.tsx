@@ -1,9 +1,11 @@
 import { motion } from 'framer-motion';
-import { ArrowRight, Sparkles, Smartphone, Camera, TrendingUp, Palette, Rocket, Handshake } from 'lucide-react';
+import { ArrowRight, Sparkles, Smartphone, Camera, TrendingUp, Palette, Rocket } from 'lucide-react';
 import { useContactDialog } from '@/components/ContactFormDialog';
 import ServiceCard from './ServiceCard';
-import hydroLogo from '@/assets/hydro-logo.png';
-import blazeLogo from '@/assets/blaze-logo.png';
+import serviceSocialMedia from '@/assets/service-social-media.jpg';
+import serviceContent from '@/assets/service-content.jpg';
+import servicePerformance from '@/assets/service-performance.jpg';
+import serviceBranding from '@/assets/service-branding.jpg';
 
 const DiscoveryCallButton = () => {
   const { open } = useContactDialog();
@@ -23,6 +25,7 @@ const coreServices = [
     tagline: 'Consistent presence. Structured execution.',
     description: 'End-to-end management of your social platforms — from planning to publishing.',
     includes: ['Content planning & monthly calendars', 'Scheduling & posting', 'Caption writing & hashtag strategy', 'Community management', 'Monthly performance reporting'],
+    image: serviceSocialMedia,
   },
   {
     icon: '📸',
@@ -31,6 +34,7 @@ const coreServices = [
     tagline: 'High-quality shoots built for digital performance',
     description: 'We produce on-ground content designed specifically for reels, ads, and scalable content libraries.',
     includes: ['Photo & video shoots', 'Reel-first shooting approach', 'Product, service & brand shoots', 'Content shortlisting & editing', 'Multi-format outputs'],
+    image: serviceContent,
   },
   {
     icon: '📈',
@@ -39,6 +43,7 @@ const coreServices = [
     tagline: 'Paid growth with control & accountability',
     description: 'We manage ad campaigns with structured testing and optimisation.',
     includes: ['Meta ads strategy & setup', 'Audience & creative testing', 'Daily optimisation & scaling', 'Performance tracking & reporting', 'Lead quality alignment'],
+    image: servicePerformance,
   },
   {
     icon: '🎨',
@@ -47,11 +52,9 @@ const coreServices = [
     tagline: 'Build a brand that looks professional and credible',
     description: 'We design brand assets that create consistency and trust across all touchpoints.',
     includes: ['Logo design', 'Brand kits & visual guidelines', 'Posters & banners', 'Social media creatives', 'Portfolio & brand collateral'],
+    image: serviceBranding,
   },
 ];
-
-const hydroItems = ['Brand & market analysis', 'Audience & competitor research', 'Platform-specific growth planning', 'Funnel & lead journey mapping', 'Performance benchmarks & KPIs'];
-const blazeItems = ['Scroll-stopping visual concepts', 'Platform-native content formats', 'Performance-driven ad creatives', 'Brand-consistent visual systems', 'Continuous creative optimisation'];
 
 const ServicesSection = () => {
   return (
@@ -64,7 +67,7 @@ const ServicesSection = () => {
           whileInView={{ opacity: 1, y: 0 }}
           viewport={{ once: true }}
           transition={{ duration: 0.6 }}
-          className="mb-20"
+          className="mb-16"
         >
           <span className="inline-flex items-center gap-2 px-4 py-1.5 rounded-full text-xs font-medium bg-hydro/10 text-hydro border border-hydro/20 mb-5">
             <Sparkles className="w-3.5 h-3.5" />
@@ -80,65 +83,10 @@ const ServicesSection = () => {
           </p>
         </motion.div>
 
-        {/* How We Work — Compact side-by-side */}
-        <motion.div
-          initial={{ opacity: 0, y: 20 }}
-          whileInView={{ opacity: 1, y: 0 }}
-          viewport={{ once: true }}
-          transition={{ duration: 0.6 }}
-          className="mb-20"
-        >
-          <h3 className="text-[10px] uppercase tracking-[0.25em] text-muted-foreground font-semibold mb-6">How We Work</h3>
-          
-          <div className="grid md:grid-cols-2 gap-4">
-            {/* Hydro */}
-            <div className="group p-6 rounded-2xl border border-hydro/15 bg-hydro/[0.02] hover:border-hydro/30 transition-all duration-400">
-              <div className="flex items-center gap-3 mb-4">
-                <div className="w-10 h-10 rounded-xl bg-hydro/10 border border-hydro/15 flex items-center justify-center overflow-hidden">
-                  <img src={hydroLogo} alt="Hydro" className="w-7 h-7 object-contain" />
-                </div>
-                <div>
-                  <h4 className="font-display text-lg font-semibold">Hydro Strategy</h4>
-                  <p className="text-hydro text-xs font-medium">The thinking layer</p>
-                </div>
-              </div>
-              <div className="space-y-2">
-                {hydroItems.map((item, i) => (
-                  <div key={i} className="flex items-center gap-2.5 text-sm">
-                    <div className="w-1.5 h-1.5 rounded-full bg-hydro shrink-0" />
-                    <span className="text-foreground/70">{item}</span>
-                  </div>
-                ))}
-              </div>
-            </div>
-
-            {/* Blaze */}
-            <div className="group p-6 rounded-2xl border border-blaze/15 bg-blaze/[0.02] hover:border-blaze/30 transition-all duration-400">
-              <div className="flex items-center gap-3 mb-4">
-                <div className="w-10 h-10 rounded-xl bg-blaze/10 border border-blaze/15 flex items-center justify-center overflow-hidden">
-                  <img src={blazeLogo} alt="Blaze" className="w-7 h-7 object-contain" />
-                </div>
-                <div>
-                  <h4 className="font-display text-lg font-semibold">Blaze Creative</h4>
-                  <p className="text-blaze text-xs font-medium">The execution engine</p>
-                </div>
-              </div>
-              <div className="space-y-2">
-                {blazeItems.map((item, i) => (
-                  <div key={i} className="flex items-center gap-2.5 text-sm">
-                    <div className="w-1.5 h-1.5 rounded-full bg-blaze shrink-0" />
-                    <span className="text-foreground/70">{item}</span>
-                  </div>
-                ))}
-              </div>
-            </div>
-          </div>
-        </motion.div>
-
-        {/* Core Services — Expandable list */}
+        {/* Core Services */}
         <div className="mb-20">
           <h3 className="text-[10px] uppercase tracking-[0.25em] text-muted-foreground font-semibold mb-6">What We Do</h3>
-          <div className="space-y-3">
+          <div className="space-y-4">
             {coreServices.map((service, index) => (
               <ServiceCard key={service.title} {...service} index={index} />
             ))}
