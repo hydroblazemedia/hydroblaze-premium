@@ -1,5 +1,5 @@
 import { motion } from 'framer-motion';
-import { useRef, useState } from 'react';
+import { useState, useRef } from 'react';
 import { LucideIcon } from 'lucide-react';
 
 interface ServiceCardProps {
@@ -13,7 +13,6 @@ interface ServiceCardProps {
 }
 
 const ServiceCard = ({ 
-  icon, 
   lucideIcon: LucideIconComp,
   title, 
   tagline, 
@@ -23,104 +22,76 @@ const ServiceCard = ({
 }: ServiceCardProps) => {
   const cardRef = useRef<HTMLDivElement>(null);
   const [mousePosition, setMousePosition] = useState({ x: 0, y: 0 });
-  const [isHovered, setIsHovered] = useState(false);
+  const [isExpanded, setIsExpanded] = useState(false);
 
   const handleMouseMove = (e: React.MouseEvent) => {
     if (!cardRef.current) return;
     const rect = cardRef.current.getBoundingClientRect();
-    setMousePosition({
-      x: e.clientX - rect.left,
-      y: e.clientY - rect.top,
-    });
+    setMousePosition({ x: e.clientX - rect.left, y: e.clientY - rect.top });
   };
-
-  const cardNumber = String(index + 1).padStart(2, '0');
 
   return (
     <motion.div
       ref={cardRef}
-      initial={{ opacity: 0, y: 50, scale: 0.95 }}
-      whileInView={{ opacity: 1, y: 0, scale: 1 }}
-      viewport={{ once: true, margin: '-80px' }}
-      transition={{ duration: 0.7, delay: index * 0.15, ease: [0.22, 1, 0.36, 1] }}
+      initial={{ opacity: 0, y: 30 }}
+      whileInView={{ opacity: 1, y: 0 }}
+      viewport={{ once: true, margin: '-50px' }}
+      transition={{ duration: 0.6, delay: index * 0.1, ease: [0.22, 1, 0.36, 1] }}
       onMouseMove={handleMouseMove}
-      onMouseEnter={() => setIsHovered(true)}
-      onMouseLeave={() => setIsHovered(false)}
-      className="relative group rounded-2xl overflow-hidden h-full"
+      onClick={() => setIsExpanded(!isExpanded)}
+      className="group relative rounded-2xl overflow-hidden cursor-pointer"
     >
-      {/* Animated border glow */}
+      {/* Mouse-follow radial */}
       <div 
-        className="absolute inset-0 rounded-2xl opacity-0 group-hover:opacity-100 transition-opacity duration-700 -z-0"
+        className="absolute inset-0 rounded-2xl opacity-0 group-hover:opacity-100 transition-opacity duration-500 pointer-events-none z-0"
         style={{
-          background: `conic-gradient(from 180deg at 50% 50%, 
-            hsl(var(--hydro) / 0.4), 
-            hsl(var(--blaze) / 0.4), 
-            hsl(var(--hydro) / 0.4))`,
-          padding: '1px',
+          background: `radial-gradient(400px circle at ${mousePosition.x}px ${mousePosition.y}px, hsl(var(--hydro) / 0.06), transparent 50%)`
         }}
       />
 
-      {/* Card inner */}
-      <div className="relative bg-black/50 backdrop-blur-xl border border-white/10 rounded-2xl group-hover:border-white/5 transition-all duration-500 h-full flex flex-col">
-        {/* Mouse-follow radial */}
-        <div 
-          className="absolute inset-0 rounded-2xl opacity-0 group-hover:opacity-100 transition-opacity duration-500 pointer-events-none"
-          style={{
-            background: `radial-gradient(500px circle at ${mousePosition.x}px ${mousePosition.y}px, 
-              hsl(var(--hydro) / 0.08), 
-              transparent 50%)`
-          }}
-        />
-
-        {/* Top gradient line */}
-        <div className="h-[2px] w-full bg-gradient-to-r from-transparent via-hydro/50 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-500" />
-
-        <div className="relative z-10 p-7 md:p-9 flex-1 flex flex-col">
-          {/* Header with number badge */}
-          <div className="flex items-start justify-between mb-5">
-            <div className="flex items-center gap-4">
-              <motion.div 
-                className="w-14 h-14 rounded-2xl bg-gradient-to-br from-hydro/15 to-blaze/10 border border-white/10 flex items-center justify-center"
-                whileHover={{ rotate: [0, -10, 10, 0], transition: { duration: 0.5 } }}
-              >
-                {LucideIconComp ? (
-                  <LucideIconComp className="w-7 h-7 text-hydro" />
-                ) : (
-                  <span className="text-2xl">{icon}</span>
-                )}
-              </motion.div>
-              <div>
-                <h3 className="font-display text-xl md:text-2xl font-semibold tracking-tight">{title}</h3>
-                <p className="text-hydro font-medium text-sm mt-0.5">{tagline}</p>
-              </div>
-            </div>
-            <span className="font-display text-3xl font-bold text-foreground/[0.06] select-none leading-none">
-              {cardNumber}
-            </span>
+      <div className="relative bg-card/50 backdrop-blur-sm border border-foreground/10 rounded-2xl group-hover:border-hydro/20 transition-all duration-400 p-6 md:p-8">
+        <div className="flex items-start gap-5">
+          {/* Icon */}
+          <div className="w-12 h-12 rounded-xl bg-hydro/10 border border-hydro/15 flex items-center justify-center shrink-0">
+            {LucideIconComp && <LucideIconComp className="w-6 h-6 text-hydro" />}
           </div>
 
-          <p className="text-muted-foreground text-sm leading-relaxed mb-7">{description}</p>
-
-          {/* Includes with animated reveal */}
-          <div className="mt-auto">
-            <h4 className="text-[10px] uppercase tracking-[0.2em] text-foreground/50 mb-4 font-semibold">What's included</h4>
-            <div className="space-y-2.5">
-              {includes.map((item, i) => (
-                <motion.div
-                  key={i}
-                  initial={{ opacity: 0, x: -10 }}
-                  whileInView={{ opacity: 1, x: 0 }}
-                  viewport={{ once: true }}
-                  transition={{ duration: 0.4, delay: index * 0.1 + i * 0.05 }}
-                  className="flex items-center gap-3 text-sm group/item"
-                >
-                  <div className="w-5 h-5 rounded-md bg-hydro/10 border border-hydro/20 flex items-center justify-center flex-shrink-0 group-hover/item:bg-hydro/20 transition-colors">
-                    <div className="w-1.5 h-1.5 rounded-full bg-hydro" />
-                  </div>
-                  <span className="text-foreground/70 group-hover/item:text-foreground/90 transition-colors">{item}</span>
-                </motion.div>
-              ))}
+          <div className="flex-1 min-w-0">
+            <div className="flex items-start justify-between gap-4">
+              <div>
+                <h3 className="font-display text-lg md:text-xl font-semibold tracking-tight mb-1">{title}</h3>
+                <p className="text-hydro text-sm font-medium">{tagline}</p>
+              </div>
+              <motion.div
+                animate={{ rotate: isExpanded ? 45 : 0 }}
+                transition={{ duration: 0.2 }}
+                className="w-8 h-8 rounded-full border border-foreground/10 flex items-center justify-center shrink-0 mt-1"
+              >
+                <span className="text-muted-foreground text-lg leading-none">+</span>
+              </motion.div>
             </div>
+
+            <p className="text-muted-foreground text-sm mt-3 leading-relaxed">{description}</p>
+
+            {/* Expandable includes */}
+            <motion.div
+              initial={false}
+              animate={{ height: isExpanded ? 'auto' : 0, opacity: isExpanded ? 1 : 0 }}
+              transition={{ duration: 0.3, ease: [0.22, 1, 0.36, 1] }}
+              className="overflow-hidden"
+            >
+              <div className="pt-5 mt-5 border-t border-foreground/5">
+                <h4 className="text-[10px] uppercase tracking-[0.2em] text-foreground/40 mb-3 font-semibold">What's included</h4>
+                <div className="grid grid-cols-1 md:grid-cols-2 gap-2">
+                  {includes.map((item, i) => (
+                    <div key={i} className="flex items-center gap-2.5 text-sm">
+                      <div className="w-1.5 h-1.5 rounded-full bg-hydro shrink-0" />
+                      <span className="text-foreground/70">{item}</span>
+                    </div>
+                  ))}
+                </div>
+              </div>
+            </motion.div>
           </div>
         </div>
       </div>
