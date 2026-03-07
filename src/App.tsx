@@ -10,6 +10,7 @@ import Pricing from "./pages/Pricing";
 import About from "./pages/About";
 
 import Blog from "./pages/Blog";
+import Portfolio from "./pages/Portfolio";
 import NotFound from "./pages/NotFound";
 
 const queryClient = new QueryClient();
