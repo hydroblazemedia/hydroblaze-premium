@@ -1,6 +1,7 @@
 import { motion, useScroll, useTransform } from 'framer-motion';
 import { useContactDialog } from '@/components/ContactFormDialog';
 import { useRef } from 'react';
+import { ArrowRight, Sparkles } from 'lucide-react';
 import logo3d from '@/assets/hydroblaze-logo-3d.png';
 
 const Hero = () => {
@@ -18,29 +19,28 @@ const Hero = () => {
       {/* Ambient orbs */}
       <div className="absolute inset-0 -z-10">
         <motion.div
-          className="absolute top-1/4 left-1/6 w-[500px] h-[500px] rounded-full opacity-[0.07]"
+          className="absolute top-1/4 left-1/4 w-[600px] h-[600px] rounded-full opacity-[0.08]"
           style={{ background: 'radial-gradient(circle, hsl(var(--hydro)), transparent 70%)' }}
-          animate={{ scale: [1, 1.2, 1], x: [0, 30, 0] }}
-          transition={{ duration: 8, repeat: Infinity, ease: 'easeInOut' }}
-        />
-        <motion.div
-          className="absolute bottom-1/4 right-1/6 w-[400px] h-[400px] rounded-full opacity-[0.06]"
-          style={{ background: 'radial-gradient(circle, hsl(var(--blaze)), transparent 70%)' }}
-          animate={{ scale: [1, 1.15, 1], x: [0, -20, 0] }}
+          animate={{ scale: [1, 1.2, 1], x: [0, 40, 0] }}
           transition={{ duration: 10, repeat: Infinity, ease: 'easeInOut' }}
         />
-        <div 
-          className="absolute inset-0"
-          style={{ background: 'radial-gradient(ellipse at center, rgba(0,0,0,0.6) 0%, transparent 70%)' }}
+        <motion.div
+          className="absolute bottom-1/4 right-1/4 w-[500px] h-[500px] rounded-full opacity-[0.06]"
+          style={{ background: 'radial-gradient(circle, hsl(var(--blaze)), transparent 70%)' }}
+          animate={{ scale: [1, 1.15, 1], x: [0, -30, 0] }}
+          transition={{ duration: 12, repeat: Infinity, ease: 'easeInOut' }}
+        />
+        <motion.div
+          className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[800px] h-[800px] rounded-full opacity-[0.04]"
+          style={{ background: 'radial-gradient(circle, hsl(var(--hydro)), transparent 60%)' }}
+          animate={{ scale: [1, 1.1, 1] }}
+          transition={{ duration: 15, repeat: Infinity, ease: 'easeInOut' }}
         />
       </div>
 
       <motion.div style={{ y: textY, opacity }} className="text-center max-w-6xl mx-auto relative z-10">
         {/* Floating logo */}
-        <motion.div
-          style={{ y: logoY }}
-          className="mb-10"
-        >
+        <motion.div style={{ y: logoY }} className="mb-10">
           <motion.img
             src={logo3d}
             alt="HydroBlaze"
@@ -58,8 +58,8 @@ const Hero = () => {
           transition={{ duration: 0.8, delay: 0.5 }}
           className="mb-8"
         >
-          <span className="inline-flex items-center gap-2 px-5 py-2 rounded-full text-xs uppercase tracking-[0.2em] border border-hydro/30 bg-hydro/5 text-hydro backdrop-blur-sm">
-            <span className="w-1.5 h-1.5 rounded-full bg-hydro animate-pulse" />
+          <span className="inline-flex items-center gap-2 px-4 py-1.5 rounded-full text-xs font-medium bg-hydro/10 text-hydro border border-hydro/20 backdrop-blur-sm">
+            <Sparkles className="w-3.5 h-3.5" />
             Digital Alchemy
           </span>
         </motion.div>
@@ -99,15 +99,14 @@ const Hero = () => {
           transition={{ duration: 0.6, delay: 1.3 }}
           className="flex flex-col sm:flex-row items-center justify-center gap-4"
         >
-          <button onClick={() => open("Ignite Your Brand")} className="btn-primary group">
-            <span className="flex items-center gap-3">
-              Ignite Your Brand
-              <svg className="w-4 h-4 transition-transform duration-300 group-hover:translate-x-1" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M17 8l4 4m0 0l-4 4m4-4H3" />
-              </svg>
-            </span>
+          <button
+            onClick={() => open("Ignite Your Brand")}
+            className="group inline-flex items-center gap-3 px-8 py-4 rounded-full text-sm font-semibold bg-gradient-to-r from-hydro to-blaze text-white hover:shadow-[0_0_40px_hsl(var(--hydro)/0.4)] transition-all duration-500 hover:scale-105"
+          >
+            Ignite Your Brand
+            <ArrowRight className="w-4 h-4 transition-transform group-hover:translate-x-1.5" />
           </button>
-          <a href="/services" className="px-8 py-4 rounded-full font-display font-semibold text-sm text-muted-foreground hover:text-foreground border border-foreground/10 hover:border-foreground/20 transition-all duration-300">
+          <a href="/services" className="inline-flex items-center gap-2 px-7 py-4 rounded-full font-display font-semibold text-sm text-muted-foreground hover:text-foreground border border-foreground/10 hover:border-foreground/20 transition-all duration-300">
             Explore Services
           </a>
         </motion.div>

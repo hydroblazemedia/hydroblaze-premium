@@ -1,7 +1,6 @@
 import Navbar from '@/components/Navbar';
 import PricingSection from '@/components/PricingSection';
 import ServiceComparison from '@/components/ServiceComparison';
-
 import Footer from '@/components/Footer';
 import PageTransition from '@/components/PageTransition';
 
@@ -17,7 +16,6 @@ const Pricing = () => {
             <ServiceComparison />
           </div>
         </section>
-        
         <Footer />
       </main>
     </PageTransition>
