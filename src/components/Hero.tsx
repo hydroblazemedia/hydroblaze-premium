@@ -1,7 +1,7 @@
 import { motion, useScroll, useTransform } from 'framer-motion';
 import { useContactDialog } from '@/components/ContactFormDialog';
 import { useRef } from 'react';
-import { ArrowRight, Sparkles } from 'lucide-react';
+import { ArrowRight, Sparkles, Search } from 'lucide-react';
 import logo3d from '@/assets/hydroblaze-logo-3d.png';
 
 const Hero = () => {
@@ -12,7 +12,7 @@ const Hero = () => {
   const textY = useTransform(scrollYProgress, [0, 1], ['0%', '15%']);
   const opacity = useTransform(scrollYProgress, [0, 0.5], [1, 0]);
 
-  const headingWords = ['Where', 'Fluid', 'Design', 'Ignites', 'Growth'];
+  const headingWords = ['Where', 'Strategy', 'Meets', 'Creative', 'That', 'Drives', 'Growth'];
 
   return (
     <section ref={containerRef} className="relative min-h-[110vh] flex items-center justify-center px-6 overflow-hidden">
@@ -60,7 +60,7 @@ const Hero = () => {
         >
           <span className="inline-flex items-center gap-2 px-4 py-1.5 rounded-full text-xs font-medium bg-hydro/10 text-hydro border border-hydro/20 backdrop-blur-sm">
             <Sparkles className="w-3.5 h-3.5" />
-            Digital Alchemy
+            Trusted by Growing Brands
           </span>
         </motion.div>
 
@@ -68,16 +68,16 @@ const Hero = () => {
         <h1 className="font-display font-bold text-5xl md:text-7xl lg:text-8xl xl:text-9xl leading-[0.95] tracking-tight mb-8">
           {headingWords.map((word, i) => (
             <motion.span
-              key={word}
+              key={word + i}
               initial={{ opacity: 0, y: 40, filter: 'blur(8px)' }}
               animate={{ opacity: 1, y: 0, filter: 'blur(0px)' }}
               transition={{ duration: 0.7, delay: 0.6 + i * 0.08, ease: [0.22, 1, 0.36, 1] }}
               className={`inline-block mr-[0.25em] ${
-                word === 'Ignites' || word === 'Growth' ? 'text-gradient' : ''
+                word === 'Drives' || word === 'Growth' ? 'text-gradient' : ''
               }`}
             >
               {word}
-              {(word === 'Design') && <br className="hidden md:block" />}
+              {(word === 'Creative') && <br className="hidden md:block" />}
             </motion.span>
           ))}
         </h1>
@@ -87,9 +87,9 @@ const Hero = () => {
           initial={{ opacity: 0, y: 20, filter: 'blur(8px)' }}
           animate={{ opacity: 1, y: 0, filter: 'blur(0px)' }}
           transition={{ duration: 0.7, delay: 1.1 }}
-          className="text-lg md:text-xl text-muted-foreground max-w-xl mx-auto leading-relaxed mb-12"
+          className="text-lg md:text-xl text-muted-foreground max-w-2xl mx-auto leading-relaxed mb-12"
         >
-          We fuse cool, data-driven strategy with fiery creative execution.
+          We help brands grow through structured social media, performance marketing, and high-impact content — built to convert, not just look good.
         </motion.p>
 
         {/* CTA buttons */}
@@ -100,15 +100,19 @@ const Hero = () => {
           className="flex flex-col sm:flex-row items-center justify-center gap-4"
         >
           <button
-            onClick={() => open("Ignite Your Brand")}
+            onClick={() => open("Start Your Growth")}
             className="group inline-flex items-center gap-3 px-8 py-4 rounded-full text-sm font-semibold bg-gradient-to-r from-hydro to-blaze text-white hover:shadow-[0_0_40px_hsl(var(--hydro)/0.4)] transition-all duration-500 hover:scale-105"
           >
-            Ignite Your Brand
+            Start Your Growth
             <ArrowRight className="w-4 h-4 transition-transform group-hover:translate-x-1.5" />
           </button>
-          <a href="/services" className="inline-flex items-center gap-2 px-7 py-4 rounded-full font-display font-semibold text-sm text-muted-foreground hover:text-foreground border border-foreground/10 hover:border-foreground/20 transition-all duration-300">
-            Explore Services
-          </a>
+          <button
+            onClick={() => open("Get Free Audit")}
+            className="inline-flex items-center gap-2 px-7 py-4 rounded-full font-display font-semibold text-sm text-muted-foreground hover:text-foreground border border-foreground/10 hover:border-foreground/20 transition-all duration-300"
+          >
+            <Search className="w-4 h-4" />
+            Get Free Audit
+          </button>
         </motion.div>
 
         {/* Scroll indicator */}

@@ -1,76 +1,60 @@
 import { motion } from 'framer-motion';
-import { useState, useEffect } from 'react';
 import { Link } from 'react-router-dom';
-import { ArrowRight, ArrowUpRight, ChevronLeft, ChevronRight, Rocket, Gem, Droplets, Flame, BookOpen, Smartphone, Camera, TrendingUp, Palette, MessageCircle } from 'lucide-react';
+import {
+  ArrowRight, ArrowUpRight, Smartphone, Camera, TrendingUp, Palette,
+  Droplets, Flame, Gem, Target, Users, Shield, MessageCircle,
+  BarChart3, MousePointerClick, Eye, Percent
+} from 'lucide-react';
 import { useContactDialog } from '@/components/ContactFormDialog';
-import servicesPreview from '@/assets/services-preview.jpg';
-import pricingPreview from '@/assets/pricing-preview.jpg';
-import aboutPreview from '@/assets/about-preview.jpg';
-import blogPreview from '@/assets/blog-preview.jpg';
 
+/* ── What We Do ── */
 const quickServices = [
-  { icon: Smartphone, label: 'Social Media', color: 'hydro' as const },
-  { icon: Camera, label: 'Content', color: 'blaze' as const },
-  { icon: TrendingUp, label: 'Performance Ads', color: 'hydro' as const },
-  { icon: Palette, label: 'Branding', color: 'blaze' as const },
-];
-
-const blogPosts = [
-  { title: "10 Growth Hacks for 2024", excerpt: "Discover the latest strategies to accelerate your brand's digital presence.", category: "Growth", date: "Feb 1, 2024" },
-  { title: "The Art of Scroll-Stopping Content", excerpt: "Learn how to create content that captures attention in under 3 seconds.", category: "Creative", date: "Jan 28, 2024" },
-  { title: "AI in Marketing: A Complete Guide", excerpt: "How artificial intelligence is reshaping digital marketing strategies.", category: "Tech", date: "Jan 20, 2024" },
-  { title: "Building Brand Loyalty in 2024", excerpt: "Strategies to turn one-time customers into lifelong advocates.", category: "Strategy", date: "Jan 15, 2024" },
+  { icon: Smartphone, label: 'Social Media Management', desc: 'Consistent presence with structured execution', color: 'hydro' as const },
+  { icon: Camera, label: 'Content Production', desc: 'High-quality content built for reels & ads', color: 'blaze' as const },
+  { icon: TrendingUp, label: 'Performance Marketing', desc: 'Paid campaigns that scale with control', color: 'hydro' as const },
+  { icon: Palette, label: 'Branding & Creatives', desc: 'Professional design that builds trust', color: 'blaze' as const },
 ];
 
 const colorMap = {
-  hydro: {
-    border: 'hover:border-hydro/30',
-    bg: 'from-hydro/5',
-    icon: 'text-hydro',
-  },
-  blaze: {
-    border: 'hover:border-blaze/30',
-    bg: 'from-blaze/5',
-    icon: 'text-blaze',
-  },
+  hydro: { border: 'hover:border-hydro/30', bg: 'from-hydro/5', icon: 'text-hydro' },
+  blaze: { border: 'hover:border-blaze/30', bg: 'from-blaze/5', icon: 'text-blaze' },
 };
+
+/* ── Results ── */
+const results = [
+  { icon: BarChart3, metric: '3.5x', label: 'Average ROAS', color: 'text-hydro' },
+  { icon: MousePointerClick, metric: '150%', label: 'Lead Increase', color: 'text-blaze' },
+  { icon: Eye, metric: '2M+', label: 'Impressions Delivered', color: 'text-hydro' },
+  { icon: Percent, metric: '40%', label: 'Lower Cost Per Lead', color: 'text-blaze' },
+];
+
+/* ── Why HydroBlaze ── */
+const reasons = [
+  { icon: Target, title: 'Strategy-First Approach', desc: 'Every campaign starts with research and a clear growth roadmap.' },
+  { icon: MessageCircle, title: 'Clear Communication', desc: 'Regular updates, transparent reporting, and direct access to your team.' },
+  { icon: TrendingUp, title: 'Performance-Focused Execution', desc: 'We optimize for results — not vanity metrics.' },
+  { icon: Users, title: 'Limited Clients = Better Quality', desc: 'We work with select brands to deliver undivided attention and superior results.' },
+];
 
 const PagePreviewSection = () => {
   const { open } = useContactDialog();
-  const [currentSlide, setCurrentSlide] = useState(0);
-
-  useEffect(() => {
-    const timer = setInterval(() => {
-      setCurrentSlide((prev) => (prev + 1) % blogPosts.length);
-    }, 5000);
-    return () => clearInterval(timer);
-  }, []);
-
-  const nextSlide = () => setCurrentSlide((prev) => (prev + 1) % blogPosts.length);
-  const prevSlide = () => setCurrentSlide((prev) => (prev - 1 + blogPosts.length) % blogPosts.length);
 
   return (
     <div className="relative z-10">
 
-      {/* === Bento Services Section === */}
+      {/* ═══ WHAT WE DO ═══ */}
       <section className="py-20 md:py-28 px-6 md:px-12 lg:px-16">
         <div className="max-w-7xl mx-auto">
-          <motion.div
-            initial={{ opacity: 0, y: 30, filter: 'blur(8px)' }}
-            whileInView={{ opacity: 1, y: 0, filter: 'blur(0px)' }}
-            viewport={{ once: true }}
-            transition={{ duration: 0.7 }}
-            className="mb-14"
-          >
+          <motion.div initial={{ opacity: 0, y: 30 }} whileInView={{ opacity: 1, y: 0 }} viewport={{ once: true }} transition={{ duration: 0.7 }} className="mb-14">
             <span className="inline-flex items-center gap-2 px-4 py-1.5 rounded-full text-xs font-medium bg-hydro/10 text-hydro border border-hydro/20 mb-5">
-              <Rocket className="w-3.5 h-3.5" />
-              Services
+              <Shield className="w-3.5 h-3.5" />
+              What We Do
             </span>
             <div className="flex flex-col md:flex-row md:items-end md:justify-between gap-4">
               <h2 className="font-display text-3xl md:text-5xl font-bold leading-[1.1] tracking-tight">
-                Powered by Strategy.
+                Growth Services Built
                 <br />
-                <span className="text-gradient">Executed with Precision.</span>
+                <span className="text-gradient">for Execution.</span>
               </h2>
               <Link to="/services" className="group inline-flex items-center gap-2 text-sm text-hydro hover:text-hydro-glow transition-colors shrink-0">
                 View all services
@@ -79,8 +63,7 @@ const PagePreviewSection = () => {
             </div>
           </motion.div>
 
-          {/* Bento grid */}
-          <div className="grid grid-cols-2 md:grid-cols-4 gap-3 md:gap-4 mb-6">
+          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4">
             {quickServices.map((service, i) => {
               const colors = colorMap[service.color];
               return (
@@ -90,182 +73,208 @@ const PagePreviewSection = () => {
                   whileInView={{ opacity: 1, y: 0 }}
                   viewport={{ once: true }}
                   transition={{ duration: 0.5, delay: i * 0.08 }}
-                  whileHover={{ y: -4, transition: { duration: 0.25 } }}
-                  className={`group relative p-5 md:p-6 rounded-2xl border border-foreground/10 bg-card/50 backdrop-blur-sm ${colors.border} transition-all duration-400 cursor-pointer overflow-hidden`}
+                  whileHover={{ y: -6, transition: { duration: 0.25 } }}
+                  className={`group relative p-6 md:p-7 rounded-2xl border border-foreground/10 bg-card/50 backdrop-blur-sm ${colors.border} transition-all duration-400 cursor-pointer overflow-hidden`}
                 >
                   <div className={`absolute inset-0 rounded-2xl opacity-0 group-hover:opacity-100 transition-opacity duration-500 bg-gradient-to-b ${colors.bg} to-transparent pointer-events-none`} />
-                  <service.icon className={`w-7 h-7 mb-3 ${colors.icon} opacity-70 group-hover:opacity-100 transition-opacity relative z-10`} />
-                  <p className="font-display font-semibold text-sm relative z-10">{service.label}</p>
+                  <service.icon className={`w-8 h-8 mb-4 ${colors.icon} opacity-70 group-hover:opacity-100 transition-opacity relative z-10`} />
+                  <p className="font-display font-semibold text-base mb-2 relative z-10">{service.label}</p>
+                  <p className="text-muted-foreground text-sm leading-relaxed relative z-10">{service.desc}</p>
                 </motion.div>
               );
             })}
           </div>
+        </div>
+      </section>
 
-          {/* Large image card */}
-          <motion.div
-            initial={{ opacity: 0, y: 20 }}
-            whileInView={{ opacity: 1, y: 0 }}
-            viewport={{ once: true }}
-            transition={{ duration: 0.6, delay: 0.2 }}
-          >
-            <Link to="/services" className="group block relative rounded-2xl overflow-hidden border border-foreground/10 hover:border-hydro/30 transition-all duration-500">
-              <div className="aspect-[21/9] md:aspect-[3/1]">
-                <img src={servicesPreview} alt="Services" className="w-full h-full object-cover transition-transform duration-700 group-hover:scale-105" />
-                <div className="absolute inset-0 bg-gradient-to-t from-background via-background/40 to-transparent" />
-              </div>
-              <div className="absolute bottom-0 left-0 right-0 p-6 md:p-8">
-                <p className="text-muted-foreground text-sm mb-2">Hydro Strategy + Blaze Creative</p>
-                <div className="flex items-center gap-2 font-display font-semibold text-lg">
-                  Explore our framework
-                  <ArrowRight className="w-4 h-4 transition-transform group-hover:translate-x-1" />
+      {/* ═══ HOW WE WORK ═══ */}
+      <section className="py-20 md:py-28 px-6 md:px-12 lg:px-16 border-t border-foreground/5">
+        <div className="max-w-7xl mx-auto">
+          <motion.div initial={{ opacity: 0, y: 30 }} whileInView={{ opacity: 1, y: 0 }} viewport={{ once: true }} transition={{ duration: 0.7 }} className="text-center mb-16">
+            <span className="inline-flex items-center gap-2 px-4 py-1.5 rounded-full text-xs font-medium bg-hydro/10 text-hydro border border-hydro/20 mb-5">
+              <Droplets className="w-3.5 h-3.5" />
+              <Flame className="w-3.5 h-3.5 text-blaze" />
+              Our System
+            </span>
+            <h2 className="font-display text-3xl md:text-5xl font-bold tracking-tight">
+              Our System, Not <span className="text-gradient">Guesswork.</span>
+            </h2>
+          </motion.div>
+
+          <div className="grid md:grid-cols-2 gap-6 max-w-4xl mx-auto">
+            <motion.div
+              initial={{ opacity: 0, x: -30 }}
+              whileInView={{ opacity: 1, x: 0 }}
+              viewport={{ once: true }}
+              transition={{ duration: 0.6 }}
+              className="group relative p-8 md:p-10 rounded-2xl border border-foreground/10 bg-card/50 backdrop-blur-sm hover:border-hydro/30 transition-all duration-500 overflow-hidden"
+            >
+              <div className="absolute inset-0 bg-gradient-to-br from-hydro/5 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-500 pointer-events-none" />
+              <div className="relative z-10">
+                <div className="w-12 h-12 rounded-xl bg-hydro/10 border border-hydro/20 flex items-center justify-center mb-5">
+                  <Droplets className="w-6 h-6 text-hydro" />
                 </div>
+                <h3 className="font-display text-2xl font-bold mb-3 text-gradient-hydro">Hydro Strategy</h3>
+                <p className="text-muted-foreground leading-relaxed">
+                  We plan before we execute. Every move is backed by data and intent — from audience research to channel selection, nothing is left to chance.
+                </p>
               </div>
+            </motion.div>
+
+            <motion.div
+              initial={{ opacity: 0, x: 30 }}
+              whileInView={{ opacity: 1, x: 0 }}
+              viewport={{ once: true }}
+              transition={{ duration: 0.6, delay: 0.1 }}
+              className="group relative p-8 md:p-10 rounded-2xl border border-foreground/10 bg-card/50 backdrop-blur-sm hover:border-blaze/30 transition-all duration-500 overflow-hidden"
+            >
+              <div className="absolute inset-0 bg-gradient-to-br from-blaze/5 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-500 pointer-events-none" />
+              <div className="relative z-10">
+                <div className="w-12 h-12 rounded-xl bg-blaze/10 border border-blaze/20 flex items-center justify-center mb-5">
+                  <Flame className="w-6 h-6 text-blaze" />
+                </div>
+                <h3 className="font-display text-2xl font-bold mb-3 text-gradient-blaze">Blaze Creative</h3>
+                <p className="text-muted-foreground leading-relaxed">
+                  We create content designed to perform — not just fill your feed. Every asset is crafted to stop scrolls and drive conversions.
+                </p>
+              </div>
+            </motion.div>
+          </div>
+        </div>
+      </section>
+
+      {/* ═══ RESULTS / PROOF ═══ */}
+      <section className="py-20 md:py-28 px-6 md:px-12 lg:px-16 border-t border-foreground/5">
+        <div className="max-w-7xl mx-auto">
+          <motion.div initial={{ opacity: 0, y: 30 }} whileInView={{ opacity: 1, y: 0 }} viewport={{ once: true }} transition={{ duration: 0.7 }} className="text-center mb-16">
+            <span className="inline-flex items-center gap-2 px-4 py-1.5 rounded-full text-xs font-medium bg-blaze/10 text-blaze border border-blaze/20 mb-5">
+              <BarChart3 className="w-3.5 h-3.5" />
+              Results
+            </span>
+            <h2 className="font-display text-3xl md:text-5xl font-bold tracking-tight mb-4">
+              Built for Results, <span className="text-gradient-blaze">Not Just Aesthetics.</span>
+            </h2>
+            <p className="text-muted-foreground max-w-xl mx-auto text-base md:text-lg">
+              Real performance metrics from campaigns we've managed across industries.
+            </p>
+          </motion.div>
+
+          <div className="grid grid-cols-2 lg:grid-cols-4 gap-4 md:gap-6">
+            {results.map((r, i) => (
+              <motion.div
+                key={r.label}
+                initial={{ opacity: 0, y: 30 }}
+                whileInView={{ opacity: 1, y: 0 }}
+                viewport={{ once: true }}
+                transition={{ duration: 0.5, delay: i * 0.1 }}
+                className="relative p-6 md:p-8 rounded-2xl border border-foreground/10 bg-card/50 backdrop-blur-sm text-center overflow-hidden group hover:border-foreground/20 transition-all duration-500"
+              >
+                <div className="absolute inset-0 bg-gradient-to-b from-foreground/[0.02] to-transparent pointer-events-none" />
+                <r.icon className={`w-7 h-7 mx-auto mb-4 ${r.color} opacity-70`} />
+                <p className="font-display text-3xl md:text-4xl font-bold mb-2">{r.metric}</p>
+                <p className="text-muted-foreground text-sm">{r.label}</p>
+              </motion.div>
+            ))}
+          </div>
+        </div>
+      </section>
+
+      {/* ═══ PRICING PREVIEW ═══ */}
+      <section className="py-20 md:py-28 px-6 md:px-12 lg:px-16 border-t border-foreground/5">
+        <div className="max-w-7xl mx-auto">
+          <motion.div initial={{ opacity: 0, y: 30 }} whileInView={{ opacity: 1, y: 0 }} viewport={{ once: true }} transition={{ duration: 0.7 }} className="text-center mb-14">
+            <span className="inline-flex items-center gap-2 px-4 py-1.5 rounded-full text-xs font-medium bg-blaze/10 text-blaze border border-blaze/20 mb-5">
+              <Gem className="w-3.5 h-3.5" />
+              Pricing
+            </span>
+            <h2 className="font-display text-3xl md:text-5xl font-bold tracking-tight mb-4">
+              Simple, <span className="text-gradient-blaze">Transparent Pricing.</span>
+            </h2>
+            <p className="text-muted-foreground max-w-xl mx-auto">
+              No hidden fees, no long-term contracts. Choose the plan that fits your growth stage.
+            </p>
+          </motion.div>
+
+          <div className="grid md:grid-cols-3 gap-4 md:gap-6 max-w-4xl mx-auto mb-10">
+            {[
+              { name: 'Starter', price: '₹15,000', desc: 'Perfect for brands just getting started' },
+              { name: 'Growth', price: '₹25,000', desc: 'For brands ready to scale aggressively', featured: true },
+              { name: 'Premium', price: '₹40,000', desc: 'Full-service marketing partnership' },
+            ].map((tier, i) => (
+              <motion.div
+                key={tier.name}
+                initial={{ opacity: 0, y: 20 }}
+                whileInView={{ opacity: 1, y: 0 }}
+                viewport={{ once: true }}
+                transition={{ duration: 0.5, delay: i * 0.1 }}
+                className={`relative p-6 md:p-8 rounded-2xl border bg-card/50 backdrop-blur-sm text-center transition-all duration-500 ${
+                  tier.featured
+                    ? 'border-hydro/30 shadow-[0_0_30px_hsl(var(--hydro)/0.1)]'
+                    : 'border-foreground/10 hover:border-foreground/20'
+                }`}
+              >
+                {tier.featured && (
+                  <span className="absolute -top-3 left-1/2 -translate-x-1/2 px-3 py-1 rounded-full text-[10px] uppercase tracking-widest font-semibold bg-hydro text-primary-foreground">
+                    Popular
+                  </span>
+                )}
+                <p className="font-display text-lg font-semibold mb-2">{tier.name}</p>
+                <p className="font-display text-3xl font-bold mb-1">{tier.price}</p>
+                <p className="text-muted-foreground text-xs mb-4">/month</p>
+                <p className="text-muted-foreground text-sm">{tier.desc}</p>
+              </motion.div>
+            ))}
+          </div>
+
+          <div className="text-center">
+            <Link
+              to="/pricing"
+              className="group inline-flex items-center gap-3 px-8 py-4 rounded-full text-sm font-semibold bg-gradient-to-r from-blaze to-blaze/80 text-white hover:shadow-[0_0_30px_hsl(var(--blaze)/0.4)] transition-all duration-500 hover:scale-105"
+            >
+              View Pricing
+              <ArrowRight className="w-4 h-4 transition-transform group-hover:translate-x-1.5" />
             </Link>
-          </motion.div>
+          </div>
         </div>
       </section>
 
-      {/* === Pricing === */}
+      {/* ═══ WHY HYDROBLAZE ═══ */}
       <section className="py-20 md:py-28 px-6 md:px-12 lg:px-16 border-t border-foreground/5">
         <div className="max-w-7xl mx-auto">
-          <motion.div
-            initial={{ opacity: 0, y: 30 }}
-            whileInView={{ opacity: 1, y: 0 }}
-            viewport={{ once: true }}
-            transition={{ duration: 0.7 }}
-            className="grid md:grid-cols-2 gap-12 items-center"
-          >
-            <div className="order-2 md:order-1 relative group">
-              <Link to="/pricing" className="block">
-                <div className="aspect-[4/3] rounded-2xl overflow-hidden border border-foreground/10 group-hover:border-blaze/30 transition-all duration-500">
-                  <img src={pricingPreview} alt="Pricing tiers" className="w-full h-full object-cover transition-transform duration-700 group-hover:scale-105" />
-                </div>
-              </Link>
-            </div>
-            <div className="order-1 md:order-2">
-              <span className="inline-flex items-center gap-2 px-4 py-1.5 rounded-full text-xs font-medium bg-blaze/10 text-blaze border border-blaze/20 mb-5">
-                <Gem className="w-3.5 h-3.5" />
-                Pricing
-              </span>
-              <h2 className="font-display text-3xl md:text-4xl font-bold mb-4 leading-[1.1] tracking-tight">
-                Transparent Pricing.
-                <br />
-                <span className="text-gradient-blaze">No Surprises.</span>
-              </h2>
-              <p className="text-muted-foreground mb-8 leading-relaxed">
-                Every stage of growth deserves the right support. Choose the plan that fits — no hidden fees, no long-term contracts.
-              </p>
-              <Link to="/pricing" className="group inline-flex items-center gap-3 px-7 py-3.5 rounded-full text-sm font-semibold bg-gradient-to-r from-blaze to-blaze/80 text-white hover:shadow-[0_0_30px_hsl(var(--blaze)/0.4)] transition-all duration-500 hover:scale-105">
-                View Pricing
-                <ArrowRight className="w-4 h-4 transition-transform group-hover:translate-x-1.5" />
-              </Link>
-            </div>
+          <motion.div initial={{ opacity: 0, y: 30 }} whileInView={{ opacity: 1, y: 0 }} viewport={{ once: true }} transition={{ duration: 0.7 }} className="text-center mb-16">
+            <span className="inline-flex items-center gap-2 px-4 py-1.5 rounded-full text-xs font-medium bg-hydro/10 text-hydro border border-hydro/20 mb-5">
+              <Shield className="w-3.5 h-3.5" />
+              Why Us
+            </span>
+            <h2 className="font-display text-3xl md:text-5xl font-bold tracking-tight">
+              Why Brands <span className="text-gradient">Choose Us.</span>
+            </h2>
           </motion.div>
+
+          <div className="grid md:grid-cols-2 gap-4 md:gap-6 max-w-4xl mx-auto">
+            {reasons.map((r, i) => (
+              <motion.div
+                key={r.title}
+                initial={{ opacity: 0, y: 20 }}
+                whileInView={{ opacity: 1, y: 0 }}
+                viewport={{ once: true }}
+                transition={{ duration: 0.5, delay: i * 0.08 }}
+                className="group flex gap-5 p-6 rounded-2xl border border-foreground/10 bg-card/50 backdrop-blur-sm hover:border-hydro/20 transition-all duration-500"
+              >
+                <div className="w-11 h-11 rounded-xl bg-hydro/10 border border-hydro/20 flex items-center justify-center shrink-0">
+                  <r.icon className="w-5 h-5 text-hydro" />
+                </div>
+                <div>
+                  <p className="font-display font-semibold text-base mb-1">{r.title}</p>
+                  <p className="text-muted-foreground text-sm leading-relaxed">{r.desc}</p>
+                </div>
+              </motion.div>
+            ))}
+          </div>
         </div>
       </section>
 
-      {/* === About === */}
-      <section className="py-20 md:py-28 px-6 md:px-12 lg:px-16 border-t border-foreground/5">
-        <div className="max-w-7xl mx-auto">
-          <motion.div
-            initial={{ opacity: 0, y: 30 }}
-            whileInView={{ opacity: 1, y: 0 }}
-            viewport={{ once: true }}
-            transition={{ duration: 0.7 }}
-            className="grid md:grid-cols-2 gap-12 items-center"
-          >
-            <div>
-              <span className="inline-flex items-center gap-2 px-4 py-1.5 rounded-full text-xs font-medium bg-hydro/10 text-hydro border border-hydro/20 mb-5">
-                <Droplets className="w-3.5 h-3.5" />
-                <Flame className="w-3.5 h-3.5 text-blaze" />
-                About Us
-              </span>
-              <h2 className="font-display text-3xl md:text-4xl font-bold mb-4 leading-[1.1] tracking-tight">
-                Where <span className="text-gradient">Water</span> Meets <span className="text-gradient-blaze">Fire</span>
-              </h2>
-              <p className="text-muted-foreground mb-8 leading-relaxed">
-                A digital marketing agency that combines fluid, data-driven strategy with the intensity of scroll-stopping creative. Meet the team behind HydroBlaze.
-              </p>
-              <Link to="/about" className="group inline-flex items-center gap-3 px-7 py-3.5 rounded-full text-sm font-semibold border border-foreground/10 hover:border-hydro/30 hover:shadow-[0_0_20px_hsl(var(--hydro)/0.3)] transition-all duration-500">
-                Meet the Team
-                <ArrowRight className="w-4 h-4 transition-transform group-hover:translate-x-1.5" />
-              </Link>
-            </div>
-            <div className="relative group">
-              <Link to="/about" className="block">
-                <div className="aspect-[4/3] rounded-2xl overflow-hidden border border-foreground/10 group-hover:border-hydro/30 transition-all duration-500">
-                  <img src={aboutPreview} alt="About HydroBlaze" className="w-full h-full object-cover transition-transform duration-700 group-hover:scale-105" />
-                </div>
-              </Link>
-            </div>
-          </motion.div>
-        </div>
-      </section>
-
-      {/* === Blog === */}
-      <section className="py-20 md:py-28 px-6 md:px-12 lg:px-16 border-t border-foreground/5">
-        <div className="max-w-7xl mx-auto">
-          <motion.div initial={{ opacity: 0, y: 30 }} whileInView={{ opacity: 1, y: 0 }} viewport={{ once: true }} transition={{ duration: 0.7 }}>
-            <div className="flex flex-col md:flex-row md:items-end md:justify-between gap-4 mb-12">
-              <div>
-                <span className="inline-flex items-center gap-2 px-4 py-1.5 rounded-full text-xs font-medium bg-blaze/10 text-blaze border border-blaze/20 mb-5">
-                  <BookOpen className="w-3.5 h-3.5" />
-                  Blog
-                </span>
-                <h2 className="font-display text-3xl md:text-4xl font-bold tracking-tight">
-                  Insights & <span className="text-gradient-blaze">Strategies</span>
-                </h2>
-              </div>
-              <Link to="/blog" className="group inline-flex items-center gap-2 text-sm text-blaze hover:text-blaze-glow transition-colors shrink-0">
-                All articles
-                <ArrowUpRight className="w-4 h-4 transition-transform group-hover:-translate-y-0.5 group-hover:translate-x-0.5" />
-              </Link>
-            </div>
-
-            {/* Blog carousel */}
-            <div className="relative">
-              <div className="overflow-hidden rounded-2xl border border-foreground/5">
-                <div className="flex transition-transform duration-500 ease-out" style={{ transform: `translateX(-${currentSlide * 100}%)` }}>
-                  {blogPosts.map((post, index) => (
-                    <div key={index} className="w-full flex-shrink-0">
-                      <div className="grid md:grid-cols-2 gap-8 items-center">
-                        <div className="aspect-video rounded-2xl overflow-hidden">
-                          <img src={blogPreview} alt={post.title} className="w-full h-full object-cover" />
-                        </div>
-                        <div className="p-4 md:p-8">
-                          <span className="inline-block px-3 py-1 rounded-full text-xs font-medium bg-blaze/10 text-blaze border border-blaze/20 mb-3">{post.category}</span>
-                          <h3 className="font-display text-2xl md:text-3xl font-bold mb-3 tracking-tight">{post.title}</h3>
-                          <p className="text-muted-foreground mb-4">{post.excerpt}</p>
-                          <p className="text-sm text-muted-foreground/60 mb-6">{post.date}</p>
-                          <Link to="/blog" className="group/link inline-flex items-center gap-2 text-blaze hover:underline text-sm font-medium">
-                            Read More
-                            <ArrowRight className="w-4 h-4 transition-transform group-hover/link:translate-x-1" />
-                          </Link>
-                        </div>
-                      </div>
-                    </div>
-                  ))}
-                </div>
-              </div>
-
-              <button onClick={prevSlide} className="absolute left-4 top-1/2 -translate-y-1/2 w-10 h-10 rounded-full bg-background/80 backdrop-blur-sm border border-foreground/10 flex items-center justify-center hover:border-foreground/20 transition-colors">
-                <ChevronLeft className="w-5 h-5" />
-              </button>
-              <button onClick={nextSlide} className="absolute right-4 top-1/2 -translate-y-1/2 w-10 h-10 rounded-full bg-background/80 backdrop-blur-sm border border-foreground/10 flex items-center justify-center hover:border-foreground/20 transition-colors">
-                <ChevronRight className="w-5 h-5" />
-              </button>
-
-              <div className="flex justify-center gap-2 mt-6">
-                {blogPosts.map((_, index) => (
-                  <button key={index} onClick={() => setCurrentSlide(index)} className={`w-2 h-2 rounded-full transition-all duration-300 ${index === currentSlide ? 'w-6 bg-blaze' : 'bg-foreground/20 hover:bg-foreground/40'}`} />
-                ))}
-              </div>
-            </div>
-          </motion.div>
-        </div>
-      </section>
-
-      {/* === Final CTA === */}
+      {/* ═══ FINAL CTA ═══ */}
       <section className="px-6 md:px-12 lg:px-16 py-20 md:py-28 border-t border-foreground/5">
         <motion.div
           initial={{ opacity: 0, y: 30 }}
@@ -278,28 +287,26 @@ const PagePreviewSection = () => {
             <div className="absolute inset-0 bg-gradient-to-br from-hydro/5 via-transparent to-blaze/5 pointer-events-none" />
             <div className="relative space-y-6">
               <h2 className="font-display text-3xl md:text-5xl font-bold tracking-tight">
-                Ready to <span className="text-gradient">Ignite Growth?</span>
+                Ready to Scale <span className="text-gradient">Your Brand?</span>
               </h2>
               <p className="text-muted-foreground max-w-lg mx-auto text-base md:text-lg">
-                Partner with HydroBlaze Media and start generating consistent leads and measurable results.
+                Let's build something that actually grows your business — not just your feed.
               </p>
               <div className="flex flex-col sm:flex-row items-center justify-center gap-4 pt-2">
                 <button
-                  onClick={() => open("Book Free Strategy Call - Home")}
+                  onClick={() => open("Start Project - Home")}
                   className="group inline-flex items-center gap-3 px-8 py-4 rounded-full text-sm font-semibold bg-gradient-to-r from-hydro to-blaze text-white hover:shadow-[0_0_40px_hsl(var(--hydro)/0.4)] transition-all duration-500 hover:scale-105"
                 >
-                  Book Free Strategy Call
+                  Start Project
                   <ArrowRight className="w-4 h-4 transition-transform group-hover:translate-x-1.5" />
                 </button>
-                <a
-                  href="https://wa.me/919876543210"
-                  target="_blank"
-                  rel="noopener noreferrer"
+                <button
+                  onClick={() => open("Book a Call - Home")}
                   className="inline-flex items-center gap-2 px-7 py-4 rounded-full text-sm font-semibold border border-foreground/10 hover:border-foreground/20 text-muted-foreground hover:text-foreground transition-all duration-300"
                 >
                   <MessageCircle className="w-4 h-4" />
-                  WhatsApp Us
-                </a>
+                  Book a Call
+                </button>
               </div>
             </div>
           </div>
