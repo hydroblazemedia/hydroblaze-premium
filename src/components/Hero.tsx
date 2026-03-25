@@ -2,13 +2,13 @@ import { motion, useScroll, useTransform } from 'framer-motion';
 import { useContactDialog } from '@/components/ContactFormDialog';
 import { useRef } from 'react';
 import { ArrowRight, Sparkles, Search } from 'lucide-react';
-import logo3d from '@/assets/hydroblaze-logo-3d.png';
+
 
 const Hero = () => {
   const { open } = useContactDialog();
   const containerRef = useRef<HTMLDivElement>(null);
   const { scrollYProgress } = useScroll({ target: containerRef, offset: ['start start', 'end start'] });
-  const logoY = useTransform(scrollYProgress, [0, 1], ['0%', '30%']);
+  
   const textY = useTransform(scrollYProgress, [0, 1], ['0%', '15%']);
   const opacity = useTransform(scrollYProgress, [0, 0.5], [1, 0]);
 
@@ -39,18 +39,6 @@ const Hero = () => {
       </div>
 
       <motion.div style={{ y: textY, opacity }} className="text-center max-w-6xl mx-auto relative z-10">
-        {/* Floating logo */}
-        <motion.div style={{ y: logoY }} className="mb-10">
-          <motion.img
-            src={logo3d}
-            alt="HydroBlaze"
-            className="w-20 h-20 md:w-28 md:h-28 mx-auto object-contain"
-            initial={{ opacity: 0, scale: 0.5, rotate: -10 }}
-            animate={{ opacity: 1, scale: 1, rotate: 0 }}
-            transition={{ duration: 1, delay: 0.3, ease: [0.22, 1, 0.36, 1] }}
-          />
-        </motion.div>
-
         {/* Badge */}
         <motion.div
           initial={{ opacity: 0, y: 20, filter: 'blur(10px)' }}
@@ -65,7 +53,7 @@ const Hero = () => {
         </motion.div>
 
         {/* Heading — staggered word reveal */}
-        <h1 className="font-display font-bold text-5xl md:text-7xl lg:text-8xl xl:text-9xl leading-[0.95] tracking-tight mb-8">
+        <h1 className="font-display font-bold text-4xl md:text-5xl lg:text-6xl xl:text-7xl leading-[0.95] tracking-tight mb-8">
           {headingWords.map((word, i) => (
             <motion.span
               key={word + i}
