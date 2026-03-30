@@ -12,7 +12,8 @@ const Hero = () => {
   const textY = useTransform(scrollYProgress, [0, 1], ['0%', '15%']);
   const opacity = useTransform(scrollYProgress, [0, 0.5], [1, 0]);
 
-  const headingWords = ['Where', 'Strategy', 'Meets', 'Creative', 'That', 'Drives', 'Growth'];
+  const headingWordsLine1 = ['Where', 'Strategy', 'Meets', 'Creative'];
+  const headingWordsLine2 = ['That'];
 
   return (
     <section ref={containerRef} className="relative min-h-[110vh] flex items-center justify-center px-6 overflow-hidden">
@@ -54,21 +55,37 @@ const Hero = () => {
 
         {/* Heading — staggered word reveal */}
         <h1 className="font-display font-bold text-4xl md:text-5xl lg:text-6xl xl:text-7xl leading-[0.95] tracking-tight mb-8">
-          {headingWords.map((word, i) => (
+          {headingWordsLine1.map((word, i) => (
             <motion.span
               key={word + i}
               initial={{ opacity: 0, y: 40, filter: 'blur(8px)' }}
               animate={{ opacity: 1, y: 0, filter: 'blur(0px)' }}
               transition={{ duration: 0.7, delay: 0.6 + i * 0.08, ease: [0.22, 1, 0.36, 1] }}
-              className={`inline-block ${word === 'Growth' ? '' : 'mr-[0.25em]'} ${
-                word === 'Drives' || word === 'Growth' ? 'text-gradient' : ''
-              }`}
+              className="inline-block mr-[0.25em]"
             >
-              {word === 'Drives' && <br className="hidden md:block" />}
               {word}
-              {(word === 'Creative') && <br className="hidden md:block" />}
+              {word === 'Creative' && <br className="hidden md:block" />}
             </motion.span>
           ))}
+          {headingWordsLine2.map((word, i) => (
+            <motion.span
+              key={word}
+              initial={{ opacity: 0, y: 40, filter: 'blur(8px)' }}
+              animate={{ opacity: 1, y: 0, filter: 'blur(0px)' }}
+              transition={{ duration: 0.7, delay: 0.6 + (4 + i) * 0.08, ease: [0.22, 1, 0.36, 1] }}
+              className="inline-block mr-[0.25em]"
+            >
+              {word}
+            </motion.span>
+          ))}
+          <motion.span
+            initial={{ opacity: 0, y: 40, filter: 'blur(8px)' }}
+            animate={{ opacity: 1, y: 0, filter: 'blur(0px)' }}
+            transition={{ duration: 0.7, delay: 0.6 + 5 * 0.08, ease: [0.22, 1, 0.36, 1] }}
+            className="inline-block text-gradient"
+          >
+            Drives Growth
+          </motion.span>
         </h1>
 
         {/* Subtitle */}
