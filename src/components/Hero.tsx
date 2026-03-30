@@ -60,10 +60,11 @@ const Hero = () => {
               initial={{ opacity: 0, y: 40, filter: 'blur(8px)' }}
               animate={{ opacity: 1, y: 0, filter: 'blur(0px)' }}
               transition={{ duration: 0.7, delay: 0.6 + i * 0.08, ease: [0.22, 1, 0.36, 1] }}
-              className={`inline-block mr-[0.25em] ${
+              className={`inline-block ${word === 'Growth' ? '' : 'mr-[0.25em]'} ${
                 word === 'Drives' || word === 'Growth' ? 'text-gradient' : ''
               }`}
             >
+              {word === 'Drives' && <br className="hidden md:block" />}
               {word}
               {(word === 'Creative') && <br className="hidden md:block" />}
             </motion.span>
