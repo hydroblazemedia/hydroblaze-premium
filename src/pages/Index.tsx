@@ -4,6 +4,7 @@ import Navbar from '@/components/Navbar';
 import Hero from '@/components/Hero';
 import TrustMarquee from '@/components/TrustMarquee';
 import PagePreviewSection from '@/components/PagePreviewSection';
+import BlogSection from '@/components/BlogSection';
 import Footer from '@/components/Footer';
 
 const Index = () => {
