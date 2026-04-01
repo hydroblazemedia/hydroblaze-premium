@@ -1,39 +1,81 @@
+import { useState, useEffect } from 'react';
 import { motion } from 'framer-motion';
-import { BookOpen, Sparkles } from 'lucide-react';
+import { BookOpen, Calendar, ArrowRight, ExternalLink } from 'lucide-react';
 import Navbar from '@/components/Navbar';
-
 import Footer from '@/components/Footer';
 import PageTransition from '@/components/PageTransition';
 
-const posts = [
-  { title: 'Why Your Content Strategy Needs a Data-First Approach', excerpt: "Most brands create content based on vibes. Here's why that's killing your growth and what to do instead.", category: 'Strategy', date: 'Jan 25, 2026', readTime: '5 min read', slug: 'data-first-content-strategy', featured: true },
-  { title: 'The Anatomy of a Viral Reel: What Actually Works in 2026', excerpt: "We analyzed 500+ viral reels to find the patterns. Spoiler: it's not just about trends.", category: 'Creative', date: 'Jan 20, 2026', readTime: '7 min read', slug: 'anatomy-viral-reel', featured: true },
-  { title: 'Landing Pages That Convert: A Technical Deep Dive', excerpt: "From load times to CTA placement, here's everything you need to build pages that actually convert.", category: 'Tech', date: 'Jan 15, 2026', readTime: '10 min read', slug: 'landing-pages-convert', featured: false },
-  { title: 'The Psychology of Scroll-Stopping Thumbnails', excerpt: 'Why some thumbnails demand attention while others get ignored. The science behind visual hooks.', category: 'Creative', date: 'Jan 10, 2026', readTime: '6 min read', slug: 'psychology-thumbnails', featured: false },
-  { title: 'Building a Growth Engine: Strategy + Creative + Tech', excerpt: 'How the three pillars of digital marketing work together to create predictable, scalable growth.', category: 'Strategy', date: 'Jan 5, 2026', readTime: '8 min read', slug: 'building-growth-engine', featured: false },
-  { title: "Meta Ads in 2026: What's Changed and What Works", excerpt: 'The latest algorithm updates and creative strategies that are driving results right now.', category: 'Strategy', date: 'Jan 1, 2026', readTime: '9 min read', slug: 'meta-ads-2026', featured: false },
-];
+interface Post {
+  title: string;
+  brief: string;
+  slug: string;
+  coverImage: { url: string } | null;
+  publishedAt: string;
+  tags: { name: string }[];
+}
 
-const categories = ['All', 'Strategy', 'Creative', 'Tech'];
+const HASHNODE_HOST = 'blog.hydroblazemedia.com';
+const BLOG_URL = `https://${HASHNODE_HOST}`;
+
+const query = `
+  query {
+    publication(host: "${HASHNODE_HOST}") {
+      posts(first: 20) {
+        edges {
+          node {
+            title
+            brief
+            slug
+            coverImage { url }
+            publishedAt
+            tags { name }
+          }
+        }
+      }
+    }
+  }
+`;
 
 const getCategoryColor = (category: string) => {
-  switch (category) {
-    case 'Strategy': return 'bg-hydro/10 text-hydro border-hydro/20';
-    case 'Creative': return 'bg-blaze/10 text-blaze border-blaze/20';
-    case 'Tech': return 'bg-purple-500/10 text-purple-400 border-purple-500/20';
-    default: return 'bg-foreground/5 text-muted-foreground border-foreground/10';
-  }
+  const lower = category.toLowerCase();
+  if (['strategy', 'marketing', 'growth', 'seo'].some(k => lower.includes(k))) return 'bg-hydro/10 text-hydro border-hydro/20';
+  if (['creative', 'design', 'content', 'social'].some(k => lower.includes(k))) return 'bg-blaze/10 text-blaze border-blaze/20';
+  if (['tech', 'web', 'development', 'code'].some(k => lower.includes(k))) return 'bg-purple-500/10 text-purple-400 border-purple-500/20';
+  return 'bg-foreground/5 text-muted-foreground border-foreground/10';
 };
 
 const Blog = () => {
-  const featuredPosts = posts.filter(post => post.featured);
-  const regularPosts = posts.filter(post => !post.featured);
+  const [posts, setPosts] = useState<Post[]>([]);
+  const [loading, setLoading] = useState(true);
+
+  useEffect(() => {
+    fetch('https://gql.hashnode.com/', {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({ query }),
+    })
+      .then(res => res.json())
+      .then(data => {
+        const edges = data?.data?.publication?.posts?.edges;
+        if (edges?.length) {
+          setPosts(edges.map((e: any) => e.node));
+        }
+      })
+      .catch(() => {})
+      .finally(() => setLoading(false));
+  }, []);
+
+  const formatDate = (dateStr: string) =>
+    new Date(dateStr).toLocaleDateString('en-US', { month: 'short', day: 'numeric', year: 'numeric' });
+
+  const featuredPosts = posts.slice(0, 2);
+  const regularPosts = posts.slice(2);
 
   return (
     <PageTransition>
       <div className="noise-overlay" />
       <Navbar />
-      
+
       <main className="pt-24">
         <section className="py-20 md:py-32 px-6 md:px-12 lg:px-16">
           <div className="max-w-7xl mx-auto">
@@ -50,41 +92,95 @@ const Blog = () => {
               </p>
             </motion.div>
 
-            <motion.div initial={{ opacity: 0, y: 20 }} animate={{ opacity: 1, y: 0 }} transition={{ duration: 0.6, delay: 0.1 }} className="flex flex-wrap justify-center gap-3 mb-16">
-              {categories.map((category) => (
-                <button key={category} className={`px-5 py-2 rounded-full text-sm font-medium transition-all duration-300 ${category === 'All' ? 'bg-foreground text-background' : 'bg-foreground/5 text-muted-foreground hover:bg-foreground/10'}`}>
-                  {category}
-                </button>
-              ))}
-            </motion.div>
-
-            <div className="grid md:grid-cols-2 gap-6 mb-12">
-              {featuredPosts.map((post, index) => (
-                <motion.article key={post.slug} initial={{ opacity: 0, y: 20 }} whileInView={{ opacity: 1, y: 0 }} viewport={{ once: true }} transition={{ duration: 0.6, delay: index * 0.1 }} whileHover={{ y: -5 }} className="group relative p-8 rounded-3xl bg-card/50 border border-foreground/10 backdrop-blur-sm hover:border-hydro/30 transition-all duration-300">
-                  <span className="absolute top-6 right-6 px-3 py-1 rounded-full text-xs bg-gradient-to-r from-hydro/20 to-blaze/20 text-foreground border border-foreground/10">Featured</span>
-                  <span className={`inline-block px-3 py-1 rounded-full text-xs border ${getCategoryColor(post.category)} mb-4`}>{post.category}</span>
-                  <h2 className="font-display text-2xl font-bold mb-3 group-hover:text-hydro transition-colors duration-300">{post.title}</h2>
-                  <p className="text-muted-foreground mb-6">{post.excerpt}</p>
-                  <div className="flex items-center gap-4 text-sm text-muted-foreground">
-                    <span>{post.date}</span><span>•</span><span>{post.readTime}</span>
+            {loading ? (
+              <div className="grid sm:grid-cols-2 lg:grid-cols-3 gap-6">
+                {[1, 2, 3, 4, 5, 6].map(i => (
+                  <div key={i} className="rounded-2xl bg-card/50 border border-foreground/10 overflow-hidden animate-pulse">
+                    <div className="h-48 bg-foreground/5" />
+                    <div className="p-6 space-y-3">
+                      <div className="h-4 bg-foreground/5 rounded w-1/3" />
+                      <div className="h-5 bg-foreground/5 rounded w-full" />
+                      <div className="h-4 bg-foreground/5 rounded w-2/3" />
+                    </div>
                   </div>
-                </motion.article>
-              ))}
-            </div>
+                ))}
+              </div>
+            ) : posts.length === 0 ? (
+              <div className="text-center py-20">
+                <p className="text-muted-foreground text-lg mb-4">No posts found.</p>
+                <a href={BLOG_URL} target="_blank" rel="noopener noreferrer" className="text-hydro hover:underline">
+                  Visit blog directly →
+                </a>
+              </div>
+            ) : (
+              <>
+                {/* Featured */}
+                <div className="grid md:grid-cols-2 gap-6 mb-12">
+                  {featuredPosts.map((post, index) => (
+                    <motion.article key={post.slug} initial={{ opacity: 0, y: 20 }} whileInView={{ opacity: 1, y: 0 }} viewport={{ once: true }} transition={{ duration: 0.6, delay: index * 0.1 }} className="group">
+                      <a href={`${BLOG_URL}/${post.slug}`} target="_blank" rel="noopener noreferrer" className="block relative rounded-3xl bg-card/50 border border-foreground/10 backdrop-blur-sm overflow-hidden hover:border-hydro/30 transition-all duration-300 hover:-translate-y-1 h-full">
+                        <span className="absolute top-6 right-6 z-10 px-3 py-1 rounded-full text-xs bg-gradient-to-r from-hydro/20 to-blaze/20 text-foreground border border-foreground/10">Featured</span>
+                        {post.coverImage?.url ? (
+                          <div className="h-56 overflow-hidden">
+                            <img src={post.coverImage.url} alt={post.title} loading="lazy" className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500" />
+                          </div>
+                        ) : (
+                          <div className="h-56 bg-gradient-to-br from-hydro/20 to-blaze/20" />
+                        )}
+                        <div className="p-8">
+                          {post.tags?.[0] && (
+                            <span className={`inline-block px-3 py-1 rounded-full text-xs border ${getCategoryColor(post.tags[0].name)} mb-4`}>{post.tags[0].name}</span>
+                          )}
+                          <h2 className="font-display text-2xl font-bold mb-3 group-hover:text-hydro transition-colors duration-300">{post.title}</h2>
+                          <p className="text-muted-foreground mb-6 line-clamp-2">{post.brief}</p>
+                          <div className="flex items-center gap-2 text-sm text-muted-foreground">
+                            <Calendar className="w-3.5 h-3.5" />
+                            <time dateTime={post.publishedAt}>{formatDate(post.publishedAt)}</time>
+                          </div>
+                        </div>
+                      </a>
+                    </motion.article>
+                  ))}
+                </div>
 
-            <div className="grid sm:grid-cols-2 lg:grid-cols-3 gap-6">
-              {regularPosts.map((post, index) => (
-                <motion.article key={post.slug} initial={{ opacity: 0, y: 20 }} whileInView={{ opacity: 1, y: 0 }} viewport={{ once: true }} transition={{ duration: 0.6, delay: index * 0.1 }} whileHover={{ y: -5 }} className="group p-6 rounded-2xl bg-card/50 border border-foreground/10 backdrop-blur-sm hover:border-hydro/30 transition-all duration-300">
-                  <span className={`inline-block px-3 py-1 rounded-full text-xs border ${getCategoryColor(post.category)} mb-4`}>{post.category}</span>
-                  <h3 className="font-display text-lg font-semibold mb-2 group-hover:text-hydro transition-colors duration-300">{post.title}</h3>
-                  <p className="text-muted-foreground text-sm mb-4 line-clamp-2">{post.excerpt}</p>
-                  <div className="flex items-center gap-3 text-xs text-muted-foreground">
-                    <span>{post.date}</span><span>•</span><span>{post.readTime}</span>
-                  </div>
-                </motion.article>
-              ))}
-            </div>
+                {/* Regular */}
+                <div className="grid sm:grid-cols-2 lg:grid-cols-3 gap-6">
+                  {regularPosts.map((post, index) => (
+                    <motion.article key={post.slug} initial={{ opacity: 0, y: 20 }} whileInView={{ opacity: 1, y: 0 }} viewport={{ once: true }} transition={{ duration: 0.6, delay: index * 0.1 }} className="group">
+                      <a href={`${BLOG_URL}/${post.slug}`} target="_blank" rel="noopener noreferrer" className="block rounded-2xl bg-card/50 border border-foreground/10 backdrop-blur-sm overflow-hidden hover:border-hydro/30 transition-all duration-300 hover:-translate-y-1 h-full">
+                        {post.coverImage?.url ? (
+                          <div className="h-48 overflow-hidden">
+                            <img src={post.coverImage.url} alt={post.title} loading="lazy" className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500" />
+                          </div>
+                        ) : (
+                          <div className="h-48 bg-gradient-to-br from-hydro/20 to-blaze/20 flex items-center justify-center">
+                            <span className="text-4xl font-display font-bold text-foreground/10">HB</span>
+                          </div>
+                        )}
+                        <div className="p-6">
+                          {post.tags?.[0] && (
+                            <span className={`inline-block px-3 py-1 rounded-full text-xs border ${getCategoryColor(post.tags[0].name)} mb-3`}>{post.tags[0].name}</span>
+                          )}
+                          <h3 className="font-display text-lg font-semibold mb-2 group-hover:text-hydro transition-colors duration-300 line-clamp-2">{post.title}</h3>
+                          <p className="text-muted-foreground text-sm mb-4 line-clamp-2">{post.brief}</p>
+                          <div className="flex items-center justify-between">
+                            <div className="flex items-center gap-2 text-xs text-muted-foreground">
+                              <Calendar className="w-3 h-3" />
+                              <time dateTime={post.publishedAt}>{formatDate(post.publishedAt)}</time>
+                            </div>
+                            <span className="inline-flex items-center gap-1 text-xs font-medium text-hydro group-hover:gap-2 transition-all duration-300">
+                              Read <ArrowRight className="w-3 h-3" />
+                            </span>
+                          </div>
+                        </div>
+                      </a>
+                    </motion.article>
+                  ))}
+                </div>
+              </>
+            )}
 
+            {/* Newsletter CTA */}
             <motion.div initial={{ opacity: 0, y: 20 }} whileInView={{ opacity: 1, y: 0 }} viewport={{ once: true }} transition={{ duration: 0.6 }} className="mt-20 text-center p-8 md:p-12 rounded-3xl bg-gradient-to-br from-hydro/10 to-blaze/10 border border-foreground/10">
               <h3 className="font-display text-2xl md:text-3xl font-bold mb-4">Get insights in your inbox</h3>
               <p className="text-muted-foreground mb-6 max-w-xl mx-auto">Weekly breakdowns on strategy, creative, and growth. No spam, just value.</p>
@@ -95,7 +191,7 @@ const Blog = () => {
             </motion.div>
           </div>
         </section>
-        
+
         <Footer />
       </main>
     </PageTransition>
