@@ -23,6 +23,7 @@ const Index = () => {
             <Hero />
             <TrustMarquee />
             <PagePreviewSection />
+            <BlogSection />
             <Footer />
           </main>
         </>
