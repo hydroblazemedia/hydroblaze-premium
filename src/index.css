@@ -220,6 +220,55 @@
   }
 }
 
+/* Light mode overrides for elements using foreground opacity borders/backgrounds */
+.light .noise-overlay {
+  @apply opacity-[0.015];
+}
+
+/* Strengthen fractional foreground borders in light mode */
+.light [class*="border-foreground/5"] {
+  border-color: hsl(220 20% 78%) !important;
+}
+.light [class*="border-foreground/10"] {
+  border-color: hsl(220 20% 75%) !important;
+}
+.light [class*="border-foreground/[0.06]"],
+.light [class*="border-foreground/[0.1]"] {
+  border-color: hsl(220 20% 78%) !important;
+}
+
+/* Fix semi-transparent card backgrounds in light mode */
+.light [class*="bg-card/50"],
+.light [class*="bg-card/95"] {
+  background-color: hsl(0 0% 100%) !important;
+  box-shadow: 0 2px 8px -2px hsl(220 40% 16% / 0.06), 0 4px 16px -4px hsl(220 40% 16% / 0.08);
+}
+
+/* Fix semi-transparent background colors */
+.light [class*="bg-background/50"],
+.light [class*="bg-background/90"] {
+  background-color: hsl(220 20% 96% / 0.95) !important;
+}
+
+/* Navbar glass effect for light mode */
+.light nav {
+  background: hsl(0 0% 100% / 0.85) !important;
+  border-color: hsl(220 20% 78%) !important;
+  box-shadow: 0 2px 16px -4px hsl(220 40% 16% / 0.08) !important;
+}
+
+/* Service comparison table */
+.light [class*="bg-white/5"],
+.light [class*="bg-white/\\[0.02\\]"] {
+  background-color: hsl(220 20% 96%) !important;
+}
+.light [class*="border-white/5"],
+.light [class*="border-white/10"],
+.light [class*="border-white/\\[0.08\\]"],
+.light [class*="border-white/\\[0.15\\]"] {
+  border-color: hsl(220 20% 78%) !important;
+}
+
 @layer utilities {
   .font-display {
     font-family: var(--font-display);
