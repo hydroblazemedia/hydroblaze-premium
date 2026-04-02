@@ -154,16 +154,20 @@
   
   /* Glassmorphism */
   .glass {
-    @apply bg-white/5 backdrop-blur-xl border border-white/10;
+    @apply backdrop-blur-xl border;
+    background: hsl(var(--foreground) / 0.05);
+    border-color: hsl(var(--foreground) / 0.1);
   }
   
   .glass-card {
-    @apply bg-black/40 backdrop-blur-xl border border-white/10 rounded-2xl;
+    @apply backdrop-blur-xl border rounded-2xl;
+    background: hsl(var(--card));
+    border-color: hsl(var(--foreground) / 0.1);
     transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
   }
   
   .glass-card:hover {
-    @apply border-white/20;
+    border-color: hsl(var(--foreground) / 0.2);
     transform: translateY(-8px);
     box-shadow: var(--shadow-card);
   }
