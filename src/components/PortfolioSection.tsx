@@ -189,17 +189,36 @@ const ProjectDetail = ({ project, onClose }: { project: Project; onClose: () => 
             </div>
           </div>
 
+          {/* What We Did */}
+          <div>
+            <h3 className="font-display text-lg font-semibold mb-4">What We Did</h3>
+            <div className="space-y-3">
+              {project.whatWeDid.map((item, i) => (
+                <motion.div
+                  key={i}
+                  initial={{ opacity: 0, x: -20 }}
+                  animate={{ opacity: 1, x: 0 }}
+                  transition={{ delay: 0.2 + i * 0.1 }}
+                  className="flex items-start gap-3"
+                >
+                  <CheckCircle2 className="w-4 h-4 text-hydro mt-0.5 shrink-0" />
+                  <p className="text-muted-foreground text-sm">{item}</p>
+                </motion.div>
+              ))}
+            </div>
+          </div>
+
           {/* Strategy */}
           <div>
             <h3 className="font-display text-lg font-semibold mb-3">Marketing Strategy</h3>
             <p className="text-muted-foreground text-sm leading-relaxed">{project.details.strategy}</p>
           </div>
 
-          {/* Results */}
+          {/* Impact */}
           <div>
-            <h3 className="font-display text-lg font-semibold mb-5">Results & Impact</h3>
-            <div className="grid grid-cols-2 md:grid-cols-4 gap-4">
-              {project.details.results.map((result, i) => (
+            <h3 className="font-display text-lg font-semibold mb-5">Impact</h3>
+            <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
+              {project.impact.map((item, i) => (
                 <motion.div
                   key={i}
                   initial={{ opacity: 0, y: 20 }}
@@ -207,9 +226,8 @@ const ProjectDetail = ({ project, onClose }: { project: Project; onClose: () => 
                   transition={{ delay: 0.2 + i * 0.1 }}
                   className="text-center p-5 rounded-2xl bg-background/50 border border-foreground/5"
                 >
-                  <result.icon className="w-5 h-5 text-hydro mx-auto mb-2" />
-                  <p className="font-display text-2xl md:text-3xl font-bold text-gradient">{result.value}</p>
-                  <p className="text-[11px] uppercase tracking-wider text-muted-foreground mt-1">{result.label}</p>
+                  <TrendingUp className="w-5 h-5 text-hydro mx-auto mb-2" />
+                  <p className="font-display text-sm font-semibold text-gradient">{item}</p>
                 </motion.div>
               ))}
             </div>
