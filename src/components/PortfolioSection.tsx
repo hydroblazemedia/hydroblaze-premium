@@ -430,32 +430,21 @@ const PortfolioSection = () => {
         </div>
       </div>
 
-      {/* ── Testimonials ── */}
+      {/* ── What This Means ── */}
       <div className="px-6 md:px-12 lg:px-16 pb-20">
-        <div className="max-w-6xl mx-auto">
-          <motion.div initial={{ opacity: 0, y: 20 }} whileInView={{ opacity: 1, y: 0 }} viewport={{ once: true }} className="mb-10">
-            <h2 className="font-display text-3xl md:text-4xl font-bold">Client <span className="text-gradient">Testimonials</span></h2>
+        <div className="max-w-4xl mx-auto">
+          <motion.div initial={{ opacity: 0, y: 20 }} whileInView={{ opacity: 1, y: 0 }} viewport={{ once: true }} className="text-center">
+            <div className="p-8 md:p-12 rounded-3xl bg-card/50 border border-foreground/5">
+              <span className="text-3xl mb-4 block">💡</span>
+              <h2 className="font-display text-2xl md:text-3xl font-bold mb-4">What This Means <span className="text-gradient">for You</span></h2>
+              <p className="text-muted-foreground text-base md:text-lg leading-relaxed mb-6">
+                Whether you're a local business, restaurant, or fashion brand — we build growth systems that bring real customers, not just likes.
+              </p>
+              <p className="font-display text-lg font-semibold text-gradient">
+                Strategy + Creatives + Performance = Revenue Growth
+              </p>
+            </div>
           </motion.div>
-
-          <div className="grid md:grid-cols-3 gap-6">
-            {testimonials.map((t, i) => (
-              <motion.div
-                key={i}
-                initial={{ opacity: 0, y: 20 }}
-                whileInView={{ opacity: 1, y: 0 }}
-                viewport={{ once: true }}
-                transition={{ delay: i * 0.1 }}
-                className="p-6 md:p-8 rounded-2xl bg-card/50 border border-foreground/5 hover:border-hydro/10 transition-colors duration-500"
-              >
-                <Quote className="w-8 h-8 text-hydro/30 mb-4" />
-                <p className="text-foreground/80 text-sm leading-relaxed mb-6">"{t.quote}"</p>
-                <div>
-                  <p className="font-display font-semibold text-sm">{t.name}</p>
-                  <p className="text-muted-foreground text-xs">{t.business}</p>
-                </div>
-              </motion.div>
-            ))}
-          </div>
         </div>
       </div>
 
