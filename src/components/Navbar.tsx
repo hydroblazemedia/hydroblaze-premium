@@ -63,6 +63,7 @@ const Navbar = () => {
                 {link.label}
               </Link>
             ))}
+            <ThemeToggle />
             <button onClick={() => openContact("Start Project")} className="hidden md:block group relative px-5 py-2.5 rounded-full text-sm border border-foreground/20 text-foreground transition-all duration-300 hover:border-blaze hover:shadow-[0_0_20px_hsl(var(--blaze)/0.4)]">
               Start Project
             </button>
