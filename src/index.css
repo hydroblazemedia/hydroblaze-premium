@@ -62,43 +62,46 @@
   }
 
   .light {
-    --hydro: 197 100% 40%;
-    --hydro-glow: 197 100% 50%;
-    --blaze: 16 100% 45%;
-    --blaze-glow: 12 100% 50%;
+    --hydro: 197 100% 35%;
+    --hydro-glow: 197 100% 45%;
+    --blaze: 16 100% 42%;
+    --blaze-glow: 12 100% 48%;
     
-    --background: 0 0% 98%;
+    --background: 220 20% 97%;
     --background-elevated: 0 0% 100%;
-    --foreground: 220 25% 10%;
+    --foreground: 220 30% 12%;
     
     --card: 0 0% 100%;
-    --card-foreground: 220 25% 10%;
+    --card-foreground: 220 30% 12%;
     
     --popover: 0 0% 100%;
-    --popover-foreground: 220 25% 10%;
+    --popover-foreground: 220 30% 12%;
     
-    --primary: 197 100% 40%;
+    --primary: 197 100% 35%;
     --primary-foreground: 0 0% 100%;
     
-    --secondary: 16 100% 45%;
+    --secondary: 16 100% 42%;
     --secondary-foreground: 0 0% 100%;
     
-    --muted: 220 15% 92%;
-    --muted-foreground: 215 20% 45%;
+    --muted: 220 20% 92%;
+    --muted-foreground: 215 25% 40%;
     
-    --accent: 220 15% 95%;
-    --accent-foreground: 220 25% 10%;
+    --accent: 220 20% 94%;
+    --accent-foreground: 220 30% 12%;
     
     --destructive: 0 84% 55%;
     --destructive-foreground: 0 0% 100%;
     
-    --border: 220 15% 88%;
-    --input: 220 15% 88%;
-    --ring: 197 100% 40%;
+    --border: 220 20% 82%;
+    --input: 220 20% 85%;
+    --ring: 197 100% 35%;
     
-    --gradient-hydro-blaze: linear-gradient(135deg, hsl(197 100% 40%) 0%, hsl(220 25% 10%) 50%, hsl(16 100% 45%) 100%);
-    --gradient-surface: linear-gradient(180deg, hsl(0 0% 96%) 0%, hsl(0 0% 100%) 100%);
-    --shadow-card: 0 25px 50px -12px hsl(0 0% 0% / 0.1);
+    --gradient-hydro-blaze: linear-gradient(135deg, hsl(197 100% 35%) 0%, hsl(220 30% 12%) 50%, hsl(16 100% 42%) 100%);
+    --gradient-surface: linear-gradient(180deg, hsl(220 20% 95%) 0%, hsl(0 0% 100%) 100%);
+    --shadow-card: 0 4px 20px -4px hsl(220 30% 12% / 0.08), 0 1px 3px hsl(220 30% 12% / 0.06);
+    --shadow-hydro: 0 0 40px -10px hsl(var(--hydro) / 0.25);
+    --shadow-blaze: 0 0 40px -10px hsl(var(--blaze) / 0.25);
+    --shadow-glow: 0 0 30px -8px hsl(var(--hydro) / 0.15), 0 0 30px -8px hsl(var(--blaze) / 0.15);
   }
 
   .dark {
