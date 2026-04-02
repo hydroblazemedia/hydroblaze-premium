@@ -4,6 +4,7 @@ import { Link, useLocation } from 'react-router-dom';
 import { Menu, X } from 'lucide-react';
 import logo from '@/assets/logo.png';
 import { useContactDialog } from '@/components/ContactFormDialog';
+import ThemeToggle from '@/components/ThemeToggle';
 
 const navLinks = [
   { path: '/services', label: 'Services' },
