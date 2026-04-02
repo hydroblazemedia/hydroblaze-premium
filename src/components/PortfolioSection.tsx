@@ -1,32 +1,32 @@
 import { useState } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
-import { ArrowRight, Sparkles, MessageCircle, X, TrendingUp, Users, BarChart3, Eye, Target, Megaphone, Palette, Globe, Zap, Quote } from 'lucide-react';
+import { ArrowRight, Sparkles, MessageCircle, X, TrendingUp, Users, BarChart3, Eye, Target, Megaphone, Palette, Globe, Zap, Quote, CheckCircle2 } from 'lucide-react';
 import { useContactDialog } from '@/components/ContactFormDialog';
 
-import imgSocial from '@/assets/portfolio-social-campaign.jpg';
-import imgAds from '@/assets/portfolio-paid-ads.jpg';
-import imgWebsite from '@/assets/portfolio-website.jpg';
-import imgBranding from '@/assets/portfolio-branding.jpg';
-import imgLeadgen from '@/assets/portfolio-leadgen.jpg';
-import imgEcommerce from '@/assets/portfolio-ecommerce.jpg';
+import imgCultfit from '@/assets/portfolio-cultfit.jpg';
+import imgBlrkabab from '@/assets/portfolio-blrkabab.jpg';
+import imgAayara from '@/assets/portfolio-aayara.jpg';
 
-const categories = ['All', 'Social Media', 'Paid Advertising', 'Website Design', 'Content Creation', 'Lead Generation'] as const;
+const categories = ['All', 'Lead Generation', 'Social Media', 'Brand Building'] as const;
 type Category = typeof categories[number];
 
 interface Project {
   id: number;
   title: string;
+  emoji: string;
   category: Category;
   service: string;
   description: string;
+  objective: string;
   image: string;
   featured?: boolean;
+  whatWeDid: string[];
+  impact: string[];
   details: {
     industry: string;
     services: string[];
     objective: string;
     results: { label: string; value: string; icon: typeof TrendingUp }[];
-    visuals: string[];
     strategy: string;
   };
 }
@@ -34,151 +34,105 @@ interface Project {
 const projects: Project[] = [
   {
     id: 1,
-    title: 'E-Commerce Growth Campaign',
-    category: 'Paid Advertising',
-    service: 'Meta & Google Ads',
-    description: 'Scaled an e-commerce brand from ₹2L to ₹15L monthly revenue through strategic paid advertising.',
-    image: imgEcommerce,
+    title: 'Cult.fit – Rajajinagar',
+    emoji: '🏋️',
+    category: 'Lead Generation',
+    service: 'Performance Marketing & Lead Gen',
+    description: 'Increased walk-ins & memberships for a highly competitive fitness location through localized Meta Ads and high-converting funnels.',
+    objective: 'Increase walk-ins & memberships for a highly competitive fitness location',
+    image: imgCultfit,
     featured: true,
+    whatWeDid: [
+      'Localized Meta Ads targeting nearby fitness audience',
+      'High-converting lead generation funnels',
+      'Content strategy focused on transformation + social proof',
+      'Performance creatives highlighting offers, trainers, and facilities',
+    ],
+    impact: [
+      'Consistent flow of qualified leads',
+      'Improved cost per lead efficiency',
+      'Stronger local brand visibility',
+    ],
     details: {
-      industry: 'E-Commerce / Fashion',
-      services: ['Meta Ads', 'Google Ads', 'Conversion Tracking', 'A/B Testing'],
-      objective: 'Increase online sales and reduce cost per acquisition through optimized paid campaigns.',
+      industry: 'Fitness & Wellness',
+      services: ['Meta Ads', 'Lead Generation Funnels', 'Content Strategy', 'Performance Creatives'],
+      objective: 'Increase walk-ins & memberships for a highly competitive fitness location',
       results: [
-        { label: 'Revenue Growth', value: '650%', icon: TrendingUp },
-        { label: 'ROAS', value: '5.2x', icon: BarChart3 },
-        { label: 'Leads Generated', value: '2,400+', icon: Users },
-        { label: 'Cost Reduction', value: '45%', icon: Target },
+        { label: 'Qualified Leads', value: 'Consistent', icon: Users },
+        { label: 'CPL Efficiency', value: 'Improved', icon: Target },
+        { label: 'Brand Visibility', value: 'Stronger', icon: Eye },
+        { label: 'Walk-ins', value: 'Increased', icon: TrendingUp },
       ],
-      visuals: ['Ad creatives', 'Campaign dashboards', 'Performance reports'],
-      strategy: 'We implemented a full-funnel advertising strategy with lookalike audiences, retargeting sequences, and dynamic product ads across Meta and Google platforms.',
+      strategy: 'We implemented localized Meta Ads targeting nearby fitness audiences, combined with high-converting lead generation funnels and a content strategy focused on transformation stories and social proof.',
     },
   },
   {
     id: 2,
-    title: 'Restaurant Chain Social Media',
+    title: 'BLR Kabab',
+    emoji: '🍢',
     category: 'Social Media',
-    service: 'Social Media Management',
-    description: 'Built a 50K+ engaged community for a restaurant chain through strategic content and community management.',
-    image: imgSocial,
+    service: 'Social Media & Ad Campaigns',
+    description: 'Drove online orders & built a strong food brand presence through scroll-stopping content and hyperlocal ad campaigns.',
+    objective: 'Drive online orders & build a strong food brand presence',
+    image: imgBlrkabab,
     featured: true,
+    whatWeDid: [
+      'Scroll-stopping food content & reels',
+      'Hyperlocal ad campaigns for order generation',
+      'Offer-based creatives to boost conversion rate',
+      'Consistent branding across all platforms',
+    ],
+    impact: [
+      'Increased daily order volume',
+      'Higher engagement & repeat customers',
+      'Strong positioning as a go-to kebab brand',
+    ],
     details: {
       industry: 'Food & Beverage',
-      services: ['Content Strategy', 'Community Management', 'Influencer Marketing', 'Reels & Stories'],
-      objective: 'Build brand awareness and drive foot traffic through engaging social media presence.',
+      services: ['Content Creation', 'Reels & Stories', 'Hyperlocal Ads', 'Brand Consistency'],
+      objective: 'Drive online orders & build a strong food brand presence',
       results: [
-        { label: 'Follower Growth', value: '380%', icon: Users },
-        { label: 'Engagement Rate', value: '8.5%', icon: TrendingUp },
-        { label: 'Monthly Reach', value: '500K+', icon: Eye },
-        { label: 'Store Visits', value: '2x', icon: Target },
+        { label: 'Daily Orders', value: 'Increased', icon: TrendingUp },
+        { label: 'Engagement', value: 'Higher', icon: BarChart3 },
+        { label: 'Repeat Customers', value: 'Growing', icon: Users },
+        { label: 'Brand Position', value: 'Strong', icon: Target },
       ],
-      visuals: ['Social media posts', 'Instagram reels', 'Story highlights'],
-      strategy: 'Created a content calendar focused on food photography, behind-the-scenes content, and user-generated content campaigns to build authentic community engagement.',
+      strategy: 'Created scroll-stopping food content and reels, paired with hyperlocal ad campaigns and offer-based creatives to drive orders and build a recognizable food brand.',
     },
   },
   {
     id: 3,
-    title: 'SaaS Website Redesign',
-    category: 'Website Design',
-    service: 'Website & Landing Page Design',
-    description: 'Redesigned a SaaS platform website resulting in 3x more demo bookings and reduced bounce rate.',
-    image: imgWebsite,
+    title: 'Aayara Boutique',
+    emoji: '👗',
+    category: 'Brand Building',
+    service: 'Brand Strategy & Digital Presence',
+    description: 'Launched and established a premium boutique brand from scratch with complete brand positioning and aesthetic-first social media.',
+    objective: 'Launch and establish a premium boutique brand from scratch',
+    image: imgAayara,
     featured: true,
+    whatWeDid: [
+      'Complete brand positioning & identity development',
+      'Premium content strategy aligned with target audience',
+      'Social media setup with aesthetic-first approach',
+      'Funnel planning for lead generation & conversions',
+    ],
+    impact: [
+      'Strong brand foundation before launch',
+      'Clear premium positioning in market',
+      'Ready-to-scale digital presence',
+    ],
     details: {
-      industry: 'Technology / SaaS',
-      services: ['Website Design', 'UI/UX', 'Landing Pages', 'SEO Optimization'],
-      objective: 'Increase conversion rate and improve user experience for a B2B SaaS platform.',
+      industry: 'Fashion & Retail',
+      services: ['Brand Identity', 'Content Strategy', 'Social Media Setup', 'Funnel Planning'],
+      objective: 'Launch and establish a premium boutique brand from scratch',
       results: [
-        { label: 'Demo Bookings', value: '3x', icon: TrendingUp },
-        { label: 'Bounce Rate', value: '-52%', icon: BarChart3 },
-        { label: 'Page Speed', value: '95/100', icon: Zap },
-        { label: 'Organic Traffic', value: '+180%', icon: Eye },
+        { label: 'Brand Foundation', value: 'Strong', icon: Palette },
+        { label: 'Market Position', value: 'Premium', icon: Target },
+        { label: 'Digital Presence', value: 'Scalable', icon: Globe },
+        { label: 'Conversions', value: 'Ready', icon: TrendingUp },
       ],
-      visuals: ['Website mockups', 'Responsive designs', 'UI components'],
-      strategy: 'Implemented a conversion-centered design approach with clear CTAs, social proof sections, and optimized page load performance.',
+      strategy: 'Developed complete brand positioning and identity, combined with a premium content strategy, aesthetic-first social media presence, and conversion funnel planning.',
     },
-  },
-  {
-    id: 4,
-    title: 'Real Estate Brand Identity',
-    category: 'Content Creation',
-    service: 'Branding & Content Creation',
-    description: 'Complete brand identity and content system for a premium real estate developer.',
-    image: imgBranding,
-    featured: true,
-    details: {
-      industry: 'Real Estate',
-      services: ['Brand Identity', 'Content Creation', 'Video Production', 'Marketing Collateral'],
-      objective: 'Establish a premium brand identity that attracts high-net-worth buyers.',
-      results: [
-        { label: 'Brand Recall', value: '4x', icon: Eye },
-        { label: 'Lead Quality', value: '+85%', icon: Users },
-        { label: 'Content Pieces', value: '200+', icon: Palette },
-        { label: 'Engagement', value: '+320%', icon: TrendingUp },
-      ],
-      visuals: ['Brand guidelines', 'Social media templates', 'Video content'],
-      strategy: 'Developed a cohesive visual identity with premium photography, cinematic property tours, and a consistent content system across all touchpoints.',
-    },
-  },
-  {
-    id: 5,
-    title: 'Healthcare Lead Funnel',
-    category: 'Lead Generation',
-    service: 'Lead Generation Funnels',
-    description: 'Built an automated lead generation system generating 300+ qualified leads monthly for a healthcare clinic.',
-    image: imgLeadgen,
-    details: {
-      industry: 'Healthcare',
-      services: ['Funnel Design', 'Landing Pages', 'Email Automation', 'WhatsApp Integration'],
-      objective: 'Create a scalable lead generation system with automated nurturing sequences.',
-      results: [
-        { label: 'Monthly Leads', value: '300+', icon: Users },
-        { label: 'Conversion Rate', value: '12%', icon: TrendingUp },
-        { label: 'Cost Per Lead', value: '-60%', icon: Target },
-        { label: 'Booking Rate', value: '35%', icon: BarChart3 },
-      ],
-      visuals: ['Landing pages', 'Funnel flow', 'Automation sequences'],
-      strategy: 'Designed a multi-step funnel with targeted landing pages, WhatsApp automation, and email nurture sequences to convert cold traffic into booked appointments.',
-    },
-  },
-  {
-    id: 6,
-    title: 'Fitness Brand Paid Campaign',
-    category: 'Paid Advertising',
-    service: 'Meta & Google Ads',
-    description: 'Drove 1,000+ gym memberships through a hyper-targeted Meta and Google advertising campaign.',
-    image: imgAds,
-    details: {
-      industry: 'Fitness & Wellness',
-      services: ['Meta Ads', 'Google Ads', 'Lead Ads', 'Retargeting'],
-      objective: 'Generate membership sign-ups at scale while maintaining profitable unit economics.',
-      results: [
-        { label: 'Memberships', value: '1,000+', icon: Users },
-        { label: 'ROAS', value: '4.8x', icon: TrendingUp },
-        { label: 'CPL Reduced', value: '55%', icon: Target },
-        { label: 'Ad Reach', value: '2M+', icon: Megaphone },
-      ],
-      visuals: ['Ad creatives', 'Campaign analytics', 'Performance reports'],
-      strategy: 'Implemented geo-targeted campaigns with compelling video ads, social proof elements, and limited-time offer sequences to drive urgency.',
-    },
-  },
-];
-
-const testimonials = [
-  {
-    quote: "HydroBlaze Media helped us generate consistent leads through their advertising campaigns. Their team truly understands performance marketing.",
-    name: "Rahul Sharma",
-    business: "TechStart Solutions",
-  },
-  {
-    quote: "Our social media presence went from zero to hero. The content quality and engagement strategies they implemented were outstanding.",
-    name: "Priya Mehta",
-    business: "Flavor Street Restaurants",
-  },
-  {
-    quote: "The website they designed for us completely transformed our online presence. Demo bookings increased 3x within the first month.",
-    name: "Arjun Patel",
-    business: "CloudSync SaaS",
   },
 ];
 
