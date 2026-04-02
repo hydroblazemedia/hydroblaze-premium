@@ -62,43 +62,46 @@
   }
 
   .light {
-    --hydro: 197 100% 40%;
-    --hydro-glow: 197 100% 50%;
-    --blaze: 16 100% 45%;
-    --blaze-glow: 12 100% 50%;
+    --hydro: 197 100% 32%;
+    --hydro-glow: 197 100% 42%;
+    --blaze: 16 100% 40%;
+    --blaze-glow: 12 100% 46%;
     
-    --background: 0 0% 98%;
+    --background: 220 20% 96%;
     --background-elevated: 0 0% 100%;
-    --foreground: 220 25% 10%;
+    --foreground: 220 40% 16%;
     
     --card: 0 0% 100%;
-    --card-foreground: 220 25% 10%;
+    --card-foreground: 220 40% 16%;
     
     --popover: 0 0% 100%;
-    --popover-foreground: 220 25% 10%;
+    --popover-foreground: 220 40% 16%;
     
-    --primary: 197 100% 40%;
+    --primary: 197 100% 32%;
     --primary-foreground: 0 0% 100%;
     
-    --secondary: 16 100% 45%;
+    --secondary: 16 100% 40%;
     --secondary-foreground: 0 0% 100%;
     
-    --muted: 220 15% 92%;
-    --muted-foreground: 215 20% 45%;
+    --muted: 220 20% 91%;
+    --muted-foreground: 215 25% 38%;
     
-    --accent: 220 15% 95%;
-    --accent-foreground: 220 25% 10%;
+    --accent: 220 20% 93%;
+    --accent-foreground: 220 40% 16%;
     
     --destructive: 0 84% 55%;
     --destructive-foreground: 0 0% 100%;
     
-    --border: 220 15% 88%;
-    --input: 220 15% 88%;
-    --ring: 197 100% 40%;
+    --border: 220 20% 78%;
+    --input: 220 20% 82%;
+    --ring: 197 100% 32%;
     
-    --gradient-hydro-blaze: linear-gradient(135deg, hsl(197 100% 40%) 0%, hsl(220 25% 10%) 50%, hsl(16 100% 45%) 100%);
-    --gradient-surface: linear-gradient(180deg, hsl(0 0% 96%) 0%, hsl(0 0% 100%) 100%);
-    --shadow-card: 0 25px 50px -12px hsl(0 0% 0% / 0.1);
+    --gradient-hydro-blaze: linear-gradient(135deg, hsl(197 100% 32%) 0%, hsl(220 40% 16%) 50%, hsl(16 100% 40%) 100%);
+    --gradient-surface: linear-gradient(180deg, hsl(220 20% 94%) 0%, hsl(0 0% 100%) 100%);
+    --shadow-card: 0 2px 8px -2px hsl(220 40% 16% / 0.06), 0 4px 16px -4px hsl(220 40% 16% / 0.08);
+    --shadow-hydro: 0 0 40px -10px hsl(var(--hydro) / 0.2);
+    --shadow-blaze: 0 0 40px -10px hsl(var(--blaze) / 0.2);
+    --shadow-glow: 0 0 30px -8px hsl(var(--hydro) / 0.12), 0 0 30px -8px hsl(var(--blaze) / 0.12);
   }
 
   .dark {
@@ -154,28 +157,27 @@
   
   /* Glassmorphism */
   .glass {
-    @apply backdrop-blur-xl border;
-    background: hsl(var(--foreground) / 0.05);
-    border-color: hsl(var(--foreground) / 0.1);
+    @apply backdrop-blur-xl border border-border;
+    background: hsl(var(--card));
   }
   
   .glass-card {
-    @apply backdrop-blur-xl border rounded-2xl;
+    @apply backdrop-blur-xl border border-border rounded-2xl;
     background: hsl(var(--card));
-    border-color: hsl(var(--foreground) / 0.1);
+    box-shadow: var(--shadow-card);
     transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
   }
   
   .glass-card:hover {
-    border-color: hsl(var(--foreground) / 0.2);
+    border-color: hsl(var(--hydro) / 0.3);
     transform: translateY(-8px);
-    box-shadow: var(--shadow-card);
+    box-shadow: var(--shadow-card), 0 0 20px -8px hsl(var(--hydro) / 0.15);
   }
   
   /* Premium button styles */
   .btn-primary {
     @apply relative px-8 py-4 rounded-full font-display font-semibold text-foreground;
-    @apply border border-white/20 bg-black/30 backdrop-blur-sm;
+    @apply border border-border bg-card/80 backdrop-blur-sm;
     @apply overflow-hidden transition-all duration-400;
   }
   
@@ -216,6 +218,55 @@
     @apply fixed inset-0 pointer-events-none z-50 opacity-[0.03];
     background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noise'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noise)'/%3E%3C/svg%3E");
   }
+}
+
+/* Light mode overrides for elements using foreground opacity borders/backgrounds */
+.light .noise-overlay {
+  @apply opacity-[0.015];
+}
+
+/* Strengthen fractional foreground borders in light mode */
+.light [class*="border-foreground/5"] {
+  border-color: hsl(220 20% 78%) !important;
+}
+.light [class*="border-foreground/10"] {
+  border-color: hsl(220 20% 75%) !important;
+}
+.light [class*="border-foreground/[0.06]"],
+.light [class*="border-foreground/[0.1]"] {
+  border-color: hsl(220 20% 78%) !important;
+}
+
+/* Fix semi-transparent card backgrounds in light mode */
+.light [class*="bg-card/50"],
+.light [class*="bg-card/95"] {
+  background-color: hsl(0 0% 100%) !important;
+  box-shadow: 0 2px 8px -2px hsl(220 40% 16% / 0.06), 0 4px 16px -4px hsl(220 40% 16% / 0.08);
+}
+
+/* Fix semi-transparent background colors */
+.light [class*="bg-background/50"],
+.light [class*="bg-background/90"] {
+  background-color: hsl(220 20% 96% / 0.95) !important;
+}
+
+/* Navbar glass effect for light mode */
+.light nav {
+  background: hsl(0 0% 100% / 0.85) !important;
+  border-color: hsl(220 20% 78%) !important;
+  box-shadow: 0 2px 16px -4px hsl(220 40% 16% / 0.08) !important;
+}
+
+/* Service comparison table */
+.light [class*="bg-white/5"],
+.light [class*="bg-white/\\[0.02\\]"] {
+  background-color: hsl(220 20% 96%) !important;
+}
+.light [class*="border-white/5"],
+.light [class*="border-white/10"],
+.light [class*="border-white/\\[0.08\\]"],
+.light [class*="border-white/\\[0.15\\]"] {
+  border-color: hsl(220 20% 78%) !important;
 }
 
 @layer utilities {
