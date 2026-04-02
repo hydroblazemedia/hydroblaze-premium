@@ -324,9 +324,9 @@ const PortfolioSection = () => {
             transition={{ duration: 0.8, delay: 0.15 }}
             className="font-display text-4xl md:text-6xl lg:text-7xl font-bold tracking-tight leading-[1.05] mb-6"
           >
-            Our Work & Marketing
+            Our Work That Drives
             <br />
-            <span className="text-gradient">Success Stories</span>
+            <span className="text-gradient">Real Growth</span>
           </motion.h1>
 
           <motion.p
@@ -335,7 +335,7 @@ const PortfolioSection = () => {
             transition={{ duration: 0.7, delay: 0.3 }}
             className="text-muted-foreground max-w-2xl mx-auto text-base md:text-lg leading-relaxed mb-10"
           >
-            Explore how HydroBlaze Media helps businesses grow with high-performing digital marketing campaigns, creative content, and strategic marketing solutions.
+            We don't just run campaigns — we build systems that bring in leads, increase sales, and scale brands.
           </motion.p>
 
           <motion.div initial={{ opacity: 0, y: 20 }} animate={{ opacity: 1, y: 0 }} transition={{ duration: 0.6, delay: 0.45 }}>
