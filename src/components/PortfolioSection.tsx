@@ -354,8 +354,8 @@ const PortfolioSection = () => {
       <div className="px-6 md:px-12 lg:px-16 pb-20">
         <div className="max-w-6xl mx-auto">
           <motion.div initial={{ opacity: 0, y: 20 }} whileInView={{ opacity: 1, y: 0 }} viewport={{ once: true }} className="mb-12">
-            <h2 className="font-display text-3xl md:text-4xl font-bold">Featured <span className="text-gradient">Projects</span></h2>
-            <p className="text-muted-foreground mt-3 max-w-lg">Our best campaigns that delivered exceptional results for our clients.</p>
+            <h2 className="font-display text-3xl md:text-4xl font-bold">Our <span className="text-gradient">Clients</span></h2>
+            <p className="text-muted-foreground mt-3 max-w-lg">Real campaigns. Real results. Real growth for our clients.</p>
           </motion.div>
 
           <div className="grid md:grid-cols-2 gap-6">
