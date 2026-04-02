@@ -1,32 +1,32 @@
 import { useState } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
-import { ArrowRight, Sparkles, MessageCircle, X, TrendingUp, Users, BarChart3, Eye, Target, Megaphone, Palette, Globe, Zap, Quote } from 'lucide-react';
+import { ArrowRight, Sparkles, MessageCircle, X, TrendingUp, Users, BarChart3, Eye, Target, Palette, Globe, CheckCircle2 } from 'lucide-react';
 import { useContactDialog } from '@/components/ContactFormDialog';
 
-import imgSocial from '@/assets/portfolio-social-campaign.jpg';
-import imgAds from '@/assets/portfolio-paid-ads.jpg';
-import imgWebsite from '@/assets/portfolio-website.jpg';
-import imgBranding from '@/assets/portfolio-branding.jpg';
-import imgLeadgen from '@/assets/portfolio-leadgen.jpg';
-import imgEcommerce from '@/assets/portfolio-ecommerce.jpg';
+import imgCultfit from '@/assets/portfolio-cultfit.jpg';
+import imgBlrkabab from '@/assets/portfolio-blrkabab.jpg';
+import imgAayara from '@/assets/portfolio-aayara.jpg';
 
-const categories = ['All', 'Social Media', 'Paid Advertising', 'Website Design', 'Content Creation', 'Lead Generation'] as const;
+const categories = ['All', 'Lead Generation', 'Social Media', 'Brand Building'] as const;
 type Category = typeof categories[number];
 
 interface Project {
   id: number;
   title: string;
+  emoji: string;
   category: Category;
   service: string;
   description: string;
+  objective: string;
   image: string;
   featured?: boolean;
+  whatWeDid: string[];
+  impact: string[];
   details: {
     industry: string;
     services: string[];
     objective: string;
     results: { label: string; value: string; icon: typeof TrendingUp }[];
-    visuals: string[];
     strategy: string;
   };
 }
@@ -34,151 +34,105 @@ interface Project {
 const projects: Project[] = [
   {
     id: 1,
-    title: 'E-Commerce Growth Campaign',
-    category: 'Paid Advertising',
-    service: 'Meta & Google Ads',
-    description: 'Scaled an e-commerce brand from ₹2L to ₹15L monthly revenue through strategic paid advertising.',
-    image: imgEcommerce,
+    title: 'Cult.fit – Rajajinagar',
+    emoji: '🏋️',
+    category: 'Lead Generation',
+    service: 'Performance Marketing & Lead Gen',
+    description: 'Increased walk-ins & memberships for a highly competitive fitness location through localized Meta Ads and high-converting funnels.',
+    objective: 'Increase walk-ins & memberships for a highly competitive fitness location',
+    image: imgCultfit,
     featured: true,
+    whatWeDid: [
+      'Localized Meta Ads targeting nearby fitness audience',
+      'High-converting lead generation funnels',
+      'Content strategy focused on transformation + social proof',
+      'Performance creatives highlighting offers, trainers, and facilities',
+    ],
+    impact: [
+      'Consistent flow of qualified leads',
+      'Improved cost per lead efficiency',
+      'Stronger local brand visibility',
+    ],
     details: {
-      industry: 'E-Commerce / Fashion',
-      services: ['Meta Ads', 'Google Ads', 'Conversion Tracking', 'A/B Testing'],
-      objective: 'Increase online sales and reduce cost per acquisition through optimized paid campaigns.',
+      industry: 'Fitness & Wellness',
+      services: ['Meta Ads', 'Lead Generation Funnels', 'Content Strategy', 'Performance Creatives'],
+      objective: 'Increase walk-ins & memberships for a highly competitive fitness location',
       results: [
-        { label: 'Revenue Growth', value: '650%', icon: TrendingUp },
-        { label: 'ROAS', value: '5.2x', icon: BarChart3 },
-        { label: 'Leads Generated', value: '2,400+', icon: Users },
-        { label: 'Cost Reduction', value: '45%', icon: Target },
+        { label: 'Qualified Leads', value: 'Consistent', icon: Users },
+        { label: 'CPL Efficiency', value: 'Improved', icon: Target },
+        { label: 'Brand Visibility', value: 'Stronger', icon: Eye },
+        { label: 'Walk-ins', value: 'Increased', icon: TrendingUp },
       ],
-      visuals: ['Ad creatives', 'Campaign dashboards', 'Performance reports'],
-      strategy: 'We implemented a full-funnel advertising strategy with lookalike audiences, retargeting sequences, and dynamic product ads across Meta and Google platforms.',
+      strategy: 'We implemented localized Meta Ads targeting nearby fitness audiences, combined with high-converting lead generation funnels and a content strategy focused on transformation stories and social proof.',
     },
   },
   {
     id: 2,
-    title: 'Restaurant Chain Social Media',
+    title: 'BLR Kabab',
+    emoji: '🍢',
     category: 'Social Media',
-    service: 'Social Media Management',
-    description: 'Built a 50K+ engaged community for a restaurant chain through strategic content and community management.',
-    image: imgSocial,
+    service: 'Social Media & Ad Campaigns',
+    description: 'Drove online orders & built a strong food brand presence through scroll-stopping content and hyperlocal ad campaigns.',
+    objective: 'Drive online orders & build a strong food brand presence',
+    image: imgBlrkabab,
     featured: true,
+    whatWeDid: [
+      'Scroll-stopping food content & reels',
+      'Hyperlocal ad campaigns for order generation',
+      'Offer-based creatives to boost conversion rate',
+      'Consistent branding across all platforms',
+    ],
+    impact: [
+      'Increased daily order volume',
+      'Higher engagement & repeat customers',
+      'Strong positioning as a go-to kebab brand',
+    ],
     details: {
       industry: 'Food & Beverage',
-      services: ['Content Strategy', 'Community Management', 'Influencer Marketing', 'Reels & Stories'],
-      objective: 'Build brand awareness and drive foot traffic through engaging social media presence.',
+      services: ['Content Creation', 'Reels & Stories', 'Hyperlocal Ads', 'Brand Consistency'],
+      objective: 'Drive online orders & build a strong food brand presence',
       results: [
-        { label: 'Follower Growth', value: '380%', icon: Users },
-        { label: 'Engagement Rate', value: '8.5%', icon: TrendingUp },
-        { label: 'Monthly Reach', value: '500K+', icon: Eye },
-        { label: 'Store Visits', value: '2x', icon: Target },
+        { label: 'Daily Orders', value: 'Increased', icon: TrendingUp },
+        { label: 'Engagement', value: 'Higher', icon: BarChart3 },
+        { label: 'Repeat Customers', value: 'Growing', icon: Users },
+        { label: 'Brand Position', value: 'Strong', icon: Target },
       ],
-      visuals: ['Social media posts', 'Instagram reels', 'Story highlights'],
-      strategy: 'Created a content calendar focused on food photography, behind-the-scenes content, and user-generated content campaigns to build authentic community engagement.',
+      strategy: 'Created scroll-stopping food content and reels, paired with hyperlocal ad campaigns and offer-based creatives to drive orders and build a recognizable food brand.',
     },
   },
   {
     id: 3,
-    title: 'SaaS Website Redesign',
-    category: 'Website Design',
-    service: 'Website & Landing Page Design',
-    description: 'Redesigned a SaaS platform website resulting in 3x more demo bookings and reduced bounce rate.',
-    image: imgWebsite,
+    title: 'Aayara Boutique',
+    emoji: '👗',
+    category: 'Brand Building',
+    service: 'Brand Strategy & Digital Presence',
+    description: 'Launched and established a premium boutique brand from scratch with complete brand positioning and aesthetic-first social media.',
+    objective: 'Launch and establish a premium boutique brand from scratch',
+    image: imgAayara,
     featured: true,
+    whatWeDid: [
+      'Complete brand positioning & identity development',
+      'Premium content strategy aligned with target audience',
+      'Social media setup with aesthetic-first approach',
+      'Funnel planning for lead generation & conversions',
+    ],
+    impact: [
+      'Strong brand foundation before launch',
+      'Clear premium positioning in market',
+      'Ready-to-scale digital presence',
+    ],
     details: {
-      industry: 'Technology / SaaS',
-      services: ['Website Design', 'UI/UX', 'Landing Pages', 'SEO Optimization'],
-      objective: 'Increase conversion rate and improve user experience for a B2B SaaS platform.',
+      industry: 'Fashion & Retail',
+      services: ['Brand Identity', 'Content Strategy', 'Social Media Setup', 'Funnel Planning'],
+      objective: 'Launch and establish a premium boutique brand from scratch',
       results: [
-        { label: 'Demo Bookings', value: '3x', icon: TrendingUp },
-        { label: 'Bounce Rate', value: '-52%', icon: BarChart3 },
-        { label: 'Page Speed', value: '95/100', icon: Zap },
-        { label: 'Organic Traffic', value: '+180%', icon: Eye },
+        { label: 'Brand Foundation', value: 'Strong', icon: Palette },
+        { label: 'Market Position', value: 'Premium', icon: Target },
+        { label: 'Digital Presence', value: 'Scalable', icon: Globe },
+        { label: 'Conversions', value: 'Ready', icon: TrendingUp },
       ],
-      visuals: ['Website mockups', 'Responsive designs', 'UI components'],
-      strategy: 'Implemented a conversion-centered design approach with clear CTAs, social proof sections, and optimized page load performance.',
+      strategy: 'Developed complete brand positioning and identity, combined with a premium content strategy, aesthetic-first social media presence, and conversion funnel planning.',
     },
-  },
-  {
-    id: 4,
-    title: 'Real Estate Brand Identity',
-    category: 'Content Creation',
-    service: 'Branding & Content Creation',
-    description: 'Complete brand identity and content system for a premium real estate developer.',
-    image: imgBranding,
-    featured: true,
-    details: {
-      industry: 'Real Estate',
-      services: ['Brand Identity', 'Content Creation', 'Video Production', 'Marketing Collateral'],
-      objective: 'Establish a premium brand identity that attracts high-net-worth buyers.',
-      results: [
-        { label: 'Brand Recall', value: '4x', icon: Eye },
-        { label: 'Lead Quality', value: '+85%', icon: Users },
-        { label: 'Content Pieces', value: '200+', icon: Palette },
-        { label: 'Engagement', value: '+320%', icon: TrendingUp },
-      ],
-      visuals: ['Brand guidelines', 'Social media templates', 'Video content'],
-      strategy: 'Developed a cohesive visual identity with premium photography, cinematic property tours, and a consistent content system across all touchpoints.',
-    },
-  },
-  {
-    id: 5,
-    title: 'Healthcare Lead Funnel',
-    category: 'Lead Generation',
-    service: 'Lead Generation Funnels',
-    description: 'Built an automated lead generation system generating 300+ qualified leads monthly for a healthcare clinic.',
-    image: imgLeadgen,
-    details: {
-      industry: 'Healthcare',
-      services: ['Funnel Design', 'Landing Pages', 'Email Automation', 'WhatsApp Integration'],
-      objective: 'Create a scalable lead generation system with automated nurturing sequences.',
-      results: [
-        { label: 'Monthly Leads', value: '300+', icon: Users },
-        { label: 'Conversion Rate', value: '12%', icon: TrendingUp },
-        { label: 'Cost Per Lead', value: '-60%', icon: Target },
-        { label: 'Booking Rate', value: '35%', icon: BarChart3 },
-      ],
-      visuals: ['Landing pages', 'Funnel flow', 'Automation sequences'],
-      strategy: 'Designed a multi-step funnel with targeted landing pages, WhatsApp automation, and email nurture sequences to convert cold traffic into booked appointments.',
-    },
-  },
-  {
-    id: 6,
-    title: 'Fitness Brand Paid Campaign',
-    category: 'Paid Advertising',
-    service: 'Meta & Google Ads',
-    description: 'Drove 1,000+ gym memberships through a hyper-targeted Meta and Google advertising campaign.',
-    image: imgAds,
-    details: {
-      industry: 'Fitness & Wellness',
-      services: ['Meta Ads', 'Google Ads', 'Lead Ads', 'Retargeting'],
-      objective: 'Generate membership sign-ups at scale while maintaining profitable unit economics.',
-      results: [
-        { label: 'Memberships', value: '1,000+', icon: Users },
-        { label: 'ROAS', value: '4.8x', icon: TrendingUp },
-        { label: 'CPL Reduced', value: '55%', icon: Target },
-        { label: 'Ad Reach', value: '2M+', icon: Megaphone },
-      ],
-      visuals: ['Ad creatives', 'Campaign analytics', 'Performance reports'],
-      strategy: 'Implemented geo-targeted campaigns with compelling video ads, social proof elements, and limited-time offer sequences to drive urgency.',
-    },
-  },
-];
-
-const testimonials = [
-  {
-    quote: "HydroBlaze Media helped us generate consistent leads through their advertising campaigns. Their team truly understands performance marketing.",
-    name: "Rahul Sharma",
-    business: "TechStart Solutions",
-  },
-  {
-    quote: "Our social media presence went from zero to hero. The content quality and engagement strategies they implemented were outstanding.",
-    name: "Priya Mehta",
-    business: "Flavor Street Restaurants",
-  },
-  {
-    quote: "The website they designed for us completely transformed our online presence. Demo bookings increased 3x within the first month.",
-    name: "Arjun Patel",
-    business: "CloudSync SaaS",
   },
 ];
 
@@ -235,17 +189,36 @@ const ProjectDetail = ({ project, onClose }: { project: Project; onClose: () => 
             </div>
           </div>
 
+          {/* What We Did */}
+          <div>
+            <h3 className="font-display text-lg font-semibold mb-4">What We Did</h3>
+            <div className="space-y-3">
+              {project.whatWeDid.map((item, i) => (
+                <motion.div
+                  key={i}
+                  initial={{ opacity: 0, x: -20 }}
+                  animate={{ opacity: 1, x: 0 }}
+                  transition={{ delay: 0.2 + i * 0.1 }}
+                  className="flex items-start gap-3"
+                >
+                  <CheckCircle2 className="w-4 h-4 text-hydro mt-0.5 shrink-0" />
+                  <p className="text-muted-foreground text-sm">{item}</p>
+                </motion.div>
+              ))}
+            </div>
+          </div>
+
           {/* Strategy */}
           <div>
             <h3 className="font-display text-lg font-semibold mb-3">Marketing Strategy</h3>
             <p className="text-muted-foreground text-sm leading-relaxed">{project.details.strategy}</p>
           </div>
 
-          {/* Results */}
+          {/* Impact */}
           <div>
-            <h3 className="font-display text-lg font-semibold mb-5">Results & Impact</h3>
-            <div className="grid grid-cols-2 md:grid-cols-4 gap-4">
-              {project.details.results.map((result, i) => (
+            <h3 className="font-display text-lg font-semibold mb-5">Impact</h3>
+            <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
+              {project.impact.map((item, i) => (
                 <motion.div
                   key={i}
                   initial={{ opacity: 0, y: 20 }}
@@ -253,9 +226,8 @@ const ProjectDetail = ({ project, onClose }: { project: Project; onClose: () => 
                   transition={{ delay: 0.2 + i * 0.1 }}
                   className="text-center p-5 rounded-2xl bg-background/50 border border-foreground/5"
                 >
-                  <result.icon className="w-5 h-5 text-hydro mx-auto mb-2" />
-                  <p className="font-display text-2xl md:text-3xl font-bold text-gradient">{result.value}</p>
-                  <p className="text-[11px] uppercase tracking-wider text-muted-foreground mt-1">{result.label}</p>
+                  <TrendingUp className="w-5 h-5 text-hydro mx-auto mb-2" />
+                  <p className="font-display text-sm font-semibold text-gradient">{item}</p>
                 </motion.div>
               ))}
             </div>
@@ -352,9 +324,9 @@ const PortfolioSection = () => {
             transition={{ duration: 0.8, delay: 0.15 }}
             className="font-display text-4xl md:text-6xl lg:text-7xl font-bold tracking-tight leading-[1.05] mb-6"
           >
-            Our Work & Marketing
+            Our Work That Drives
             <br />
-            <span className="text-gradient">Success Stories</span>
+            <span className="text-gradient">Real Growth</span>
           </motion.h1>
 
           <motion.p
@@ -363,7 +335,7 @@ const PortfolioSection = () => {
             transition={{ duration: 0.7, delay: 0.3 }}
             className="text-muted-foreground max-w-2xl mx-auto text-base md:text-lg leading-relaxed mb-10"
           >
-            Explore how HydroBlaze Media helps businesses grow with high-performing digital marketing campaigns, creative content, and strategic marketing solutions.
+            We don't just run campaigns — we build systems that bring in leads, increase sales, and scale brands.
           </motion.p>
 
           <motion.div initial={{ opacity: 0, y: 20 }} animate={{ opacity: 1, y: 0 }} transition={{ duration: 0.6, delay: 0.45 }}>
@@ -382,8 +354,8 @@ const PortfolioSection = () => {
       <div className="px-6 md:px-12 lg:px-16 pb-20">
         <div className="max-w-6xl mx-auto">
           <motion.div initial={{ opacity: 0, y: 20 }} whileInView={{ opacity: 1, y: 0 }} viewport={{ once: true }} className="mb-12">
-            <h2 className="font-display text-3xl md:text-4xl font-bold">Featured <span className="text-gradient">Projects</span></h2>
-            <p className="text-muted-foreground mt-3 max-w-lg">Our best campaigns that delivered exceptional results for our clients.</p>
+            <h2 className="font-display text-3xl md:text-4xl font-bold">Our <span className="text-gradient">Clients</span></h2>
+            <p className="text-muted-foreground mt-3 max-w-lg">Real campaigns. Real results. Real growth for our clients.</p>
           </motion.div>
 
           <div className="grid md:grid-cols-2 gap-6">
@@ -408,11 +380,11 @@ const PortfolioSection = () => {
                     </span>
                     <h3 className="font-display text-xl md:text-2xl font-bold mb-2">{project.title}</h3>
                     <p className="text-muted-foreground text-sm line-clamp-2 mb-4">{project.description}</p>
-                    <div className="flex gap-4">
-                      {project.details.results.slice(0, 3).map((r, j) => (
-                        <div key={j} className="text-center">
-                          <p className="font-display text-lg font-bold text-hydro">{r.value}</p>
-                          <p className="text-[10px] uppercase tracking-wider text-muted-foreground">{r.label}</p>
+                    <div className="space-y-1.5">
+                      {project.impact.map((item, j) => (
+                        <div key={j} className="flex items-center gap-2">
+                          <CheckCircle2 className="w-3.5 h-3.5 text-hydro shrink-0" />
+                          <p className="text-xs text-foreground/80">{item}</p>
                         </div>
                       ))}
                     </div>
@@ -458,32 +430,21 @@ const PortfolioSection = () => {
         </div>
       </div>
 
-      {/* ── Testimonials ── */}
+      {/* ── What This Means ── */}
       <div className="px-6 md:px-12 lg:px-16 pb-20">
-        <div className="max-w-6xl mx-auto">
-          <motion.div initial={{ opacity: 0, y: 20 }} whileInView={{ opacity: 1, y: 0 }} viewport={{ once: true }} className="mb-10">
-            <h2 className="font-display text-3xl md:text-4xl font-bold">Client <span className="text-gradient">Testimonials</span></h2>
+        <div className="max-w-4xl mx-auto">
+          <motion.div initial={{ opacity: 0, y: 20 }} whileInView={{ opacity: 1, y: 0 }} viewport={{ once: true }} className="text-center">
+            <div className="p-8 md:p-12 rounded-3xl bg-card/50 border border-foreground/5">
+              <span className="text-3xl mb-4 block">💡</span>
+              <h2 className="font-display text-2xl md:text-3xl font-bold mb-4">What This Means <span className="text-gradient">for You</span></h2>
+              <p className="text-muted-foreground text-base md:text-lg leading-relaxed mb-6">
+                Whether you're a local business, restaurant, or fashion brand — we build growth systems that bring real customers, not just likes.
+              </p>
+              <p className="font-display text-lg font-semibold text-gradient">
+                Strategy + Creatives + Performance = Revenue Growth
+              </p>
+            </div>
           </motion.div>
-
-          <div className="grid md:grid-cols-3 gap-6">
-            {testimonials.map((t, i) => (
-              <motion.div
-                key={i}
-                initial={{ opacity: 0, y: 20 }}
-                whileInView={{ opacity: 1, y: 0 }}
-                viewport={{ once: true }}
-                transition={{ delay: i * 0.1 }}
-                className="p-6 md:p-8 rounded-2xl bg-card/50 border border-foreground/5 hover:border-hydro/10 transition-colors duration-500"
-              >
-                <Quote className="w-8 h-8 text-hydro/30 mb-4" />
-                <p className="text-foreground/80 text-sm leading-relaxed mb-6">"{t.quote}"</p>
-                <div>
-                  <p className="font-display font-semibold text-sm">{t.name}</p>
-                  <p className="text-muted-foreground text-xs">{t.business}</p>
-                </div>
-              </motion.div>
-            ))}
-          </div>
         </div>
       </div>
 
