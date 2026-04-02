@@ -62,46 +62,46 @@
   }
 
   .light {
-    --hydro: 197 100% 35%;
-    --hydro-glow: 197 100% 45%;
-    --blaze: 16 100% 42%;
-    --blaze-glow: 12 100% 48%;
+    --hydro: 197 100% 32%;
+    --hydro-glow: 197 100% 42%;
+    --blaze: 16 100% 40%;
+    --blaze-glow: 12 100% 46%;
     
-    --background: 220 20% 97%;
+    --background: 220 20% 96%;
     --background-elevated: 0 0% 100%;
-    --foreground: 220 30% 12%;
+    --foreground: 220 40% 16%;
     
     --card: 0 0% 100%;
-    --card-foreground: 220 30% 12%;
+    --card-foreground: 220 40% 16%;
     
     --popover: 0 0% 100%;
-    --popover-foreground: 220 30% 12%;
+    --popover-foreground: 220 40% 16%;
     
-    --primary: 197 100% 35%;
+    --primary: 197 100% 32%;
     --primary-foreground: 0 0% 100%;
     
-    --secondary: 16 100% 42%;
+    --secondary: 16 100% 40%;
     --secondary-foreground: 0 0% 100%;
     
-    --muted: 220 20% 92%;
-    --muted-foreground: 215 25% 40%;
+    --muted: 220 20% 91%;
+    --muted-foreground: 215 25% 38%;
     
-    --accent: 220 20% 94%;
-    --accent-foreground: 220 30% 12%;
+    --accent: 220 20% 93%;
+    --accent-foreground: 220 40% 16%;
     
     --destructive: 0 84% 55%;
     --destructive-foreground: 0 0% 100%;
     
-    --border: 220 20% 82%;
-    --input: 220 20% 85%;
-    --ring: 197 100% 35%;
+    --border: 220 20% 78%;
+    --input: 220 20% 82%;
+    --ring: 197 100% 32%;
     
-    --gradient-hydro-blaze: linear-gradient(135deg, hsl(197 100% 35%) 0%, hsl(220 30% 12%) 50%, hsl(16 100% 42%) 100%);
-    --gradient-surface: linear-gradient(180deg, hsl(220 20% 95%) 0%, hsl(0 0% 100%) 100%);
-    --shadow-card: 0 4px 20px -4px hsl(220 30% 12% / 0.08), 0 1px 3px hsl(220 30% 12% / 0.06);
-    --shadow-hydro: 0 0 40px -10px hsl(var(--hydro) / 0.25);
-    --shadow-blaze: 0 0 40px -10px hsl(var(--blaze) / 0.25);
-    --shadow-glow: 0 0 30px -8px hsl(var(--hydro) / 0.15), 0 0 30px -8px hsl(var(--blaze) / 0.15);
+    --gradient-hydro-blaze: linear-gradient(135deg, hsl(197 100% 32%) 0%, hsl(220 40% 16%) 50%, hsl(16 100% 40%) 100%);
+    --gradient-surface: linear-gradient(180deg, hsl(220 20% 94%) 0%, hsl(0 0% 100%) 100%);
+    --shadow-card: 0 2px 8px -2px hsl(220 40% 16% / 0.06), 0 4px 16px -4px hsl(220 40% 16% / 0.08);
+    --shadow-hydro: 0 0 40px -10px hsl(var(--hydro) / 0.2);
+    --shadow-blaze: 0 0 40px -10px hsl(var(--blaze) / 0.2);
+    --shadow-glow: 0 0 30px -8px hsl(var(--hydro) / 0.12), 0 0 30px -8px hsl(var(--blaze) / 0.12);
   }
 
   .dark {
