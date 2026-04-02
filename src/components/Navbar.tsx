@@ -4,6 +4,7 @@ import { Link, useLocation } from 'react-router-dom';
 import { Menu, X } from 'lucide-react';
 import logo from '@/assets/logo.png';
 import { useContactDialog } from '@/components/ContactFormDialog';
+import ThemeToggle from '@/components/ThemeToggle';
 
 const navLinks = [
   { path: '/services', label: 'Services' },
@@ -40,8 +41,8 @@ const Navbar = () => {
         transition={{ duration: 0.6, delay: 0.2 }}
         className={`fixed top-4 left-4 right-4 z-50 px-6 md:px-10 lg:px-14 rounded-2xl transition-all duration-500 ${
           isScrolled
-            ? 'py-3 bg-white/[0.08] backdrop-blur-2xl border border-white/[0.15] shadow-[0_8px_32px_rgba(0,0,0,0.4),inset_0_1px_0_rgba(255,255,255,0.1),inset_0_-1px_0_rgba(255,255,255,0.05)]'
-            : 'py-4 md:py-5 bg-white/[0.05] backdrop-blur-2xl border border-white/[0.08] shadow-[0_4px_24px_rgba(0,0,0,0.2),inset_0_1px_0_rgba(255,255,255,0.06)]'
+            ? 'py-3 bg-card/80 backdrop-blur-2xl border border-foreground/[0.1] shadow-[0_8px_32px_hsl(var(--foreground)/0.1)]'
+            : 'py-4 md:py-5 bg-card/50 backdrop-blur-2xl border border-foreground/[0.06] shadow-[0_4px_24px_hsl(var(--foreground)/0.05)]'
         }`}
       >
         <div className="flex items-center justify-between max-w-7xl mx-auto">
@@ -62,6 +63,7 @@ const Navbar = () => {
                 {link.label}
               </Link>
             ))}
+            <ThemeToggle />
             <button onClick={() => openContact("Start Project")} className="hidden md:block group relative px-5 py-2.5 rounded-full text-sm border border-foreground/20 text-foreground transition-all duration-300 hover:border-blaze hover:shadow-[0_0_20px_hsl(var(--blaze)/0.4)]">
               Start Project
             </button>

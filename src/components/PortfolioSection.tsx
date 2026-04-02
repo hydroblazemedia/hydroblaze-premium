@@ -1,6 +1,6 @@
 import { useState } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
-import { ArrowRight, Sparkles, MessageCircle, X, TrendingUp, Users, BarChart3, Eye, Target, Palette, Globe, CheckCircle2 } from 'lucide-react';
+import { ArrowRight, Sparkles, MessageCircle, X, TrendingUp, Users, BarChart3, Eye, Target, Palette, Globe, CheckCircle2, Quote } from 'lucide-react';
 import { useContactDialog } from '@/components/ContactFormDialog';
 
 import imgCultfit from '@/assets/portfolio-cultfit.jpg';
@@ -445,6 +445,57 @@ const PortfolioSection = () => {
               </p>
             </div>
           </motion.div>
+        </div>
+      </div>
+
+      {/* ── Client Testimonials ── */}
+      <div className="px-6 md:px-12 lg:px-16 pb-20">
+        <div className="max-w-6xl mx-auto">
+          <motion.div initial={{ opacity: 0, y: 20 }} whileInView={{ opacity: 1, y: 0 }} viewport={{ once: true }} className="mb-10">
+            <h2 className="font-display text-3xl md:text-4xl font-bold">Client <span className="text-gradient">Testimonials</span></h2>
+          </motion.div>
+
+          <div className="grid md:grid-cols-3 gap-6">
+            {[
+              {
+                quote: "HydroBlaze Media transformed our lead generation at Cult.fit Rajajinagar. Their localized Meta Ads strategy brought in a consistent flow of qualified leads, and the cost per lead improved significantly. Their team truly understands performance marketing.",
+                name: "Cult.fit Team",
+                business: "Cult.fit – Rajajinagar, Bangalore",
+                emoji: "🏋️",
+              },
+              {
+                quote: "Our daily order volume increased noticeably after partnering with HydroBlaze. The scroll-stopping food content and hyperlocal campaigns they ran positioned BLR Kabab as a go-to brand. We saw higher engagement and more repeat customers than ever.",
+                name: "BLR Kabab Team",
+                business: "BLR Kabab, Bangalore",
+                emoji: "🍢",
+              },
+              {
+                quote: "HydroBlaze helped us build Aayara Boutique's brand from scratch with a clear premium positioning. From identity development to social media setup, their aesthetic-first approach gave us a strong foundation even before launch. Highly recommended!",
+                name: "Aayara Boutique Team",
+                business: "Aayara Boutique",
+                emoji: "👗",
+              },
+            ].map((t, i) => (
+              <motion.div
+                key={i}
+                initial={{ opacity: 0, y: 20 }}
+                whileInView={{ opacity: 1, y: 0 }}
+                viewport={{ once: true }}
+                transition={{ delay: i * 0.1 }}
+                className="p-6 md:p-8 rounded-2xl bg-card/50 border border-foreground/5 hover:border-hydro/10 transition-colors duration-500"
+              >
+                <Quote className="w-8 h-8 text-hydro/30 mb-4" />
+                <p className="text-foreground/80 text-sm leading-relaxed mb-6">"{t.quote}"</p>
+                <div className="flex items-center gap-3">
+                  <span className="text-2xl">{t.emoji}</span>
+                  <div>
+                    <p className="font-display font-semibold text-sm">{t.name}</p>
+                    <p className="text-muted-foreground text-xs">{t.business}</p>
+                  </div>
+                </div>
+              </motion.div>
+            ))}
+          </div>
         </div>
       </div>
 
