@@ -380,11 +380,11 @@ const PortfolioSection = () => {
                     </span>
                     <h3 className="font-display text-xl md:text-2xl font-bold mb-2">{project.title}</h3>
                     <p className="text-muted-foreground text-sm line-clamp-2 mb-4">{project.description}</p>
-                    <div className="flex gap-4">
-                      {project.details.results.slice(0, 3).map((r, j) => (
-                        <div key={j} className="text-center">
-                          <p className="font-display text-lg font-bold text-hydro">{r.value}</p>
-                          <p className="text-[10px] uppercase tracking-wider text-muted-foreground">{r.label}</p>
+                    <div className="space-y-1.5">
+                      {project.impact.map((item, j) => (
+                        <div key={j} className="flex items-center gap-2">
+                          <CheckCircle2 className="w-3.5 h-3.5 text-hydro shrink-0" />
+                          <p className="text-xs text-foreground/80">{item}</p>
                         </div>
                       ))}
                     </div>
