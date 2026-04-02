@@ -157,28 +157,27 @@
   
   /* Glassmorphism */
   .glass {
-    @apply backdrop-blur-xl border;
-    background: hsl(var(--foreground) / 0.05);
-    border-color: hsl(var(--foreground) / 0.1);
+    @apply backdrop-blur-xl border border-border;
+    background: hsl(var(--card));
   }
   
   .glass-card {
-    @apply backdrop-blur-xl border rounded-2xl;
+    @apply backdrop-blur-xl border border-border rounded-2xl;
     background: hsl(var(--card));
-    border-color: hsl(var(--foreground) / 0.1);
+    box-shadow: var(--shadow-card);
     transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
   }
   
   .glass-card:hover {
-    border-color: hsl(var(--foreground) / 0.2);
+    border-color: hsl(var(--hydro) / 0.3);
     transform: translateY(-8px);
-    box-shadow: var(--shadow-card);
+    box-shadow: var(--shadow-card), 0 0 20px -8px hsl(var(--hydro) / 0.15);
   }
   
   /* Premium button styles */
   .btn-primary {
     @apply relative px-8 py-4 rounded-full font-display font-semibold text-foreground;
-    @apply border border-white/20 bg-black/30 backdrop-blur-sm;
+    @apply border border-border bg-card/80 backdrop-blur-sm;
     @apply overflow-hidden transition-all duration-400;
   }
   
