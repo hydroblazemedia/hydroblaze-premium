@@ -113,6 +113,9 @@ export const ContactDialogProvider = ({ children }: { children: React.ReactNode 
               </div>
 
               <div>
+                <label htmlFor="dialog-company" className="block text-sm font-medium mb-2">Company Name</label>
+                <input id="dialog-company" type="text" value={formData.company} onChange={e => handleChange('company', e.target.value)} placeholder="Your company or brand" className={inputClass} maxLength={100} />
+              </div>
                 <label htmlFor="dialog-email" className="block text-sm font-medium mb-2">Email</label>
                 <input id="dialog-email" type="email" value={formData.email} onChange={e => handleChange('email', e.target.value)} placeholder="you@example.com" className={inputClass} maxLength={255} />
                 {errors.email && <p className="mt-1.5 text-xs text-destructive flex items-center gap-1"><AlertCircle className="w-3 h-3" /> {errors.email}</p>}
