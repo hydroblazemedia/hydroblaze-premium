@@ -1,13 +1,15 @@
 import { useState } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
-import { ArrowRight, Sparkles, MessageCircle, X, TrendingUp, Users, BarChart3, Eye, Target, Palette, Globe, CheckCircle2, Quote } from 'lucide-react';
+import { ArrowRight, Sparkles, MessageCircle, X, TrendingUp, Users, BarChart3, Eye, Target, Palette, Globe, CheckCircle2, Quote, Package, Flag } from 'lucide-react';
 import { useContactDialog } from '@/components/ContactFormDialog';
 
 import imgCultfit from '@/assets/portfolio-cultfit.jpg';
 import imgBlrkabab from '@/assets/portfolio-blrkabab.jpg';
 import imgAayara from '@/assets/portfolio-aayara.jpg';
+import imgAquasplash from '@/assets/portfolio-aquasplash.jpg';
+import imgAmsc from '@/assets/portfolio-amsc.jpg';
 
-const categories = ['All', 'Lead Generation', 'Social Media', 'Brand Building'] as const;
+const categories = ['All', 'Lead Generation', 'Social Media', 'Brand Building', 'Design & Branding'] as const;
 type Category = typeof categories[number];
 
 interface Project {
@@ -132,6 +134,74 @@ const projects: Project[] = [
         { label: 'Conversions', value: 'Ready', icon: TrendingUp },
       ],
       strategy: 'Developed complete brand positioning and identity, combined with a premium content strategy, aesthetic-first social media presence, and conversion funnel planning.',
+    },
+  },
+  {
+    id: 4,
+    title: 'Aqua Splash',
+    emoji: '🚗',
+    category: 'Design & Branding',
+    service: 'Product Label & Packaging Design',
+    description: 'Created high-impact product labels for an automotive care brand that stand out on shelves and communicate quality instantly.',
+    objective: 'Create high-impact product labels that stand out on shelves and instantly communicate product function, quality, and performance',
+    image: imgAquasplash,
+    featured: true,
+    whatWeDid: [
+      'Bold, performance-oriented label design tailored for automotive buyers',
+      'Distinct visual identity across multiple SKUs (cleaners, polish, lubricants)',
+      'Strategic use of color, contrast, and typography for strong shelf visibility',
+      'Information hierarchy designed for quick product understanding',
+    ],
+    impact: [
+      'Enhanced on-shelf differentiation',
+      'Elevated perceived product quality',
+      'Consistent visual system across product line',
+    ],
+    details: {
+      industry: 'Automotive Care',
+      services: ['Label Design', 'Packaging Design', 'Brand Identity', 'Visual Strategy'],
+      objective: 'Create high-impact product labels that stand out on shelves and instantly communicate product function, quality, and performance',
+      results: [
+        { label: 'Shelf Impact', value: 'Enhanced', icon: Eye },
+        { label: 'Brand Trust', value: 'Elevated', icon: Target },
+        { label: 'Visual System', value: 'Consistent', icon: Palette },
+        { label: 'Product Quality', value: 'Premium', icon: Package },
+      ],
+      strategy: 'Developed bold, performance-oriented label designs with strategic use of color, contrast, and typography. Created a distinct visual identity across multiple SKUs with information hierarchy designed for quick product understanding.',
+    },
+  },
+  {
+    id: 5,
+    title: 'AMSC Motorsport Team',
+    emoji: '🏎️',
+    category: 'Design & Branding',
+    service: 'Portfolio & Sponsorship Deck Design',
+    description: 'Developed a high-impact sponsorship portfolio to strengthen brand credibility and enable effective sponsor outreach for a motorsport team.',
+    objective: 'Develop a high-impact portfolio to support event presentation, strengthen brand credibility, and enable effective sponsor outreach',
+    image: imgAmsc,
+    featured: true,
+    whatWeDid: [
+      'Strategically structured sponsorship deck for pitching and presentations',
+      'High-energy visual direction aligned with motorsport branding',
+      'Clear articulation of team identity, event scope, and sponsorship value',
+      'Clean, professional layout for seamless presentation flow',
+    ],
+    impact: [
+      'Strengthened credibility with sponsors',
+      'Improved sponsor communication clarity',
+      'Professional event positioning asset',
+    ],
+    details: {
+      industry: 'Motorsport & Events',
+      services: ['Sponsorship Deck', 'Presentation Design', 'Brand Strategy', 'Visual Direction'],
+      objective: 'Develop a high-impact portfolio to support event presentation, strengthen brand credibility, and enable effective sponsor outreach',
+      results: [
+        { label: 'Sponsor Credibility', value: 'Strengthened', icon: Target },
+        { label: 'Communication', value: 'Improved', icon: Users },
+        { label: 'Event Position', value: 'Professional', icon: Flag },
+        { label: 'Brand Impact', value: 'High-Energy', icon: TrendingUp },
+      ],
+      strategy: 'Created a strategically structured sponsorship deck with high-energy visual direction aligned with motorsport branding. Clearly articulated team identity, event scope, and sponsorship value with a clean, professional layout.',
     },
   },
 ];
@@ -358,7 +428,7 @@ const PortfolioSection = () => {
             <p className="text-muted-foreground mt-3 max-w-lg">Real campaigns. Real results. Real growth for our clients.</p>
           </motion.div>
 
-          <div className="grid md:grid-cols-2 gap-6">
+          <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-6">
             {featuredProjects.map((project, i) => (
               <motion.div
                 key={project.id}
@@ -474,6 +544,18 @@ const PortfolioSection = () => {
                 name: "Aayara Boutique Team",
                 business: "Aayara Boutique",
                 emoji: "👗",
+              },
+              {
+                quote: "The product labels HydroBlaze designed for Aqua Splash completely elevated our brand presence on shelves. The bold, professional design instantly communicates quality. Our customers notice the difference and so do retailers.",
+                name: "Aqua Splash Team",
+                business: "Aqua Splash, Automotive Care",
+                emoji: "🚗",
+              },
+              {
+                quote: "HydroBlaze created an outstanding sponsorship deck for our motorsport team. The professional layout and high-energy visuals helped us strengthen credibility with potential sponsors. It's been a game-changer for our outreach.",
+                name: "AMSC Team",
+                business: "AMSC Motorsport",
+                emoji: "🏎️",
               },
             ].map((t, i) => (
               <motion.div

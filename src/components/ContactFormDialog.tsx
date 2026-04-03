@@ -9,6 +9,7 @@ const GOOGLE_SHEET_URL = 'https://script.google.com/macros/s/AKfycbxDs3H3G1-GgxV
 
 const contactSchema = z.object({
   name: z.string().trim().min(1, 'Name is required').max(100, 'Name must be under 100 characters'),
+  company: z.string().trim().max(100, 'Company name must be under 100 characters').optional().or(z.literal('')),
   email: z.string().trim().email('Please enter a valid email').max(255, 'Email must be under 255 characters'),
   phone: z.string().trim().min(1, 'Phone number is required').max(20, 'Phone must be under 20 characters').regex(/^[\d\s+\-()]+$/, 'Please enter a valid phone number'),
   message: z.string().trim().min(1, 'Message is required').max(1000, 'Message must be under 1000 characters'),
@@ -23,7 +24,7 @@ export const useContactDialog = () => useContext(ContactDialogContext);
 
 export const ContactDialogProvider = ({ children }: { children: React.ReactNode }) => {
   const [isOpen, setIsOpen] = useState(false);
-  const [formData, setFormData] = useState<ContactFormData>({ name: '', email: '', phone: '', message: '' });
+  const [formData, setFormData] = useState<ContactFormData>({ name: '', company: '', email: '', phone: '', message: '' });
   const [errors, setErrors] = useState<FormErrors>({});
   const [submitted, setSubmitted] = useState(false);
   const [isSubmitting, setIsSubmitting] = useState(false);
@@ -33,7 +34,7 @@ export const ContactDialogProvider = ({ children }: { children: React.ReactNode 
     setIsOpen(true);
     setSubmitted(false);
     setSource(src || 'Direct');
-    setFormData({ name: '', email: '', phone: '', message: '' });
+    setFormData({ name: '', company: '', email: '', phone: '', message: '' });
     setErrors({});
   }, []);
 
@@ -65,6 +66,7 @@ export const ContactDialogProvider = ({ children }: { children: React.ReactNode 
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({
           name: result.data.name,
+          company: result.data.company || '',
           email: result.data.email,
           phone: result.data.phone,
           message: result.data.message,
@@ -93,7 +95,7 @@ export const ContactDialogProvider = ({ children }: { children: React.ReactNode 
                   We'll get back to you within 24 hours. Check your WhatsApp for confirmation.
                 </DialogDescription>
               </DialogHeader>
-              <button onClick={() => { setSubmitted(false); setFormData({ name: '', email: '', phone: '', message: '' }); }} className="mt-6 px-6 py-3 rounded-full text-sm font-medium bg-gradient-to-r from-hydro to-blaze text-white hover:shadow-[0_0_30px_hsl(var(--hydro)/0.4)] transition-all duration-300">
+              <button onClick={() => { setSubmitted(false); setFormData({ name: '', company: '', email: '', phone: '', message: '' }); }} className="mt-6 px-6 py-3 rounded-full text-sm font-medium bg-gradient-to-r from-hydro to-blaze text-white hover:shadow-[0_0_30px_hsl(var(--hydro)/0.4)] transition-all duration-300">
                 Send Another
               </button>
             </div>
@@ -108,6 +110,11 @@ export const ContactDialogProvider = ({ children }: { children: React.ReactNode 
                 <label htmlFor="dialog-name" className="block text-sm font-medium mb-2">Name</label>
                 <input id="dialog-name" type="text" value={formData.name} onChange={e => handleChange('name', e.target.value)} placeholder="Your full name" className={inputClass} maxLength={100} />
                 {errors.name && <p className="mt-1.5 text-xs text-destructive flex items-center gap-1"><AlertCircle className="w-3 h-3" /> {errors.name}</p>}
+              </div>
+
+              <div>
+                <label htmlFor="dialog-company" className="block text-sm font-medium mb-2">Company Name</label>
+                <input id="dialog-company" type="text" value={formData.company} onChange={e => handleChange('company', e.target.value)} placeholder="Your company or brand" className={inputClass} maxLength={100} />
               </div>
 
               <div>
