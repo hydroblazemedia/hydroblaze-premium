@@ -1,25 +1,49 @@
-import { useState, useEffect } from 'react';
+import { useState, useEffect, createContext, useContext } from 'react';
 import { Sun, Moon } from 'lucide-react';
 import { motion } from 'framer-motion';
 
-const ThemeToggle = () => {
-  const [isDark, setIsDark] = useState(true);
+// Simple global state for theme
+let themeListeners: Array<(isDark: boolean) => void> = [];
+let currentIsDark = true;
+
+const getIsDark = () => {
+  const saved = localStorage.getItem('theme');
+  return saved !== 'light';
+};
+
+export const useTheme = () => {
+  const [isDark, setIsDark] = useState(getIsDark);
 
   useEffect(() => {
-    const saved = localStorage.getItem('theme');
-    if (saved === 'light') {
-      setIsDark(false);
-      document.documentElement.classList.remove('dark');
-      document.documentElement.classList.add('light');
-    } else {
+    const listener = (v: boolean) => setIsDark(v);
+    themeListeners.push(listener);
+    return () => { themeListeners = themeListeners.filter(l => l !== listener); };
+  }, []);
+
+  return isDark;
+};
+
+const ThemeToggle = () => {
+  const [isDark, setIsDark] = useState(getIsDark);
+
+  useEffect(() => {
+    const dark = getIsDark();
+    setIsDark(dark);
+    currentIsDark = dark;
+    if (dark) {
       document.documentElement.classList.remove('light');
       document.documentElement.classList.add('dark');
+    } else {
+      document.documentElement.classList.remove('dark');
+      document.documentElement.classList.add('light');
     }
   }, []);
 
   const toggle = () => {
     const next = !isDark;
     setIsDark(next);
+    currentIsDark = next;
+    themeListeners.forEach(l => l(next));
     if (next) {
       document.documentElement.classList.remove('light');
       document.documentElement.classList.add('dark');

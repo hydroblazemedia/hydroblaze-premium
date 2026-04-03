@@ -48,7 +48,7 @@ const Navbar = () => {
       >
         <div className="flex items-center justify-between max-w-7xl mx-auto">
           <Link to="/" className="flex items-center gap-3">
-            <img src={logo} alt="HydroBlaze" className="h-[35px] w-[140px] object-contain" />
+            <img src={isDark ? logoDark : logoLight} alt="HydroBlaze" className="h-[42px] w-[168px] object-contain" />
           </Link>
 
           {/* Desktop Navigation */}
