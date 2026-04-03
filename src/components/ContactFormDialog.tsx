@@ -24,7 +24,7 @@ export const useContactDialog = () => useContext(ContactDialogContext);
 
 export const ContactDialogProvider = ({ children }: { children: React.ReactNode }) => {
   const [isOpen, setIsOpen] = useState(false);
-  const [formData, setFormData] = useState<ContactFormData>({ name: '', email: '', phone: '', message: '' });
+  const [formData, setFormData] = useState<ContactFormData>({ name: '', company: '', email: '', phone: '', message: '' });
   const [errors, setErrors] = useState<FormErrors>({});
   const [submitted, setSubmitted] = useState(false);
   const [isSubmitting, setIsSubmitting] = useState(false);
