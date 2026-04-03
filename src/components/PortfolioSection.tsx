@@ -545,6 +545,18 @@ const PortfolioSection = () => {
                 business: "Aayara Boutique",
                 emoji: "👗",
               },
+              {
+                quote: "The product labels HydroBlaze designed for Aqua Splash completely elevated our brand presence on shelves. The bold, professional design instantly communicates quality. Our customers notice the difference and so do retailers.",
+                name: "Aqua Splash Team",
+                business: "Aqua Splash, Automotive Care",
+                emoji: "🚗",
+              },
+              {
+                quote: "HydroBlaze created an outstanding sponsorship deck for our motorsport team. The professional layout and high-energy visuals helped us strengthen credibility with potential sponsors. It's been a game-changer for our outreach.",
+                name: "AMSC Team",
+                business: "AMSC Motorsport",
+                emoji: "🏎️",
+              },
             ].map((t, i) => (
               <motion.div
                 key={i}
