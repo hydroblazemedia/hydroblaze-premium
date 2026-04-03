@@ -9,6 +9,7 @@ const GOOGLE_SHEET_URL = 'https://script.google.com/macros/s/AKfycbxDs3H3G1-GgxV
 
 const contactSchema = z.object({
   name: z.string().trim().min(1, 'Name is required').max(100, 'Name must be under 100 characters'),
+  company: z.string().trim().max(100, 'Company name must be under 100 characters').optional().or(z.literal('')),
   email: z.string().trim().email('Please enter a valid email').max(255, 'Email must be under 255 characters'),
   phone: z.string().trim().min(1, 'Phone number is required').max(20, 'Phone must be under 20 characters').regex(/^[\d\s+\-()]+$/, 'Please enter a valid phone number'),
   message: z.string().trim().min(1, 'Message is required').max(1000, 'Message must be under 1000 characters'),
