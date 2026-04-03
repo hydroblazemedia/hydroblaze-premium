@@ -1,13 +1,15 @@
 import { useState } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
-import { ArrowRight, Sparkles, MessageCircle, X, TrendingUp, Users, BarChart3, Eye, Target, Palette, Globe, CheckCircle2, Quote } from 'lucide-react';
+import { ArrowRight, Sparkles, MessageCircle, X, TrendingUp, Users, BarChart3, Eye, Target, Palette, Globe, CheckCircle2, Quote, Package, Flag } from 'lucide-react';
 import { useContactDialog } from '@/components/ContactFormDialog';
 
 import imgCultfit from '@/assets/portfolio-cultfit.jpg';
 import imgBlrkabab from '@/assets/portfolio-blrkabab.jpg';
 import imgAayara from '@/assets/portfolio-aayara.jpg';
+import imgAquasplash from '@/assets/portfolio-aquasplash.jpg';
+import imgAmsc from '@/assets/portfolio-amsc.jpg';
 
-const categories = ['All', 'Lead Generation', 'Social Media', 'Brand Building'] as const;
+const categories = ['All', 'Lead Generation', 'Social Media', 'Brand Building', 'Design & Branding'] as const;
 type Category = typeof categories[number];
 
 interface Project {
