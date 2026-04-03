@@ -20,6 +20,7 @@ const Navbar = () => {
   const [isMobileOpen, setIsMobileOpen] = useState(false);
   const location = useLocation();
   const { open: openContact } = useContactDialog();
+  const isDark = useTheme();
 
   useEffect(() => {
     const handleScroll = () => setIsScrolled(window.scrollY > 50);
