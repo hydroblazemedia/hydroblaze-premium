@@ -66,6 +66,7 @@ export const ContactDialogProvider = ({ children }: { children: React.ReactNode 
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({
           name: result.data.name,
+          company: result.data.company || '',
           email: result.data.email,
           phone: result.data.phone,
           message: result.data.message,
