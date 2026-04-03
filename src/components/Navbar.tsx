@@ -2,9 +2,10 @@ import { useState, useEffect } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
 import { Link, useLocation } from 'react-router-dom';
 import { Menu, X } from 'lucide-react';
-import logo from '@/assets/logo.png';
+import logoDark from '@/assets/logo.png';
+import logoLight from '@/assets/logo-light.png';
 import { useContactDialog } from '@/components/ContactFormDialog';
-import ThemeToggle from '@/components/ThemeToggle';
+import ThemeToggle, { useTheme } from '@/components/ThemeToggle';
 
 const navLinks = [
   { path: '/services', label: 'Services' },
