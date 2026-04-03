@@ -428,7 +428,7 @@ const PortfolioSection = () => {
             <p className="text-muted-foreground mt-3 max-w-lg">Real campaigns. Real results. Real growth for our clients.</p>
           </motion.div>
 
-          <div className="grid md:grid-cols-2 gap-6">
+          <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-6">
             {featuredProjects.map((project, i) => (
               <motion.div
                 key={project.id}
