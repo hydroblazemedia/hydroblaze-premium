@@ -34,7 +34,7 @@ export const ContactDialogProvider = ({ children }: { children: React.ReactNode 
     setIsOpen(true);
     setSubmitted(false);
     setSource(src || 'Direct');
-    setFormData({ name: '', email: '', phone: '', message: '' });
+    setFormData({ name: '', company: '', email: '', phone: '', message: '' });
     setErrors({});
   }, []);
 
