@@ -1,4 +1,4 @@
-import { useState } from 'react';
+import { useState, useEffect, useCallback } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
 import { ArrowRight, Sparkles, MessageCircle, X, TrendingUp, Users, BarChart3, Eye, Target, Palette, Globe, CheckCircle2, Quote, Package, Flag } from 'lucide-react';
 import { useContactDialog } from '@/components/ContactFormDialog';
@@ -349,6 +349,108 @@ const PortfolioCard = ({ project, onClick }: { project: Project; onClick: () => 
   );
 };
 
+const testimonials = [
+  {
+    quote: "HydroBlaze Media transformed our lead generation at Cult.fit Rajajinagar. Their localized Meta Ads strategy brought in a consistent flow of qualified leads, and the cost per lead improved significantly. Their team truly understands performance marketing.",
+    name: "Cult.fit Team",
+    business: "Cult.fit – Rajajinagar, Bangalore",
+    emoji: "🏋️",
+  },
+  {
+    quote: "Our daily order volume increased noticeably after partnering with HydroBlaze. The scroll-stopping food content and hyperlocal campaigns they ran positioned BLR Kabab as a go-to brand. We saw higher engagement and more repeat customers than ever.",
+    name: "BLR Kabab Team",
+    business: "BLR Kabab, Bangalore",
+    emoji: "🍢",
+  },
+  {
+    quote: "HydroBlaze helped us build Aayara Boutique's brand from scratch with a clear premium positioning. From identity development to social media setup, their aesthetic-first approach gave us a strong foundation even before launch. Highly recommended!",
+    name: "Aayara Boutique Team",
+    business: "Aayara Boutique",
+    emoji: "👗",
+  },
+  {
+    quote: "The product labels HydroBlaze designed for Aqua Splash completely elevated our brand presence on shelves. The bold, professional design instantly communicates quality. Our customers notice the difference and so do retailers.",
+    name: "Aqua Splash Team",
+    business: "Aqua Splash, Automotive Care",
+    emoji: "🚗",
+  },
+  {
+    quote: "HydroBlaze created an outstanding sponsorship deck for our motorsport team. The professional layout and high-energy visuals helped us strengthen credibility with potential sponsors. It's been a game-changer for our outreach.",
+    name: "AMSC Team",
+    business: "AMSC Motorsport",
+    emoji: "🏎️",
+  },
+];
+
+const TestimonialsCarousel = () => {
+  const [current, setCurrent] = useState(0);
+  const maxIndex = Math.max(0, testimonials.length - 3);
+
+  const next = useCallback(() => {
+    setCurrent(prev => (prev >= maxIndex ? 0 : prev + 1));
+  }, [maxIndex]);
+
+  const prev = useCallback(() => {
+    setCurrent(prev => (prev <= 0 ? maxIndex : prev - 1));
+  }, [maxIndex]);
+
+  // Auto-slide
+  useEffect(() => {
+    const timer = setInterval(next, 4000);
+    return () => clearInterval(timer);
+  }, [next]);
+
+  return (
+    <div className="px-6 md:px-12 lg:px-16 pb-20">
+      <div className="max-w-6xl mx-auto">
+        <motion.div initial={{ opacity: 0, y: 20 }} whileInView={{ opacity: 1, y: 0 }} viewport={{ once: true }} className="flex items-end justify-between mb-10">
+          <h2 className="font-display text-3xl md:text-4xl font-bold">Client <span className="text-gradient">Testimonials</span></h2>
+          <div className="flex gap-2">
+            <button onClick={prev} className="w-10 h-10 rounded-full border border-foreground/10 hover:border-foreground/20 flex items-center justify-center text-muted-foreground hover:text-foreground transition-colors">←</button>
+            <button onClick={next} className="w-10 h-10 rounded-full border border-foreground/10 hover:border-foreground/20 flex items-center justify-center text-muted-foreground hover:text-foreground transition-colors">→</button>
+          </div>
+        </motion.div>
+
+        <div className="overflow-hidden">
+          <motion.div
+            className="flex gap-6"
+            animate={{ x: `calc(-${current} * (33.333% + 8px))` }}
+            transition={{ type: 'spring', stiffness: 200, damping: 30 }}
+          >
+            {testimonials.map((t, i) => (
+              <div
+                key={i}
+                className="min-w-[calc(33.333%-16px)] flex-shrink-0 p-6 md:p-8 rounded-2xl bg-card/50 border border-foreground/5 hover:border-hydro/10 transition-colors duration-500"
+              >
+                <Quote className="w-8 h-8 text-hydro/30 mb-4" />
+                <p className="text-foreground/80 text-sm leading-relaxed mb-6">"{t.quote}"</p>
+                <div className="flex items-center gap-3">
+                  <span className="text-2xl">{t.emoji}</span>
+                  <div>
+                    <p className="font-display font-semibold text-sm">{t.name}</p>
+                    <p className="text-muted-foreground text-xs">{t.business}</p>
+                  </div>
+                </div>
+              </div>
+            ))}
+          </motion.div>
+        </div>
+
+        {/* Dots */}
+        <div className="flex justify-center gap-2 mt-6">
+          {Array.from({ length: maxIndex + 1 }).map((_, i) => (
+            <button
+              key={i}
+              onClick={() => setCurrent(i)}
+              className={`w-2 h-2 rounded-full transition-all duration-300 ${i === current ? 'bg-hydro w-6' : 'bg-foreground/20'}`}
+            />
+          ))}
+        </div>
+      </div>
+    </div>
+  );
+};
+
 /* ─── Main Section ─── */
 const PortfolioSection = () => {
   const { open } = useContactDialog();
@@ -518,68 +620,8 @@ const PortfolioSection = () => {
         </div>
       </div>
 
-      {/* ── Client Testimonials ── */}
-      <div className="px-6 md:px-12 lg:px-16 pb-20">
-        <div className="max-w-6xl mx-auto">
-          <motion.div initial={{ opacity: 0, y: 20 }} whileInView={{ opacity: 1, y: 0 }} viewport={{ once: true }} className="mb-10">
-            <h2 className="font-display text-3xl md:text-4xl font-bold">Client <span className="text-gradient">Testimonials</span></h2>
-          </motion.div>
-
-          <div className="grid md:grid-cols-3 gap-6">
-            {[
-              {
-                quote: "HydroBlaze Media transformed our lead generation at Cult.fit Rajajinagar. Their localized Meta Ads strategy brought in a consistent flow of qualified leads, and the cost per lead improved significantly. Their team truly understands performance marketing.",
-                name: "Cult.fit Team",
-                business: "Cult.fit – Rajajinagar, Bangalore",
-                emoji: "🏋️",
-              },
-              {
-                quote: "Our daily order volume increased noticeably after partnering with HydroBlaze. The scroll-stopping food content and hyperlocal campaigns they ran positioned BLR Kabab as a go-to brand. We saw higher engagement and more repeat customers than ever.",
-                name: "BLR Kabab Team",
-                business: "BLR Kabab, Bangalore",
-                emoji: "🍢",
-              },
-              {
-                quote: "HydroBlaze helped us build Aayara Boutique's brand from scratch with a clear premium positioning. From identity development to social media setup, their aesthetic-first approach gave us a strong foundation even before launch. Highly recommended!",
-                name: "Aayara Boutique Team",
-                business: "Aayara Boutique",
-                emoji: "👗",
-              },
-              {
-                quote: "The product labels HydroBlaze designed for Aqua Splash completely elevated our brand presence on shelves. The bold, professional design instantly communicates quality. Our customers notice the difference and so do retailers.",
-                name: "Aqua Splash Team",
-                business: "Aqua Splash, Automotive Care",
-                emoji: "🚗",
-              },
-              {
-                quote: "HydroBlaze created an outstanding sponsorship deck for our motorsport team. The professional layout and high-energy visuals helped us strengthen credibility with potential sponsors. It's been a game-changer for our outreach.",
-                name: "AMSC Team",
-                business: "AMSC Motorsport",
-                emoji: "🏎️",
-              },
-            ].map((t, i) => (
-              <motion.div
-                key={i}
-                initial={{ opacity: 0, y: 20 }}
-                whileInView={{ opacity: 1, y: 0 }}
-                viewport={{ once: true }}
-                transition={{ delay: i * 0.1 }}
-                className="p-6 md:p-8 rounded-2xl bg-card/50 border border-foreground/5 hover:border-hydro/10 transition-colors duration-500"
-              >
-                <Quote className="w-8 h-8 text-hydro/30 mb-4" />
-                <p className="text-foreground/80 text-sm leading-relaxed mb-6">"{t.quote}"</p>
-                <div className="flex items-center gap-3">
-                  <span className="text-2xl">{t.emoji}</span>
-                  <div>
-                    <p className="font-display font-semibold text-sm">{t.name}</p>
-                    <p className="text-muted-foreground text-xs">{t.business}</p>
-                  </div>
-                </div>
-              </motion.div>
-            ))}
-          </div>
-        </div>
-      </div>
+      {/* ── Client Testimonials (Sliding Carousel) ── */}
+      <TestimonialsCarousel />
 
       {/* ── Final CTA ── */}
       <div className="px-6 md:px-12 lg:px-16 py-20 md:py-28">

@@ -2,9 +2,10 @@ import { useState, useEffect } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
 import { Link, useLocation } from 'react-router-dom';
 import { Menu, X } from 'lucide-react';
-import logo from '@/assets/logo.png';
+import logoDark from '@/assets/logo.png';
+import logoLight from '@/assets/logo-light.png';
 import { useContactDialog } from '@/components/ContactFormDialog';
-import ThemeToggle from '@/components/ThemeToggle';
+import ThemeToggle, { useTheme } from '@/components/ThemeToggle';
 
 const navLinks = [
   { path: '/services', label: 'Services' },
@@ -19,6 +20,7 @@ const Navbar = () => {
   const [isMobileOpen, setIsMobileOpen] = useState(false);
   const location = useLocation();
   const { open: openContact } = useContactDialog();
+  const isDark = useTheme();
 
   useEffect(() => {
     const handleScroll = () => setIsScrolled(window.scrollY > 50);
@@ -47,7 +49,7 @@ const Navbar = () => {
       >
         <div className="flex items-center justify-between max-w-7xl mx-auto">
           <Link to="/" className="flex items-center gap-3">
-            <img src={logo} alt="HydroBlaze" className="h-[35px] w-[140px] object-contain" />
+            <img src={isDark ? logoDark : logoLight} alt="HydroBlaze" className="h-[42px] w-[168px] object-contain" />
           </Link>
 
           {/* Desktop Navigation */}
