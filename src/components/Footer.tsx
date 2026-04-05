@@ -125,9 +125,14 @@ const Footer = () => {
           <p className="text-xs text-muted-foreground/50">
             © 2026 HydroBlaze Media. All rights reserved.
           </p>
-          <p className="text-xs text-muted-foreground/40">
-            Strategy × Creative × Growth
-          </p>
+          <div className="flex items-center gap-4">
+            <Link to="/privacy-policy" className="text-xs text-muted-foreground/50 hover:text-foreground transition-colors">
+              Privacy Policy
+            </Link>
+            <p className="text-xs text-muted-foreground/40">
+              Strategy × Creative × Growth
+            </p>
+          </div>
         </div>
       </div>
     </footer>

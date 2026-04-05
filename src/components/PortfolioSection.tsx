@@ -384,7 +384,20 @@ const testimonials = [
 
 const TestimonialsCarousel = () => {
   const [current, setCurrent] = useState(0);
-  const maxIndex = Math.max(0, testimonials.length - 3);
+  const [visibleCount, setVisibleCount] = useState(3);
+
+  useEffect(() => {
+    const update = () => {
+      if (window.innerWidth < 640) setVisibleCount(1);
+      else if (window.innerWidth < 1024) setVisibleCount(2);
+      else setVisibleCount(3);
+    };
+    update();
+    window.addEventListener('resize', update);
+    return () => window.removeEventListener('resize', update);
+  }, []);
+
+  const maxIndex = Math.max(0, testimonials.length - visibleCount);
 
   const next = useCallback(() => {
     setCurrent(prev => (prev >= maxIndex ? 0 : prev + 1));
@@ -394,11 +407,19 @@ const TestimonialsCarousel = () => {
     setCurrent(prev => (prev <= 0 ? maxIndex : prev - 1));
   }, [maxIndex]);
 
+  // Reset current if it exceeds maxIndex after resize
+  useEffect(() => {
+    if (current > maxIndex) setCurrent(maxIndex);
+  }, [maxIndex, current]);
+
   // Auto-slide
   useEffect(() => {
     const timer = setInterval(next, 4000);
     return () => clearInterval(timer);
   }, [next]);
+
+  const cardWidth = 100 / visibleCount;
+  const gapPx = 24; // gap-6
 
   return (
     <div className="px-6 md:px-12 lg:px-16 pb-20">
@@ -413,14 +434,16 @@ const TestimonialsCarousel = () => {
 
         <div className="overflow-hidden">
           <motion.div
-            className="flex gap-6"
-            animate={{ x: `calc(-${current} * (33.333% + 8px))` }}
+            className="flex"
+            style={{ gap: `${gapPx}px` }}
+            animate={{ x: `-${current * (cardWidth)}% ` }}
             transition={{ type: 'spring', stiffness: 200, damping: 30 }}
           >
             {testimonials.map((t, i) => (
               <div
                 key={i}
-                className="min-w-[calc(33.333%-16px)] flex-shrink-0 p-6 md:p-8 rounded-2xl bg-card/50 border border-foreground/5 hover:border-hydro/10 transition-colors duration-500"
+                style={{ width: `calc(${cardWidth}% - ${gapPx * (visibleCount - 1) / visibleCount}px)` }}
+                className="flex-shrink-0 p-6 md:p-8 rounded-2xl bg-card/50 border border-foreground/5 hover:border-hydro/10 transition-colors duration-500"
               >
                 <Quote className="w-8 h-8 text-hydro/30 mb-4" />
                 <p className="text-foreground/80 text-sm leading-relaxed mb-6">"{t.quote}"</p>
