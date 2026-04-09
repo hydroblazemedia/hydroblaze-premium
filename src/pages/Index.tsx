@@ -25,6 +25,16 @@ const Index = () => {
             <PagePreviewSection />
             <BlogSection />
             <Footer />
+            <div className="pb-6 text-center text-sm text-foreground/80">
+              <a
+                href="https://www.linkedin.com/company/hydroblaze-media/"
+                target="_blank"
+                rel="noopener noreferrer"
+                className="hover:underline"
+              >
+                Strategic Marketing by HydroBlaze Media
+              </a>
+            </div>
           </main>
         </>
       )}
