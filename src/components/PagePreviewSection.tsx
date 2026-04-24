@@ -2,7 +2,7 @@ import { motion } from 'framer-motion';
 import { Link } from 'react-router-dom';
 import {
   ArrowRight, ArrowUpRight, Smartphone, Camera, TrendingUp, Palette,
-  Droplets, Flame, Gem, Target, Users, Shield, MessageCircle,
+  Droplets, Flame, Target, Users, Shield, MessageCircle,
   BarChart3, MousePointerClick, Eye, Percent
 } from 'lucide-react';
 import { useContactDialog } from '@/components/ContactFormDialog';
