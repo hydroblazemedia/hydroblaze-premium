@@ -62,46 +62,54 @@
   }
 
   .light {
-    --hydro: 197 100% 32%;
-    --hydro-glow: 197 100% 42%;
-    --blaze: 16 100% 40%;
-    --blaze-glow: 12 100% 46%;
-    
-    --background: 220 20% 96%;
+    /* Premium light theme — warm off-white with cool depth */
+    --hydro: 197 92% 36%;
+    --hydro-glow: 197 100% 46%;
+    --blaze: 14 92% 44%;
+    --blaze-glow: 12 100% 52%;
+
+    --background: 220 28% 97%;
     --background-elevated: 0 0% 100%;
-    --foreground: 220 40% 16%;
-    
+    --foreground: 222 45% 11%;
+
     --card: 0 0% 100%;
-    --card-foreground: 220 40% 16%;
-    
+    --card-foreground: 222 45% 11%;
+
     --popover: 0 0% 100%;
-    --popover-foreground: 220 40% 16%;
-    
-    --primary: 197 100% 32%;
+    --popover-foreground: 222 45% 11%;
+
+    --primary: 197 92% 36%;
     --primary-foreground: 0 0% 100%;
-    
-    --secondary: 16 100% 40%;
+
+    --secondary: 14 92% 44%;
     --secondary-foreground: 0 0% 100%;
-    
-    --muted: 220 20% 91%;
-    --muted-foreground: 215 25% 38%;
-    
-    --accent: 220 20% 93%;
-    --accent-foreground: 220 40% 16%;
-    
+
+    --muted: 220 22% 93%;
+    --muted-foreground: 220 18% 38%;
+
+    --accent: 220 22% 95%;
+    --accent-foreground: 222 45% 11%;
+
     --destructive: 0 84% 55%;
     --destructive-foreground: 0 0% 100%;
-    
-    --border: 220 20% 78%;
-    --input: 220 20% 82%;
-    --ring: 197 100% 32%;
-    
-    --gradient-hydro-blaze: linear-gradient(135deg, hsl(197 100% 32%) 0%, hsl(220 40% 16%) 50%, hsl(16 100% 40%) 100%);
-    --gradient-surface: linear-gradient(180deg, hsl(220 20% 94%) 0%, hsl(0 0% 100%) 100%);
-    --shadow-card: 0 2px 8px -2px hsl(220 40% 16% / 0.06), 0 4px 16px -4px hsl(220 40% 16% / 0.08);
-    --shadow-hydro: 0 0 40px -10px hsl(var(--hydro) / 0.2);
-    --shadow-blaze: 0 0 40px -10px hsl(var(--blaze) / 0.2);
-    --shadow-glow: 0 0 30px -8px hsl(var(--hydro) / 0.12), 0 0 30px -8px hsl(var(--blaze) / 0.12);
+
+    --border: 220 20% 86%;
+    --input: 220 20% 88%;
+    --ring: 197 92% 36%;
+
+    --gradient-hydro-blaze: linear-gradient(135deg, hsl(197 92% 36%) 0%, hsl(222 45% 18%) 50%, hsl(14 92% 44%) 100%);
+    --gradient-hydro: linear-gradient(135deg, hsl(197 92% 36%) 0%, hsl(197 100% 46%) 100%);
+    --gradient-blaze: linear-gradient(135deg, hsl(14 92% 44%) 0%, hsl(12 100% 52%) 100%);
+    --gradient-surface: linear-gradient(180deg, hsl(220 28% 98%) 0%, hsl(0 0% 100%) 100%);
+    --shadow-card:
+      0 1px 2px -1px hsl(222 45% 11% / 0.06),
+      0 8px 24px -12px hsl(222 45% 11% / 0.10),
+      0 24px 48px -24px hsl(197 60% 30% / 0.08);
+    --shadow-hydro: 0 12px 40px -16px hsl(var(--hydro) / 0.28);
+    --shadow-blaze: 0 12px 40px -16px hsl(var(--blaze) / 0.28);
+    --shadow-glow:
+      0 0 30px -8px hsl(var(--hydro) / 0.18),
+      0 0 40px -10px hsl(var(--blaze) / 0.14);
   }
 
   .dark {
@@ -222,51 +230,80 @@
 
 /* Light mode overrides for elements using foreground opacity borders/backgrounds */
 .light .noise-overlay {
-  @apply opacity-[0.015];
+  @apply opacity-[0.012];
 }
 
-/* Strengthen fractional foreground borders in light mode */
+/* Refined light-mode shading for premium look */
 .light [class*="border-foreground/5"] {
-  border-color: hsl(220 20% 78%) !important;
+  border-color: hsl(220 20% 88%) !important;
 }
 .light [class*="border-foreground/10"] {
-  border-color: hsl(220 20% 75%) !important;
+  border-color: hsl(220 20% 84%) !important;
+}
+.light [class*="border-foreground/20"] {
+  border-color: hsl(220 20% 76%) !important;
 }
 .light [class*="border-foreground/[0.06]"],
 .light [class*="border-foreground/[0.1]"] {
-  border-color: hsl(220 20% 78%) !important;
+  border-color: hsl(220 20% 86%) !important;
 }
 
-/* Fix semi-transparent card backgrounds in light mode */
+/* Premium card backgrounds — soft elevation, subtle tint */
 .light [class*="bg-card/50"],
 .light [class*="bg-card/95"] {
   background-color: hsl(0 0% 100%) !important;
-  box-shadow: 0 2px 8px -2px hsl(220 40% 16% / 0.06), 0 4px 16px -4px hsl(220 40% 16% / 0.08);
+  background-image: linear-gradient(180deg, hsl(220 30% 99%) 0%, hsl(0 0% 100%) 100%) !important;
+  box-shadow:
+    0 1px 2px -1px hsl(222 45% 11% / 0.05),
+    0 8px 24px -16px hsl(222 45% 11% / 0.10) !important;
 }
 
-/* Fix semi-transparent background colors */
+.light [class*="bg-card/50"]:hover,
+.light [class*="bg-card/95"]:hover {
+  box-shadow:
+    0 1px 2px -1px hsl(222 45% 11% / 0.06),
+    0 12px 32px -16px hsl(197 70% 30% / 0.18),
+    0 24px 48px -24px hsl(14 80% 40% / 0.10) !important;
+}
+
+/* Translucent backgrounds */
 .light [class*="bg-background/50"],
 .light [class*="bg-background/90"] {
-  background-color: hsl(220 20% 96% / 0.95) !important;
+  background-color: hsl(220 28% 97% / 0.92) !important;
 }
 
-/* Navbar glass effect for light mode */
+/* Navbar — frosted glass with subtle depth */
 .light nav {
-  background: hsl(0 0% 100% / 0.85) !important;
-  border-color: hsl(220 20% 78%) !important;
-  box-shadow: 0 2px 16px -4px hsl(220 40% 16% / 0.08) !important;
+  background: hsl(0 0% 100% / 0.78) !important;
+  border-color: hsl(220 20% 86%) !important;
+  box-shadow:
+    0 1px 0 0 hsl(220 30% 100% / 0.6) inset,
+    0 4px 24px -8px hsl(222 45% 11% / 0.10) !important;
 }
 
-/* Service comparison table */
+/* Service comparison & misc white-tint utilities */
 .light [class*="bg-white/5"],
 .light [class*="bg-white/\\[0.02\\]"] {
-  background-color: hsl(220 20% 96%) !important;
+  background-color: hsl(220 24% 96%) !important;
 }
 .light [class*="border-white/5"],
 .light [class*="border-white/10"],
 .light [class*="border-white/\\[0.08\\]"],
 .light [class*="border-white/\\[0.15\\]"] {
-  border-color: hsl(220 20% 78%) !important;
+  border-color: hsl(220 20% 84%) !important;
+}
+
+/* Brand-tint accents — make hydro/blaze ambient surfaces visible on light */
+.light [class*="bg-hydro/5"] { background-color: hsl(var(--hydro) / 0.08) !important; }
+.light [class*="bg-hydro/10"] { background-color: hsl(var(--hydro) / 0.10) !important; }
+.light [class*="bg-blaze/5"] { background-color: hsl(var(--blaze) / 0.08) !important; }
+.light [class*="bg-blaze/10"] { background-color: hsl(var(--blaze) / 0.10) !important; }
+.light [class*="border-hydro/20"] { border-color: hsl(var(--hydro) / 0.30) !important; }
+.light [class*="border-blaze/20"] { border-color: hsl(var(--blaze) / 0.30) !important; }
+
+/* Section dividers — softer, richer */
+.light section[class*="border-t"] {
+  border-top-color: hsl(220 20% 88%) !important;
 }
 
 @layer utilities {
