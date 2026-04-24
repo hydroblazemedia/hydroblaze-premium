@@ -54,7 +54,7 @@ const Hero = () => {
         </motion.div>
 
         {/* Heading — staggered word reveal */}
-        <h1 className="font-display font-bold text-4xl md:text-5xl lg:text-6xl xl:text-7xl leading-[0.95] tracking-tight mb-8">
+        <h1 className="font-display font-bold text-4xl md:text-5xl lg:text-6xl xl:text-7xl leading-[0.92] tracking-[-0.025em] mb-8">
           {headingWordsLine1.map((word, i) => (
             <motion.span
               key={word + i}
@@ -93,7 +93,7 @@ const Hero = () => {
           initial={{ opacity: 0, y: 20, filter: 'blur(8px)' }}
           animate={{ opacity: 1, y: 0, filter: 'blur(0px)' }}
           transition={{ duration: 0.7, delay: 1.1 }}
-          className="text-lg md:text-xl text-muted-foreground max-w-2xl mx-auto leading-relaxed mb-12"
+          className="text-base md:text-lg lg:text-xl text-muted-foreground max-w-2xl mx-auto leading-[1.7] mb-12 tracking-[-0.005em]"
         >
           We help brands grow through structured social media, performance marketing, and high-impact content — built to convert, not just look good.
         </motion.p>
