@@ -4,8 +4,8 @@ import { Send, CheckCircle, AlertCircle, Loader2 } from 'lucide-react';
 import { z } from 'zod';
 import { motion } from 'framer-motion';
 
-// TODO: Replace with your deployed Google Apps Script Web App URL
-const GOOGLE_SHEET_URL = 'https://script.google.com/macros/s/AKfycbxDs3H3G1-GgxVCtDRmL-89_zg8-YO8T_yrhpkT-yrkUW9XseP6mIwsleTkU-TVWJuQhA/exec';
+// Deployed Google Apps Script Web App URL
+const GOOGLE_SHEET_URL = 'https://script.google.com/macros/s/AKfycby7YhYu46M3MU7qjUd9zWfOFe08H90L3C_Gay5Xn1g8CFujFy0UOJggxEvh7A1qtXk2fg/exec';
 
 const contactSchema = z.object({
   name: z.string().trim().min(1, 'Name is required').max(100, 'Name must be under 100 characters'),
