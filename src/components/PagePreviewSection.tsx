@@ -51,7 +51,7 @@ const PagePreviewSection = () => {
               What We Do
             </span>
             <div className="flex flex-col md:flex-row md:items-end md:justify-between gap-4">
-              <h2 className="font-display text-3xl md:text-5xl font-bold leading-[1.1] tracking-tight">
+              <h2 className="font-display text-3xl md:text-5xl font-bold leading-[1.05] tracking-[-0.025em]">
                 Growth Services Built
                 <br />
                 <span className="text-gradient">for Execution.</span>
@@ -74,11 +74,12 @@ const PagePreviewSection = () => {
                   viewport={{ once: true }}
                   transition={{ duration: 0.5, delay: i * 0.08 }}
                   whileHover={{ y: -6, transition: { duration: 0.25 } }}
-                  className={`group relative p-6 md:p-7 rounded-2xl border border-foreground/10 bg-card/50 backdrop-blur-sm ${colors.border} transition-all duration-400 cursor-pointer overflow-hidden`}
+                  className={`group relative p-6 md:p-7 rounded-2xl border border-foreground/10 bg-card/50 backdrop-blur-sm ${colors.border} transition-all duration-500 cursor-pointer overflow-hidden hover:shadow-[0_20px_60px_-20px_hsl(var(--hydro)/0.25)]`}
                 >
                   <div className={`absolute inset-0 rounded-2xl opacity-0 group-hover:opacity-100 transition-opacity duration-500 bg-gradient-to-b ${colors.bg} to-transparent pointer-events-none`} />
-                  <service.icon className={`w-8 h-8 mb-4 ${colors.icon} opacity-70 group-hover:opacity-100 transition-opacity relative z-10`} />
-                  <p className="font-display font-semibold text-base mb-2 relative z-10">{service.label}</p>
+                  <div className="absolute -inset-px rounded-2xl opacity-0 group-hover:opacity-100 transition-opacity duration-500 pointer-events-none" style={{ background: `linear-gradient(135deg, hsl(var(--${service.color})/0.4), transparent 60%)`, WebkitMask: 'linear-gradient(#000 0 0) content-box, linear-gradient(#000 0 0)', WebkitMaskComposite: 'xor', maskComposite: 'exclude', padding: '1px' }} />
+                  <service.icon className={`w-8 h-8 mb-4 ${colors.icon} opacity-80 group-hover:opacity-100 transition-opacity relative z-10`} />
+                  <p className="font-display font-semibold text-base mb-2 tracking-[-0.01em] relative z-10">{service.label}</p>
                   <p className="text-muted-foreground text-sm leading-relaxed relative z-10">{service.desc}</p>
                 </motion.div>
               );
@@ -96,7 +97,7 @@ const PagePreviewSection = () => {
               <Flame className="w-3.5 h-3.5 text-blaze" />
               Our System
             </span>
-            <h2 className="font-display text-3xl md:text-5xl font-bold tracking-tight">
+            <h2 className="font-display text-3xl md:text-5xl font-bold tracking-[-0.025em]">
               Our System, Not <span className="text-gradient">Guesswork.</span>
             </h2>
           </motion.div>
@@ -151,7 +152,7 @@ const PagePreviewSection = () => {
               <BarChart3 className="w-3.5 h-3.5" />
               Results
             </span>
-            <h2 className="font-display text-3xl md:text-5xl font-bold tracking-tight mb-4">
+            <h2 className="font-display text-3xl md:text-5xl font-bold tracking-[-0.025em] mb-4">
               Built for Results, <span className="text-gradient-blaze">Not Just Aesthetics.</span>
             </h2>
             <p className="text-muted-foreground max-w-xl mx-auto text-base md:text-lg">
@@ -187,7 +188,7 @@ const PagePreviewSection = () => {
               <Shield className="w-3.5 h-3.5" />
               Why Us
             </span>
-            <h2 className="font-display text-3xl md:text-5xl font-bold tracking-tight">
+            <h2 className="font-display text-3xl md:text-5xl font-bold tracking-[-0.025em]">
               Why Brands <span className="text-gradient">Choose Us.</span>
             </h2>
           </motion.div>
@@ -227,7 +228,7 @@ const PagePreviewSection = () => {
           <div className="relative bg-card/50 backdrop-blur-sm border border-foreground/10 rounded-3xl p-10 md:p-16 text-center overflow-hidden">
             <div className="absolute inset-0 bg-gradient-to-br from-hydro/5 via-transparent to-blaze/5 pointer-events-none" />
             <div className="relative space-y-6">
-              <h2 className="font-display text-3xl md:text-5xl font-bold tracking-tight">
+              <h2 className="font-display text-3xl md:text-5xl font-bold tracking-[-0.025em]">
                 Ready to Scale <span className="text-gradient">Your Brand?</span>
               </h2>
               <p className="text-muted-foreground max-w-lg mx-auto text-base md:text-lg">
