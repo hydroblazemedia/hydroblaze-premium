@@ -91,9 +91,7 @@ export const ContactDialogProvider = ({ children }: { children: React.ReactNode 
               <CheckCircle className="w-14 h-14 text-hydro mx-auto mb-4" />
               <DialogHeader>
                 <DialogTitle className="font-display text-2xl font-bold">Message Sent!</DialogTitle>
-                <DialogDescription className="text-muted-foreground mt-2">
-                  We'll get back to you within 24 hours. Check your WhatsApp for confirmation.
-                </DialogDescription>
+                <DialogDescription className="text-muted-foreground mt-2">We'll get back to you within 24 hours.</DialogDescription>
               </DialogHeader>
               <button onClick={() => { setSubmitted(false); setFormData({ name: '', company: '', email: '', phone: '', message: '' }); }} className="mt-6 px-6 py-3 rounded-full text-sm font-medium bg-gradient-to-r from-hydro to-blaze text-white hover:shadow-[0_0_30px_hsl(var(--hydro)/0.4)] transition-all duration-300">
                 Send Another
