@@ -179,65 +179,6 @@ const PagePreviewSection = () => {
         </div>
       </section>
 
-      {/* ═══ PRICING PREVIEW ═══ */}
-      <section className="py-20 md:py-28 px-6 md:px-12 lg:px-16 border-t border-foreground/5">
-        <div className="max-w-7xl mx-auto">
-          <motion.div initial={{ opacity: 0, y: 30 }} whileInView={{ opacity: 1, y: 0 }} viewport={{ once: true }} transition={{ duration: 0.7 }} className="text-center mb-14">
-            <span className="inline-flex items-center gap-2 px-4 py-1.5 rounded-full text-xs font-medium bg-blaze/10 text-blaze border border-blaze/20 mb-5">
-              <Gem className="w-3.5 h-3.5" />
-              Pricing
-            </span>
-            <h2 className="font-display text-3xl md:text-5xl font-bold tracking-tight mb-4">
-              Simple, <span className="text-gradient-blaze">Transparent Pricing.</span>
-            </h2>
-            <p className="text-muted-foreground max-w-xl mx-auto">
-              No hidden fees, no long-term contracts. Choose the plan that fits your growth stage.
-            </p>
-          </motion.div>
-
-          <div className="grid md:grid-cols-3 gap-4 md:gap-6 max-w-4xl mx-auto mb-10">
-            {[
-              { name: 'Starter', price: '₹15,000', desc: 'Perfect for brands just getting started' },
-              { name: 'Growth', price: '₹25,000', desc: 'For brands ready to scale aggressively', featured: true },
-              { name: 'Premium', price: '₹40,000', desc: 'Full-service marketing partnership' },
-            ].map((tier, i) => (
-              <motion.div
-                key={tier.name}
-                initial={{ opacity: 0, y: 20 }}
-                whileInView={{ opacity: 1, y: 0 }}
-                viewport={{ once: true }}
-                transition={{ duration: 0.5, delay: i * 0.1 }}
-                className={`relative p-6 md:p-8 rounded-2xl border bg-card/50 backdrop-blur-sm text-center transition-all duration-500 ${
-                  tier.featured
-                    ? 'border-hydro/30 shadow-[0_0_30px_hsl(var(--hydro)/0.1)]'
-                    : 'border-foreground/10 hover:border-foreground/20'
-                }`}
-              >
-                {tier.featured && (
-                  <span className="absolute -top-3 left-1/2 -translate-x-1/2 px-3 py-1 rounded-full text-[10px] uppercase tracking-widest font-semibold bg-hydro text-primary-foreground">
-                    Popular
-                  </span>
-                )}
-                <p className="font-display text-lg font-semibold mb-2">{tier.name}</p>
-                <p className="font-display text-3xl font-bold mb-1">{tier.price}</p>
-                <p className="text-muted-foreground text-xs mb-4">/month</p>
-                <p className="text-muted-foreground text-sm">{tier.desc}</p>
-              </motion.div>
-            ))}
-          </div>
-
-          <div className="text-center">
-            <Link
-              to="/pricing"
-              className="group inline-flex items-center gap-3 px-8 py-4 rounded-full text-sm font-semibold bg-gradient-to-r from-blaze to-blaze/80 text-white hover:shadow-[0_0_30px_hsl(var(--blaze)/0.4)] transition-all duration-500 hover:scale-105"
-            >
-              View Pricing
-              <ArrowRight className="w-4 h-4 transition-transform group-hover:translate-x-1.5" />
-            </Link>
-          </div>
-        </div>
-      </section>
-
       {/* ═══ WHY HYDROBLAZE ═══ */}
       <section className="py-20 md:py-28 px-6 md:px-12 lg:px-16 border-t border-foreground/5">
         <div className="max-w-7xl mx-auto">
