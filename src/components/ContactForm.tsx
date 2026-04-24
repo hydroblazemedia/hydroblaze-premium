@@ -64,9 +64,7 @@ const ContactForm = () => {
             <h3 className="font-display text-2xl md:text-3xl font-bold mb-4">
               Message Sent!
             </h3>
-            <p className="text-muted-foreground mb-8">
-              We'll get back to you within 24 hours. Meanwhile, check your WhatsApp for confirmation.
-            </p>
+            <p className="text-muted-foreground mb-8">We'll get back to you within 24 hours.</p>
             <button
               onClick={() => { setSubmitted(false); setFormData({ name: '', email: '', phone: '', message: '' }); }}
               className="btn-primary"
