@@ -68,15 +68,15 @@
     --blaze: 14 92% 44%;
     --blaze-glow: 12 100% 52%;
 
-    --background: 220 28% 97%;
+    --background: 220 30% 98%;
     --background-elevated: 0 0% 100%;
-    --foreground: 222 45% 11%;
+    --foreground: 222 47% 9%;
 
     --card: 0 0% 100%;
-    --card-foreground: 222 45% 11%;
+    --card-foreground: 222 47% 9%;
 
     --popover: 0 0% 100%;
-    --popover-foreground: 222 45% 11%;
+    --popover-foreground: 222 47% 9%;
 
     --primary: 197 92% 36%;
     --primary-foreground: 0 0% 100%;
@@ -85,16 +85,17 @@
     --secondary-foreground: 0 0% 100%;
 
     --muted: 220 22% 93%;
-    --muted-foreground: 220 18% 38%;
+    /* Darker, cooler muted text for crisp paragraph contrast (~7:1 on bg) */
+    --muted-foreground: 220 22% 28%;
 
     --accent: 220 22% 95%;
-    --accent-foreground: 222 45% 11%;
+    --accent-foreground: 222 47% 9%;
 
     --destructive: 0 84% 55%;
     --destructive-foreground: 0 0% 100%;
 
-    --border: 220 20% 86%;
-    --input: 220 20% 88%;
+    --border: 220 22% 82%;
+    --input: 220 20% 86%;
     --ring: 197 92% 36%;
 
     --gradient-hydro-blaze: linear-gradient(135deg, hsl(197 92% 36%) 0%, hsl(222 45% 18%) 50%, hsl(14 92% 44%) 100%);
@@ -102,14 +103,14 @@
     --gradient-blaze: linear-gradient(135deg, hsl(14 92% 44%) 0%, hsl(12 100% 52%) 100%);
     --gradient-surface: linear-gradient(180deg, hsl(220 28% 98%) 0%, hsl(0 0% 100%) 100%);
     --shadow-card:
-      0 1px 2px -1px hsl(222 45% 11% / 0.06),
-      0 8px 24px -12px hsl(222 45% 11% / 0.10),
-      0 24px 48px -24px hsl(197 60% 30% / 0.08);
-    --shadow-hydro: 0 12px 40px -16px hsl(var(--hydro) / 0.28);
-    --shadow-blaze: 0 12px 40px -16px hsl(var(--blaze) / 0.28);
+      0 1px 2px -1px hsl(222 45% 11% / 0.05),
+      0 6px 20px -10px hsl(222 45% 11% / 0.08),
+      0 20px 44px -22px hsl(197 60% 30% / 0.07);
+    --shadow-hydro: 0 12px 40px -16px hsl(var(--hydro) / 0.25);
+    --shadow-blaze: 0 12px 40px -16px hsl(var(--blaze) / 0.25);
     --shadow-glow:
-      0 0 30px -8px hsl(var(--hydro) / 0.18),
-      0 0 40px -10px hsl(var(--blaze) / 0.14);
+      0 0 30px -8px hsl(var(--hydro) / 0.15),
+      0 0 40px -10px hsl(var(--blaze) / 0.12);
   }
 
   .dark {
@@ -235,41 +236,45 @@
 
 /* Refined light-mode shading for premium look */
 .light [class*="border-foreground/5"] {
-  border-color: hsl(220 20% 88%) !important;
+  border-color: hsl(220 22% 88%) !important;
 }
 .light [class*="border-foreground/10"] {
-  border-color: hsl(220 20% 84%) !important;
+  border-color: hsl(220 22% 82%) !important;
 }
 .light [class*="border-foreground/20"] {
-  border-color: hsl(220 20% 76%) !important;
+  border-color: hsl(220 22% 72%) !important;
 }
 .light [class*="border-foreground/[0.06]"],
 .light [class*="border-foreground/[0.1]"] {
-  border-color: hsl(220 20% 86%) !important;
+  border-color: hsl(220 22% 84%) !important;
 }
 
 /* Premium card backgrounds — soft elevation, subtle tint */
 .light [class*="bg-card/50"],
 .light [class*="bg-card/95"] {
   background-color: hsl(0 0% 100%) !important;
-  background-image: linear-gradient(180deg, hsl(220 30% 99%) 0%, hsl(0 0% 100%) 100%) !important;
+  background-image: linear-gradient(180deg, hsl(220 30% 99.5%) 0%, hsl(0 0% 100%) 100%) !important;
+  border-color: hsl(220 22% 86%) !important;
   box-shadow:
-    0 1px 2px -1px hsl(222 45% 11% / 0.05),
-    0 8px 24px -16px hsl(222 45% 11% / 0.10) !important;
+    0 1px 0 0 hsl(0 0% 100%) inset,
+    0 1px 2px -1px hsl(222 45% 11% / 0.04),
+    0 6px 20px -12px hsl(222 45% 11% / 0.08) !important;
 }
 
 .light [class*="bg-card/50"]:hover,
 .light [class*="bg-card/95"]:hover {
+  border-color: hsl(220 22% 78%) !important;
   box-shadow:
+    0 1px 0 0 hsl(0 0% 100%) inset,
     0 1px 2px -1px hsl(222 45% 11% / 0.06),
-    0 12px 32px -16px hsl(197 70% 30% / 0.18),
-    0 24px 48px -24px hsl(14 80% 40% / 0.10) !important;
+    0 14px 36px -18px hsl(197 70% 30% / 0.16),
+    0 28px 56px -28px hsl(14 80% 40% / 0.10) !important;
 }
 
 /* Translucent backgrounds */
 .light [class*="bg-background/50"],
 .light [class*="bg-background/90"] {
-  background-color: hsl(220 28% 97% / 0.92) !important;
+  background-color: hsl(220 30% 98% / 0.92) !important;
 }
 
 /* Navbar — frosted glass with subtle depth */
@@ -293,17 +298,71 @@
   border-color: hsl(220 20% 84%) !important;
 }
 
-/* Brand-tint accents — make hydro/blaze ambient surfaces visible on light */
+/* Brand-tint accents — visible on light */
 .light [class*="bg-hydro/5"] { background-color: hsl(var(--hydro) / 0.08) !important; }
-.light [class*="bg-hydro/10"] { background-color: hsl(var(--hydro) / 0.10) !important; }
+.light [class*="bg-hydro/10"] { background-color: hsl(var(--hydro) / 0.12) !important; }
 .light [class*="bg-blaze/5"] { background-color: hsl(var(--blaze) / 0.08) !important; }
-.light [class*="bg-blaze/10"] { background-color: hsl(var(--blaze) / 0.10) !important; }
-.light [class*="border-hydro/20"] { border-color: hsl(var(--hydro) / 0.30) !important; }
-.light [class*="border-blaze/20"] { border-color: hsl(var(--blaze) / 0.30) !important; }
+.light [class*="bg-blaze/10"] { background-color: hsl(var(--blaze) / 0.12) !important; }
+.light [class*="border-hydro/20"] { border-color: hsl(var(--hydro) / 0.32) !important; }
+.light [class*="border-blaze/20"] { border-color: hsl(var(--blaze) / 0.32) !important; }
+.light [class*="border-hydro/30"] { border-color: hsl(var(--hydro) / 0.42) !important; }
+.light [class*="border-blaze/30"] { border-color: hsl(var(--blaze) / 0.42) !important; }
 
-/* Section dividers — softer, richer */
-.light section[class*="border-t"] {
-  border-top-color: hsl(220 20% 88%) !important;
+/* ── Unified section dividers ──
+   Replace fractional foreground borders with a luminous hairline that
+   reads as a soft gradient seam between sections. */
+.light section[class*="border-t"],
+.light section[class*="border-y"] {
+  border-top-color: transparent !important;
+  position: relative;
+}
+.light section[class*="border-t"]::before,
+.light section[class*="border-y"]::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 8%;
+  right: 8%;
+  height: 1px;
+  background: linear-gradient(
+    90deg,
+    transparent 0%,
+    hsl(220 22% 78%) 20%,
+    hsl(197 60% 50% / 0.35) 50%,
+    hsl(220 22% 78%) 80%,
+    transparent 100%
+  );
+  pointer-events: none;
+}
+.light section[class*="border-y"]::after {
+  content: '';
+  position: absolute;
+  bottom: 0;
+  left: 8%;
+  right: 8%;
+  height: 1px;
+  background: linear-gradient(
+    90deg,
+    transparent 0%,
+    hsl(220 22% 78%) 20%,
+    hsl(14 60% 50% / 0.30) 50%,
+    hsl(220 22% 78%) 80%,
+    transparent 100%
+  );
+  pointer-events: none;
+}
+
+/* ── Alternating section tints for subtle elevation rhythm ──
+   Only applied when a parent .home-sections wrapper is used. */
+.light .home-sections > section:nth-of-type(even) {
+  background:
+    radial-gradient(ellipse at top, hsl(197 60% 96%) 0%, transparent 60%),
+    hsl(220 30% 98%);
+}
+.light .home-sections > section:nth-of-type(odd) {
+  background:
+    radial-gradient(ellipse at bottom, hsl(14 60% 97%) 0%, transparent 55%),
+    hsl(0 0% 100%);
 }
 
 @layer utilities {

@@ -40,7 +40,7 @@ const PagePreviewSection = () => {
   const { open } = useContactDialog();
 
   return (
-    <div className="relative z-10">
+    <div className="relative z-10 home-sections">
 
       {/* ═══ WHAT WE DO ═══ */}
       <section className="py-20 md:py-28 px-6 md:px-12 lg:px-16">
