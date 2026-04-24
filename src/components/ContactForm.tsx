@@ -1,6 +1,6 @@
 import { useState } from 'react';
-import { motion } from 'framer-motion';
-import { Send, CheckCircle, AlertCircle } from 'lucide-react';
+import { motion, AnimatePresence } from 'framer-motion';
+import { Send, CheckCircle2, AlertCircle, Sparkles } from 'lucide-react';
 import { z } from 'zod';
 
 const contactSchema = z.object({
@@ -21,12 +21,30 @@ const ContactForm = () => {
     message: '',
   });
   const [errors, setErrors] = useState<FormErrors>({});
+  const [touched, setTouched] = useState<Partial<Record<keyof ContactFormData, boolean>>>({});
   const [submitted, setSubmitted] = useState(false);
 
   const handleChange = (field: keyof ContactFormData, value: string) => {
     setFormData(prev => ({ ...prev, [field]: value }));
-    if (errors[field]) {
+    // Live-revalidate the field if it has been touched
+    if (touched[field]) {
+      const next = { ...formData, [field]: value };
+      const result = contactSchema.safeParse(next);
+      const fieldError = !result.success
+        ? result.error.errors.find(err => err.path[0] === field)?.message
+        : undefined;
+      setErrors(prev => ({ ...prev, [field]: fieldError }));
+    } else if (errors[field]) {
       setErrors(prev => ({ ...prev, [field]: undefined }));
+    }
+  };
+
+  const handleBlur = (field: keyof ContactFormData) => {
+    setTouched(prev => ({ ...prev, [field]: true }));
+    const result = contactSchema.safeParse(formData);
+    if (!result.success) {
+      const fieldError = result.error.errors.find(err => err.path[0] === field)?.message;
+      setErrors(prev => ({ ...prev, [field]: fieldError }));
     }
   };
 
@@ -41,6 +59,12 @@ const ContactForm = () => {
         if (!fieldErrors[field]) fieldErrors[field] = err.message;
       });
       setErrors(fieldErrors);
+      setTouched({ name: true, email: true, phone: true, message: true });
+      // Scroll to first error field
+      const firstErrorField = Object.keys(fieldErrors)[0];
+      if (firstErrorField) {
+        document.getElementById(`contact-${firstErrorField}`)?.focus();
+      }
       return;
     }
 
@@ -53,29 +77,68 @@ const ContactForm = () => {
   if (submitted) {
     return (
       <section id="contact" className="relative z-10 py-24 md:py-32 px-6 md:px-12 lg:px-16">
-        <div className="max-w-2xl mx-auto text-center">
+        <div className="max-w-2xl mx-auto">
           <motion.div
-            initial={{ opacity: 0, scale: 0.9 }}
-            animate={{ opacity: 1, scale: 1 }}
-            transition={{ duration: 0.5 }}
-            className="glass-card p-12 rounded-2xl"
+            initial={{ opacity: 0, y: 20, scale: 0.96 }}
+            animate={{ opacity: 1, y: 0, scale: 1 }}
+            transition={{ duration: 0.55, ease: [0.22, 1, 0.36, 1] }}
+            className="glass-card relative overflow-hidden p-12 md:p-14 rounded-3xl text-center border border-hydro/20"
           >
-            <CheckCircle className="w-16 h-16 text-hydro mx-auto mb-6" />
-            <h3 className="font-display text-2xl md:text-3xl font-bold mb-4">
-              Message Sent!
-            </h3>
-            <p className="text-muted-foreground mb-8">We'll get back to you within 24 hours.</p>
-            <button
-              onClick={() => { setSubmitted(false); setFormData({ name: '', email: '', phone: '', message: '' }); }}
-              className="btn-primary"
+            {/* Ambient glow */}
+            <div className="pointer-events-none absolute -top-24 left-1/2 -translate-x-1/2 w-72 h-72 rounded-full bg-hydro/20 blur-3xl" />
+            <div className="pointer-events-none absolute -bottom-32 right-0 w-80 h-80 rounded-full bg-blaze/15 blur-3xl" />
+
+            <motion.div
+              initial={{ scale: 0, rotate: -45 }}
+              animate={{ scale: 1, rotate: 0 }}
+              transition={{ delay: 0.15, type: 'spring', stiffness: 200, damping: 14 }}
+              className="relative mx-auto mb-6 flex h-20 w-20 items-center justify-center rounded-2xl bg-gradient-to-br from-hydro to-blaze shadow-[0_0_40px_hsl(var(--hydro)/0.5)]"
             >
-              <span>Send Another</span>
+              <CheckCircle2 className="w-10 h-10 text-white" strokeWidth={2.5} />
+            </motion.div>
+
+            <motion.div
+              initial={{ opacity: 0, y: 10 }}
+              animate={{ opacity: 1, y: 0 }}
+              transition={{ delay: 0.3, duration: 0.4 }}
+              className="relative"
+            >
+              <span className="badge-glow mb-4 inline-flex items-center gap-1.5">
+                <Sparkles className="w-3 h-3" /> Submission received
+              </span>
+              <h3 className="font-display text-3xl md:text-4xl font-bold mb-3">
+                Thanks for reaching out
+              </h3>
+              <p className="text-muted-foreground text-base md:text-lg mb-8 max-w-md mx-auto">
+                Your message is in. Our team will get back to you within <span className="text-foreground font-medium">24 hours</span>.
+              </p>
+            </motion.div>
+
+            <button
+              onClick={() => {
+                setSubmitted(false);
+                setFormData({ name: '', email: '', phone: '', message: '' });
+                setErrors({});
+                setTouched({});
+              }}
+              className="relative inline-flex items-center gap-2 px-7 py-3 rounded-full text-sm font-medium border border-foreground/15 bg-foreground/5 hover:bg-foreground/10 hover:border-foreground/25 transition-all duration-300"
+            >
+              Send another message
             </button>
           </motion.div>
         </div>
       </section>
     );
   }
+
+  const inputClass = (hasError?: boolean) =>
+    `w-full px-4 py-3 rounded-xl bg-white/5 border ${
+      hasError
+        ? 'border-destructive/50 focus:border-destructive/70 focus:ring-1 focus:ring-destructive/30'
+        : 'border-white/10 focus:border-hydro/50 focus:ring-1 focus:ring-hydro/30'
+    } text-foreground placeholder:text-muted-foreground/50 focus:outline-none transition-all`;
+
+  const errorCount = Object.values(errors).filter(Boolean).length;
 
   return (
     <section id="contact" className="relative z-10 py-24 md:py-32 px-6 md:px-12 lg:px-16">
@@ -106,12 +169,31 @@ const ContactForm = () => {
           {/* Right - Form */}
           <motion.form
             onSubmit={handleSubmit}
+            noValidate
             initial={{ opacity: 0, y: 20 }}
             whileInView={{ opacity: 1, y: 0 }}
             viewport={{ once: true }}
             transition={{ duration: 0.6, delay: 0.15 }}
             className="glass-card p-6 md:p-8 rounded-2xl space-y-5"
           >
+            {/* Error summary */}
+            <AnimatePresence>
+              {errorCount > 0 && (
+                <motion.div
+                  initial={{ opacity: 0, y: -8, height: 0 }}
+                  animate={{ opacity: 1, y: 0, height: 'auto' }}
+                  exit={{ opacity: 0, y: -8, height: 0 }}
+                  transition={{ duration: 0.25 }}
+                  className="flex items-start gap-3 p-3.5 rounded-xl bg-destructive/10 border border-destructive/30 text-sm"
+                >
+                  <AlertCircle className="w-4 h-4 text-destructive flex-shrink-0 mt-0.5" />
+                  <p className="text-destructive">
+                    Please fix the {errorCount} {errorCount === 1 ? 'error' : 'errors'} below to continue.
+                  </p>
+                </motion.div>
+              )}
+            </AnimatePresence>
+
             {/* Name */}
             <div>
               <label htmlFor="contact-name" className="block text-sm font-medium mb-2">Name</label>
@@ -120,15 +202,27 @@ const ContactForm = () => {
                 type="text"
                 value={formData.name}
                 onChange={e => handleChange('name', e.target.value)}
+                onBlur={() => handleBlur('name')}
                 placeholder="Your full name"
-                className="w-full px-4 py-3 rounded-xl bg-white/5 border border-white/10 text-foreground placeholder:text-muted-foreground/50 focus:outline-none focus:border-hydro/50 focus:ring-1 focus:ring-hydro/30 transition-all"
+                className={inputClass(!!errors.name)}
+                aria-invalid={!!errors.name}
+                aria-describedby={errors.name ? 'contact-name-error' : undefined}
                 maxLength={100}
               />
-              {errors.name && (
-                <p className="mt-1.5 text-xs text-destructive flex items-center gap-1">
-                  <AlertCircle className="w-3 h-3" /> {errors.name}
-                </p>
-              )}
+              <AnimatePresence>
+                {errors.name && (
+                  <motion.p
+                    id="contact-name-error"
+                    initial={{ opacity: 0, y: -4 }}
+                    animate={{ opacity: 1, y: 0 }}
+                    exit={{ opacity: 0, y: -4 }}
+                    transition={{ duration: 0.2 }}
+                    className="mt-1.5 text-xs text-destructive flex items-center gap-1"
+                  >
+                    <AlertCircle className="w-3 h-3" /> {errors.name}
+                  </motion.p>
+                )}
+              </AnimatePresence>
             </div>
 
             {/* Email */}
@@ -139,15 +233,27 @@ const ContactForm = () => {
                 type="email"
                 value={formData.email}
                 onChange={e => handleChange('email', e.target.value)}
+                onBlur={() => handleBlur('email')}
                 placeholder="you@example.com"
-                className="w-full px-4 py-3 rounded-xl bg-white/5 border border-white/10 text-foreground placeholder:text-muted-foreground/50 focus:outline-none focus:border-hydro/50 focus:ring-1 focus:ring-hydro/30 transition-all"
+                className={inputClass(!!errors.email)}
+                aria-invalid={!!errors.email}
+                aria-describedby={errors.email ? 'contact-email-error' : undefined}
                 maxLength={255}
               />
-              {errors.email && (
-                <p className="mt-1.5 text-xs text-destructive flex items-center gap-1">
-                  <AlertCircle className="w-3 h-3" /> {errors.email}
-                </p>
-              )}
+              <AnimatePresence>
+                {errors.email && (
+                  <motion.p
+                    id="contact-email-error"
+                    initial={{ opacity: 0, y: -4 }}
+                    animate={{ opacity: 1, y: 0 }}
+                    exit={{ opacity: 0, y: -4 }}
+                    transition={{ duration: 0.2 }}
+                    className="mt-1.5 text-xs text-destructive flex items-center gap-1"
+                  >
+                    <AlertCircle className="w-3 h-3" /> {errors.email}
+                  </motion.p>
+                )}
+              </AnimatePresence>
             </div>
 
             {/* Phone */}
@@ -158,34 +264,61 @@ const ContactForm = () => {
                 type="tel"
                 value={formData.phone}
                 onChange={e => handleChange('phone', e.target.value)}
+                onBlur={() => handleBlur('phone')}
                 placeholder="+91 98765 43210"
-                className="w-full px-4 py-3 rounded-xl bg-white/5 border border-white/10 text-foreground placeholder:text-muted-foreground/50 focus:outline-none focus:border-hydro/50 focus:ring-1 focus:ring-hydro/30 transition-all"
+                className={inputClass(!!errors.phone)}
+                aria-invalid={!!errors.phone}
+                aria-describedby={errors.phone ? 'contact-phone-error' : undefined}
                 maxLength={20}
               />
-              {errors.phone && (
-                <p className="mt-1.5 text-xs text-destructive flex items-center gap-1">
-                  <AlertCircle className="w-3 h-3" /> {errors.phone}
-                </p>
-              )}
+              <AnimatePresence>
+                {errors.phone && (
+                  <motion.p
+                    id="contact-phone-error"
+                    initial={{ opacity: 0, y: -4 }}
+                    animate={{ opacity: 1, y: 0 }}
+                    exit={{ opacity: 0, y: -4 }}
+                    transition={{ duration: 0.2 }}
+                    className="mt-1.5 text-xs text-destructive flex items-center gap-1"
+                  >
+                    <AlertCircle className="w-3 h-3" /> {errors.phone}
+                  </motion.p>
+                )}
+              </AnimatePresence>
             </div>
 
             {/* Message */}
             <div>
-              <label htmlFor="contact-message" className="block text-sm font-medium mb-2">Message</label>
+              <div className="flex items-center justify-between mb-2">
+                <label htmlFor="contact-message" className="block text-sm font-medium">Message</label>
+                <span className="text-xs text-muted-foreground/70">{formData.message.length}/1000</span>
+              </div>
               <textarea
                 id="contact-message"
                 value={formData.message}
                 onChange={e => handleChange('message', e.target.value)}
+                onBlur={() => handleBlur('message')}
                 placeholder="Tell us about your project, goals, and budget..."
                 rows={4}
-                className="w-full px-4 py-3 rounded-xl bg-white/5 border border-white/10 text-foreground placeholder:text-muted-foreground/50 focus:outline-none focus:border-hydro/50 focus:ring-1 focus:ring-hydro/30 transition-all resize-none"
+                className={`${inputClass(!!errors.message)} resize-none`}
+                aria-invalid={!!errors.message}
+                aria-describedby={errors.message ? 'contact-message-error' : undefined}
                 maxLength={1000}
               />
-              {errors.message && (
-                <p className="mt-1.5 text-xs text-destructive flex items-center gap-1">
-                  <AlertCircle className="w-3 h-3" /> {errors.message}
-                </p>
-              )}
+              <AnimatePresence>
+                {errors.message && (
+                  <motion.p
+                    id="contact-message-error"
+                    initial={{ opacity: 0, y: -4 }}
+                    animate={{ opacity: 1, y: 0 }}
+                    exit={{ opacity: 0, y: -4 }}
+                    transition={{ duration: 0.2 }}
+                    className="mt-1.5 text-xs text-destructive flex items-center gap-1"
+                  >
+                    <AlertCircle className="w-3 h-3" /> {errors.message}
+                  </motion.p>
+                )}
+              </AnimatePresence>
             </div>
 
             <button
