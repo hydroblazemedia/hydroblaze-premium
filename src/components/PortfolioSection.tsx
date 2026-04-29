@@ -233,7 +233,7 @@ const ProjectDetail = ({ project, onClose }: { project: Project; onClose: () => 
         {/* Hero image */}
         <div className="relative h-64 md:h-80 overflow-hidden rounded-t-3xl">
           <img src={project.image} alt={project.title} className="w-full h-full object-cover" />
-          <div className="absolute inset-0 bg-gradient-to-t from-card via-card/30 to-transparent" />
+          <div className="absolute inset-0 hidden dark:block bg-gradient-to-t from-card via-card/30 to-transparent" />
           <div className="absolute bottom-6 left-8 right-8">
             <span className="inline-block px-3 py-1 rounded-full text-[10px] uppercase tracking-[0.2em] font-semibold bg-hydro/15 text-hydro border border-hydro/20 mb-3">
               {project.category}
@@ -328,7 +328,7 @@ const PortfolioCard = ({ project, onClick }: { project: Project; onClick: () => 
             alt={project.title}
             className="w-full h-full object-cover transition-transform duration-700 group-hover:scale-110"
           />
-          <div className="absolute inset-0 bg-gradient-to-t from-card via-transparent to-transparent opacity-80" />
+          <div className="absolute inset-0 hidden dark:block bg-gradient-to-t from-card via-transparent to-transparent opacity-80" />
           {/* Hover overlay */}
           <div className="absolute inset-0 bg-hydro/10 opacity-0 group-hover:opacity-100 transition-opacity duration-500" />
           <div className="absolute bottom-4 right-4 opacity-0 group-hover:opacity-100 translate-y-2 group-hover:translate-y-0 transition-all duration-400">
@@ -567,7 +567,7 @@ const PortfolioSection = () => {
                 <div className="relative rounded-2xl overflow-hidden bg-card/50 border border-foreground/5 hover:border-hydro/20 transition-all duration-500 h-full">
                   <div className="relative h-72 md:h-80 overflow-hidden">
                     <img src={project.image} alt={project.title} className="w-full h-full object-cover transition-transform duration-700 group-hover:scale-105" />
-                    <div className="absolute inset-0 bg-gradient-to-t from-card via-card/40 to-transparent" />
+                    <div className="absolute inset-0 hidden dark:block bg-gradient-to-t from-card via-card/40 to-transparent" />
                   </div>
                   <div className="absolute bottom-0 left-0 right-0 p-6 md:p-8">
                     <span className="inline-block px-3 py-1 rounded-full text-[10px] uppercase tracking-[0.2em] font-semibold bg-hydro/15 text-hydro border border-hydro/20 mb-3">
