@@ -22,6 +22,8 @@ interface Project {
   objective: string;
   image: string;
   featured?: boolean;
+  imageFit?: 'cover' | 'contain';
+  imageBg?: string;
   whatWeDid: string[];
   impact: string[];
   details: {
