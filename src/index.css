@@ -63,10 +63,10 @@
 
   .light {
     /* Premium light theme — warm off-white with cool depth */
-    --hydro: 197 92% 36%;
-    --hydro-glow: 197 100% 46%;
-    --blaze: 14 92% 44%;
-    --blaze-glow: 12 100% 52%;
+    --hydro: 197 100% 48%;
+    --hydro-glow: 197 100% 58%;
+    --blaze: 14 100% 55%;
+    --blaze-glow: 12 100% 62%;
 
     --background: 220 30% 98%;
     --background-elevated: 0 0% 100%;
@@ -78,10 +78,10 @@
     --popover: 0 0% 100%;
     --popover-foreground: 222 47% 9%;
 
-    --primary: 197 92% 36%;
+    --primary: 197 100% 48%;
     --primary-foreground: 0 0% 100%;
 
-    --secondary: 14 92% 44%;
+    --secondary: 14 100% 55%;
     --secondary-foreground: 0 0% 100%;
 
     --muted: 220 22% 93%;
@@ -96,11 +96,11 @@
 
     --border: 220 22% 82%;
     --input: 220 20% 86%;
-    --ring: 197 92% 36%;
+    --ring: 197 100% 48%;
 
-    --gradient-hydro-blaze: linear-gradient(135deg, hsl(197 92% 36%) 0%, hsl(222 45% 18%) 50%, hsl(14 92% 44%) 100%);
-    --gradient-hydro: linear-gradient(135deg, hsl(197 92% 36%) 0%, hsl(197 100% 46%) 100%);
-    --gradient-blaze: linear-gradient(135deg, hsl(14 92% 44%) 0%, hsl(12 100% 52%) 100%);
+    --gradient-hydro-blaze: linear-gradient(135deg, hsl(197 100% 48%) 0%, hsl(222 45% 18%) 50%, hsl(14 100% 55%) 100%);
+    --gradient-hydro: linear-gradient(135deg, hsl(197 100% 48%) 0%, hsl(197 100% 58%) 100%);
+    --gradient-blaze: linear-gradient(135deg, hsl(14 100% 55%) 0%, hsl(12 100% 62%) 100%);
     --gradient-surface: linear-gradient(180deg, hsl(220 28% 98%) 0%, hsl(0 0% 100%) 100%);
     --shadow-card:
       0 1px 2px -1px hsl(222 45% 11% / 0.05),
