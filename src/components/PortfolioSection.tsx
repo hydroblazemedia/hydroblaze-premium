@@ -46,6 +46,8 @@ const projects: Project[] = [
     objective: 'Increase walk-ins & memberships for a highly competitive fitness location',
     image: imgCultfit,
     featured: true,
+    imageFit: 'contain',
+    imageBg: '#000000',
     whatWeDid: [
       'Localized Meta Ads targeting nearby fitness audience',
       'High-converting lead generation funnels',
@@ -80,6 +82,8 @@ const projects: Project[] = [
     objective: 'Drive online orders & build a strong food brand presence',
     image: imgBlrkabab,
     featured: true,
+    imageFit: 'contain',
+    imageBg: '#E30613',
     whatWeDid: [
       'Scroll-stopping food content & reels',
       'Hyperlocal ad campaigns for order generation',
@@ -114,6 +118,8 @@ const projects: Project[] = [
     objective: 'Launch and establish a premium boutique brand from scratch',
     image: imgAayara,
     featured: true,
+    imageFit: 'contain',
+    imageBg: '#ffffff',
     whatWeDid: [
       'Complete brand positioning & identity development',
       'Premium content strategy aligned with target audience',
