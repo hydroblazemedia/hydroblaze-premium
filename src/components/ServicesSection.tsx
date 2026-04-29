@@ -81,7 +81,7 @@ const ServiceBlock = ({ service, index }: { service: typeof services[0]; index: 
               alt={service.title}
               className="w-full aspect-[4/3] object-cover transition-transform duration-700 group-hover:scale-105"
             />
-            <div className="absolute inset-0 bg-gradient-to-t from-background/60 via-transparent to-transparent" />
+            <div className="absolute inset-0 hidden dark:block bg-gradient-to-t from-background/60 via-transparent to-transparent" />
             {/* Glow border on hover */}
             <div className="absolute inset-0 rounded-2xl border border-foreground/10 group-hover:border-hydro/30 transition-colors duration-500" />
           </div>
