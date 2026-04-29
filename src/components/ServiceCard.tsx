@@ -60,7 +60,7 @@ const ServiceCard = ({
               alt={title} 
               className="w-full h-full object-cover transition-transform duration-700 group-hover:scale-105" 
             />
-            <div className="absolute inset-0 bg-gradient-to-t from-card via-card/50 to-transparent" />
+            <div className="absolute inset-0 hidden dark:block bg-gradient-to-t from-card via-card/50 to-transparent" />
             {/* Icon overlay */}
             <div className="absolute bottom-4 left-6">
               <div className="w-10 h-10 rounded-xl bg-background/80 backdrop-blur-sm border border-foreground/10 flex items-center justify-center">
