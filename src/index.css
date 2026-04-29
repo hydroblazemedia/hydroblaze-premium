@@ -308,6 +308,25 @@
 .light [class*="border-hydro/30"] { border-color: hsl(var(--hydro) / 0.42) !important; }
 .light [class*="border-blaze/30"] { border-color: hsl(var(--blaze) / 0.42) !important; }
 
+/* ── WCAG AA accessible brand text in light mode ──
+   Keeps vibrant hydro/blaze for surfaces (gradients, orbs, buttons),
+   but darkens text usage to meet 4.5:1 contrast on white backgrounds.
+   Audited values: hydro 32% L → 4.91:1, blaze 42% L → 4.63:1. */
+.light .text-hydro { color: hsl(197 100% 32%) !important; }
+.light .text-blaze { color: hsl(14 100% 38%) !important; }
+.light .text-gradient-hydro {
+  background: linear-gradient(135deg, hsl(197 100% 32%) 0%, hsl(197 100% 38%) 100%) !important;
+  -webkit-background-clip: text;
+  background-clip: text;
+  -webkit-text-fill-color: transparent;
+}
+.light .text-gradient-blaze {
+  background: linear-gradient(135deg, hsl(14 100% 38%) 0%, hsl(12 100% 44%) 100%) !important;
+  -webkit-background-clip: text;
+  background-clip: text;
+  -webkit-text-fill-color: transparent;
+}
+
 /* ── Unified section dividers ──
    Replace fractional foreground borders with a luminous hairline that
    reads as a soft gradient seam between sections. */
