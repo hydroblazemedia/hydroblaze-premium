@@ -430,16 +430,19 @@ const ProjectDetail = ({ project, onClose }: { project: Project; onClose: () => 
 /* ─── Portfolio Card ─── */
 const PortfolioCard = ({ project, onClick }: { project: Project; onClick: () => void }) => {
   return (
-    <motion.div
+    <motion.button
       layout
+      type="button"
+      onClick={onClick}
+      aria-label={`View ${project.title} case study`}
       initial={{ opacity: 0, y: 30 }}
       animate={{ opacity: 1, y: 0 }}
       exit={{ opacity: 0, scale: 0.95 }}
       transition={{ duration: 0.4 }}
-      className="group cursor-pointer"
-      onClick={onClick}
+      whileHover={{ y: -4 }}
+      className="group block w-full text-left cursor-pointer rounded-2xl focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-hydro focus-visible:ring-offset-2 focus-visible:ring-offset-background"
     >
-      <div className="relative rounded-2xl overflow-hidden bg-card/50 border border-foreground/5 hover:border-hydro/20 transition-all duration-500">
+      <div className="relative rounded-2xl overflow-hidden bg-card/50 border border-foreground/5 group-hover:border-hydro/30 group-hover:shadow-[0_20px_60px_-20px_hsl(var(--hydro)/0.35)] transition-all duration-500">
         {/* Image */}
         <div
           className="relative h-48 sm:h-52 md:h-56 overflow-hidden"
@@ -469,13 +472,19 @@ const PortfolioCard = ({ project, onClick }: { project: Project; onClick: () => 
         </div>
 
         {/* Content */}
-        <div className="p-5 space-y-2">
-          <span className="text-[10px] uppercase tracking-[0.15em] text-hydro font-semibold">{project.service}</span>
-          <h3 className="font-display text-lg font-semibold group-hover:text-hydro transition-colors duration-300">{project.title}</h3>
-          <p className="text-muted-foreground text-sm line-clamp-2">{project.description}</p>
+        <div className="p-5 md:p-6 space-y-2.5">
+          <span className="block text-[10px] sm:text-[11px] uppercase tracking-[0.18em] text-hydro font-semibold">
+            {project.service}
+          </span>
+          <h3 className="font-display text-xl md:text-2xl font-bold leading-tight tracking-tight group-hover:text-hydro transition-colors duration-300">
+            {project.title}
+          </h3>
+          <p className="text-muted-foreground text-sm md:text-[15px] leading-relaxed line-clamp-2">
+            {project.description}
+          </p>
         </div>
       </div>
-    </motion.div>
+    </motion.button>
   );
 };
 
