@@ -218,6 +218,84 @@ const projects: Project[] = [
   },
 ];
 
+/* ─── Image Slider ─── */
+const ImageSlider = ({ images, title, bg }: { images: string[]; title: string; bg?: string }) => {
+  const [index, setIndex] = useState(0);
+  const count = images.length;
+
+  useEffect(() => {
+    if (count <= 1) return;
+    const id = setInterval(() => setIndex((i) => (i + 1) % count), 5000);
+    return () => clearInterval(id);
+  }, [count]);
+
+  const go = useCallback((dir: number) => setIndex((i) => (i + dir + count) % count), [count]);
+
+  return (
+    <div className="space-y-3">
+      <div
+        className="relative w-full aspect-[16/10] rounded-2xl overflow-hidden border border-foreground/10"
+        style={bg ? { backgroundColor: bg } : undefined}
+        role="region"
+        aria-roledescription="carousel"
+        aria-label={`${title} case study slideshow`}
+      >
+        <AnimatePresence mode="wait">
+          <motion.img
+            key={index}
+            src={images[index]}
+            alt={`${title} – slide ${index + 1} of ${count}`}
+            initial={{ opacity: 0, scale: 1.02 }}
+            animate={{ opacity: 1, scale: 1 }}
+            exit={{ opacity: 0, scale: 0.98 }}
+            transition={{ duration: 0.5, ease: [0.22, 1, 0.36, 1] }}
+            className="absolute inset-0 w-full h-full object-contain"
+          />
+        </AnimatePresence>
+
+        {count > 1 && (
+          <>
+            <button
+              type="button"
+              aria-label="Previous slide"
+              onClick={() => go(-1)}
+              className="absolute left-3 top-1/2 -translate-y-1/2 p-2 rounded-full bg-background/70 backdrop-blur-sm border border-foreground/10 hover:border-hydro/40 hover:bg-background/90 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-hydro focus-visible:ring-offset-2 focus-visible:ring-offset-background transition-all"
+            >
+              <ArrowLeft className="w-4 h-4" />
+            </button>
+            <button
+              type="button"
+              aria-label="Next slide"
+              onClick={() => go(1)}
+              className="absolute right-3 top-1/2 -translate-y-1/2 p-2 rounded-full bg-background/70 backdrop-blur-sm border border-foreground/10 hover:border-hydro/40 hover:bg-background/90 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-hydro focus-visible:ring-offset-2 focus-visible:ring-offset-background transition-all"
+            >
+              <ArrowRight className="w-4 h-4" />
+            </button>
+          </>
+        )}
+      </div>
+
+      {count > 1 && (
+        <div className="flex items-center justify-center gap-2" role="tablist" aria-label="Slide selector">
+          {images.map((_, i) => (
+            <button
+              key={i}
+              type="button"
+              role="tab"
+              aria-selected={i === index}
+              aria-label={`Go to slide ${i + 1}`}
+              onClick={() => setIndex(i)}
+              className={`h-1.5 rounded-full transition-all focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-hydro focus-visible:ring-offset-2 focus-visible:ring-offset-background ${
+                i === index ? 'w-8 bg-hydro' : 'w-2 bg-foreground/25 hover:bg-foreground/50'
+              }`}
+            />
+          ))}
+        </div>
+      )}
+    </div>
+  );
+};
+
 /* ─── Project Detail Modal ─── */
 const ProjectDetail = ({ project, onClose }: { project: Project; onClose: () => void }) => {
   return (
