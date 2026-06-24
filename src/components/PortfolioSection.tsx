@@ -1,6 +1,6 @@
 import { useState, useEffect, useCallback } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
-import { ArrowRight, Sparkles, MessageCircle, X, TrendingUp, Users, BarChart3, Eye, Target, Palette, Globe, CheckCircle2, Quote, Package, Flag } from 'lucide-react';
+import { ArrowRight, ArrowLeft, Sparkles, MessageCircle, X, TrendingUp, Users, BarChart3, Eye, Target, Palette, Globe, CheckCircle2, Quote, Package, Flag } from 'lucide-react';
 import { useContactDialog } from '@/components/ContactFormDialog';
 
 import imgCultfit from '@/assets/portfolio-cultfit.png';
@@ -218,6 +218,84 @@ const projects: Project[] = [
   },
 ];
 
+/* ─── Image Slider ─── */
+const ImageSlider = ({ images, title, bg }: { images: string[]; title: string; bg?: string }) => {
+  const [index, setIndex] = useState(0);
+  const count = images.length;
+
+  useEffect(() => {
+    if (count <= 1) return;
+    const id = setInterval(() => setIndex((i) => (i + 1) % count), 5000);
+    return () => clearInterval(id);
+  }, [count]);
+
+  const go = useCallback((dir: number) => setIndex((i) => (i + dir + count) % count), [count]);
+
+  return (
+    <div className="space-y-3">
+      <div
+        className="relative w-full aspect-[16/10] rounded-2xl overflow-hidden border border-foreground/10"
+        style={bg ? { backgroundColor: bg } : undefined}
+        role="region"
+        aria-roledescription="carousel"
+        aria-label={`${title} case study slideshow`}
+      >
+        <AnimatePresence mode="wait">
+          <motion.img
+            key={index}
+            src={images[index]}
+            alt={`${title} – slide ${index + 1} of ${count}`}
+            initial={{ opacity: 0, scale: 1.02 }}
+            animate={{ opacity: 1, scale: 1 }}
+            exit={{ opacity: 0, scale: 0.98 }}
+            transition={{ duration: 0.5, ease: [0.22, 1, 0.36, 1] }}
+            className="absolute inset-0 w-full h-full object-contain"
+          />
+        </AnimatePresence>
+
+        {count > 1 && (
+          <>
+            <button
+              type="button"
+              aria-label="Previous slide"
+              onClick={() => go(-1)}
+              className="absolute left-3 top-1/2 -translate-y-1/2 p-2 rounded-full bg-background/70 backdrop-blur-sm border border-foreground/10 hover:border-hydro/40 hover:bg-background/90 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-hydro focus-visible:ring-offset-2 focus-visible:ring-offset-background transition-all"
+            >
+              <ArrowLeft className="w-4 h-4" />
+            </button>
+            <button
+              type="button"
+              aria-label="Next slide"
+              onClick={() => go(1)}
+              className="absolute right-3 top-1/2 -translate-y-1/2 p-2 rounded-full bg-background/70 backdrop-blur-sm border border-foreground/10 hover:border-hydro/40 hover:bg-background/90 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-hydro focus-visible:ring-offset-2 focus-visible:ring-offset-background transition-all"
+            >
+              <ArrowRight className="w-4 h-4" />
+            </button>
+          </>
+        )}
+      </div>
+
+      {count > 1 && (
+        <div className="flex items-center justify-center gap-2" role="tablist" aria-label="Slide selector">
+          {images.map((_, i) => (
+            <button
+              key={i}
+              type="button"
+              role="tab"
+              aria-selected={i === index}
+              aria-label={`Go to slide ${i + 1}`}
+              onClick={() => setIndex(i)}
+              className={`h-1.5 rounded-full transition-all focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-hydro focus-visible:ring-offset-2 focus-visible:ring-offset-background ${
+                i === index ? 'w-8 bg-hydro' : 'w-2 bg-foreground/25 hover:bg-foreground/50'
+              }`}
+            />
+          ))}
+        </div>
+      )}
+    </div>
+  );
+};
+
 /* ─── Project Detail Modal ─── */
 const ProjectDetail = ({ project, onClose }: { project: Project; onClose: () => void }) => {
   return (
@@ -238,7 +316,12 @@ const ProjectDetail = ({ project, onClose }: { project: Project; onClose: () => 
         onClick={(e) => e.stopPropagation()}
       >
         {/* Close */}
-        <button onClick={onClose} className="absolute top-4 right-4 z-10 p-2 rounded-full bg-background/50 backdrop-blur-sm border border-foreground/10 hover:border-foreground/20 transition-colors">
+        <button
+          type="button"
+          onClick={onClose}
+          aria-label="Close project details"
+          className="absolute top-4 right-4 z-10 p-2 rounded-full bg-background/70 backdrop-blur-sm border border-foreground/10 hover:border-hydro/40 hover:bg-background/90 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-hydro focus-visible:ring-offset-2 focus-visible:ring-offset-background transition-all"
+        >
           <X className="w-5 h-5" />
         </button>
 
@@ -272,25 +355,11 @@ const ProjectDetail = ({ project, onClose }: { project: Project; onClose: () => 
         </div>
 
         <div className="p-6 md:p-10 space-y-10">
-          {/* Gallery */}
+          {/* Gallery slider */}
           {project.images && project.images.length > 1 && (
             <div>
               <h3 className="font-display text-lg font-semibold mb-4">Case Study Highlights</h3>
-              <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
-                {project.images.map((src, i) => (
-                  <div
-                    key={i}
-                    className="relative w-full aspect-[16/10] rounded-2xl overflow-hidden border border-foreground/10 bg-background/40"
-                  >
-                    <img
-                      src={src}
-                      alt={`${project.title} – ${i + 1}`}
-                      loading="lazy"
-                      className="absolute inset-0 w-full h-full object-contain"
-                    />
-                  </div>
-                ))}
-              </div>
+              <ImageSlider images={project.images} title={project.title} bg={project.imageBg} />
             </div>
           )}
           {/* Overview */}
@@ -361,16 +430,19 @@ const ProjectDetail = ({ project, onClose }: { project: Project; onClose: () => 
 /* ─── Portfolio Card ─── */
 const PortfolioCard = ({ project, onClick }: { project: Project; onClick: () => void }) => {
   return (
-    <motion.div
+    <motion.button
       layout
+      type="button"
+      onClick={onClick}
+      aria-label={`View ${project.title} case study`}
       initial={{ opacity: 0, y: 30 }}
       animate={{ opacity: 1, y: 0 }}
       exit={{ opacity: 0, scale: 0.95 }}
       transition={{ duration: 0.4 }}
-      className="group cursor-pointer"
-      onClick={onClick}
+      whileHover={{ y: -4 }}
+      className="group block w-full text-left cursor-pointer rounded-2xl focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-hydro focus-visible:ring-offset-2 focus-visible:ring-offset-background"
     >
-      <div className="relative rounded-2xl overflow-hidden bg-card/50 border border-foreground/5 hover:border-hydro/20 transition-all duration-500">
+      <div className="relative rounded-2xl overflow-hidden bg-card/50 border border-foreground/5 group-hover:border-hydro/30 group-hover:shadow-[0_20px_60px_-20px_hsl(var(--hydro)/0.35)] transition-all duration-500">
         {/* Image */}
         <div
           className="relative h-48 sm:h-52 md:h-56 overflow-hidden"
@@ -400,13 +472,19 @@ const PortfolioCard = ({ project, onClick }: { project: Project; onClick: () => 
         </div>
 
         {/* Content */}
-        <div className="p-5 space-y-2">
-          <span className="text-[10px] uppercase tracking-[0.15em] text-hydro font-semibold">{project.service}</span>
-          <h3 className="font-display text-lg font-semibold group-hover:text-hydro transition-colors duration-300">{project.title}</h3>
-          <p className="text-muted-foreground text-sm line-clamp-2">{project.description}</p>
+        <div className="p-5 md:p-6 space-y-2.5">
+          <span className="block text-[10px] sm:text-[11px] uppercase tracking-[0.18em] text-hydro font-semibold">
+            {project.service}
+          </span>
+          <h3 className="font-display text-xl md:text-2xl font-bold leading-tight tracking-tight group-hover:text-hydro transition-colors duration-300">
+            {project.title}
+          </h3>
+          <p className="text-muted-foreground text-sm md:text-[15px] leading-relaxed line-clamp-2">
+            {project.description}
+          </p>
         </div>
       </div>
-    </motion.div>
+    </motion.button>
   );
 };
 
