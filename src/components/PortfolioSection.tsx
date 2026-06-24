@@ -3,7 +3,8 @@ import { motion, AnimatePresence } from 'framer-motion';
 import { ArrowRight, Sparkles, MessageCircle, X, TrendingUp, Users, BarChart3, Eye, Target, Palette, Globe, CheckCircle2, Quote, Package, Flag } from 'lucide-react';
 import { useContactDialog } from '@/components/ContactFormDialog';
 
-import imgCultfit from '@/assets/portfolio-cultfit.png';
+import imgCultfitMeta from '@/assets/cultfit-meta-ads.png.asset.json';
+import imgCultfitSocial from '@/assets/cultfit-social.png.asset.json';
 import imgBlrkabab from '@/assets/portfolio-blrkabab.jpg';
 import imgAayara from '@/assets/portfolio-aayara.jpg';
 import imgAquasplash from '@/assets/portfolio-aquasplash.jpg';
@@ -24,6 +25,7 @@ interface Project {
   featured?: boolean;
   imageFit?: 'cover' | 'contain';
   imageBg?: string;
+  images?: string[];
   whatWeDid: string[];
   impact: string[];
   details: {
@@ -44,9 +46,10 @@ const projects: Project[] = [
     service: 'Performance Marketing & Lead Gen',
     description: 'Increased walk-ins & memberships for a highly competitive fitness location through localized Meta Ads and high-converting funnels.',
     objective: 'Increase walk-ins & memberships for a highly competitive fitness location',
-    image: imgCultfit,
+    image: imgCultfitMeta.url,
+    images: [imgCultfitMeta.url, imgCultfitSocial.url],
     featured: true,
-    imageFit: 'contain',
+    imageFit: 'cover',
     imageBg: '#000000',
     whatWeDid: [
       'Localized Meta Ads targeting nearby fitness audience',
@@ -260,6 +263,20 @@ const ProjectDetail = ({ project, onClose }: { project: Project; onClose: () => 
         </div>
 
         <div className="p-6 md:p-10 space-y-10">
+          {/* Gallery */}
+          {project.images && project.images.length > 1 && (
+            <div className="grid grid-cols-1 gap-4">
+              {project.images.map((src, i) => (
+                <div
+                  key={i}
+                  className="rounded-2xl overflow-hidden border border-foreground/10"
+                  style={project.imageBg ? { backgroundColor: project.imageBg } : undefined}
+                >
+                  <img src={src} alt={`${project.title} – ${i + 1}`} className="w-full h-auto block" />
+                </div>
+              ))}
+            </div>
+          )}
           {/* Overview */}
           <div className="grid md:grid-cols-3 gap-6">
             <div className="space-y-1">
