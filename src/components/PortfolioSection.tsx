@@ -244,13 +244,19 @@ const ProjectDetail = ({ project, onClose }: { project: Project; onClose: () => 
 
         {/* Hero image */}
         <div
-          className="relative h-48 sm:h-64 md:h-80 overflow-hidden rounded-t-3xl"
+          className="relative h-44 sm:h-56 md:h-72 overflow-hidden rounded-t-3xl"
           style={project.imageBg ? { backgroundColor: project.imageBg } : undefined}
         >
+          {project.imageFit === 'contain' && (
+            <div
+              className="pointer-events-none absolute inset-0 opacity-60"
+              style={{ background: 'radial-gradient(circle at 50% 50%, hsl(var(--hydro) / 0.18), transparent 60%)' }}
+            />
+          )}
           <img
             src={project.image}
             alt={project.title}
-            className={`w-full h-full ${project.imageFit === 'contain' ? 'object-contain p-6' : 'object-cover'}`}
+            className={`relative w-full h-full ${project.imageFit === 'contain' ? 'object-contain p-8 sm:p-10 md:p-12' : 'object-cover'}`}
           />
           {project.imageFit !== 'contain' && (
             <div className="absolute inset-0 hidden dark:block bg-gradient-to-t from-card via-card/30 to-transparent" />
@@ -268,16 +274,23 @@ const ProjectDetail = ({ project, onClose }: { project: Project; onClose: () => 
         <div className="p-6 md:p-10 space-y-10">
           {/* Gallery */}
           {project.images && project.images.length > 1 && (
-            <div className="grid grid-cols-1 gap-4">
-              {project.images.map((src, i) => (
-                <div
-                  key={i}
-                  className="rounded-2xl overflow-hidden border border-foreground/10"
-                  style={project.imageBg ? { backgroundColor: project.imageBg } : undefined}
-                >
-                  <img src={src} alt={`${project.title} – ${i + 1}`} className="w-full h-auto block" />
-                </div>
-              ))}
+            <div>
+              <h3 className="font-display text-lg font-semibold mb-4">Case Study Highlights</h3>
+              <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
+                {project.images.map((src, i) => (
+                  <div
+                    key={i}
+                    className="relative w-full aspect-[16/10] rounded-2xl overflow-hidden border border-foreground/10 bg-background/40"
+                  >
+                    <img
+                      src={src}
+                      alt={`${project.title} – ${i + 1}`}
+                      loading="lazy"
+                      className="absolute inset-0 w-full h-full object-contain"
+                    />
+                  </div>
+                ))}
+              </div>
             </div>
           )}
           {/* Overview */}
