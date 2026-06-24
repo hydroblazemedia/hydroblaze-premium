@@ -263,6 +263,20 @@ const ProjectDetail = ({ project, onClose }: { project: Project; onClose: () => 
         </div>
 
         <div className="p-6 md:p-10 space-y-10">
+          {/* Gallery */}
+          {project.images && project.images.length > 1 && (
+            <div className="grid grid-cols-1 gap-4">
+              {project.images.map((src, i) => (
+                <div
+                  key={i}
+                  className="rounded-2xl overflow-hidden border border-foreground/10"
+                  style={project.imageBg ? { backgroundColor: project.imageBg } : undefined}
+                >
+                  <img src={src} alt={`${project.title} – ${i + 1}`} className="w-full h-auto block" />
+                </div>
+              ))}
+            </div>
+          )}
           {/* Overview */}
           <div className="grid md:grid-cols-3 gap-6">
             <div className="space-y-1">
