@@ -373,13 +373,19 @@ const PortfolioCard = ({ project, onClick }: { project: Project; onClick: () => 
       <div className="relative rounded-2xl overflow-hidden bg-card/50 border border-foreground/5 hover:border-hydro/20 transition-all duration-500">
         {/* Image */}
         <div
-          className="relative h-56 md:h-64 overflow-hidden"
+          className="relative h-48 sm:h-52 md:h-56 overflow-hidden"
           style={project.imageBg ? { backgroundColor: project.imageBg } : undefined}
         >
+          {project.imageFit === 'contain' && (
+            <div
+              className="pointer-events-none absolute inset-0"
+              style={{ background: 'radial-gradient(circle at 50% 50%, hsl(var(--hydro) / 0.20), transparent 65%)' }}
+            />
+          )}
           <img
             src={project.image}
             alt={project.title}
-            className={`w-full h-full transition-transform duration-700 group-hover:scale-110 ${project.imageFit === 'contain' ? 'object-contain p-6' : 'object-cover'}`}
+            className={`relative w-full h-full transition-transform duration-700 group-hover:scale-110 ${project.imageFit === 'contain' ? 'object-contain p-10 sm:p-12' : 'object-cover'}`}
           />
           {project.imageFit !== 'contain' && (
             <div className="absolute inset-0 hidden dark:block bg-gradient-to-t from-card via-transparent to-transparent opacity-80" />
