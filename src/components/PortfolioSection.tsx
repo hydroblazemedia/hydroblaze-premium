@@ -3,6 +3,7 @@ import { motion, AnimatePresence } from 'framer-motion';
 import { ArrowRight, Sparkles, MessageCircle, X, TrendingUp, Users, BarChart3, Eye, Target, Palette, Globe, CheckCircle2, Quote, Package, Flag } from 'lucide-react';
 import { useContactDialog } from '@/components/ContactFormDialog';
 
+import imgCultfit from '@/assets/portfolio-cultfit.png';
 import imgCultfitMeta from '@/assets/cultfit-meta-ads.png.asset.json';
 import imgCultfitSocial from '@/assets/cultfit-social.png.asset.json';
 import imgBlrkabab from '@/assets/portfolio-blrkabab.jpg';
@@ -46,10 +47,10 @@ const projects: Project[] = [
     service: 'Performance Marketing & Lead Gen',
     description: 'Increased walk-ins & memberships for a highly competitive fitness location through localized Meta Ads and high-converting funnels.',
     objective: 'Increase walk-ins & memberships for a highly competitive fitness location',
-    image: imgCultfitMeta.url,
+    image: imgCultfit,
     images: [imgCultfitMeta.url, imgCultfitSocial.url],
     featured: true,
-    imageFit: 'cover',
+    imageFit: 'contain',
     imageBg: '#000000',
     whatWeDid: [
       'Localized Meta Ads targeting nearby fitness audience',
