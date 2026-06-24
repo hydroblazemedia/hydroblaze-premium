@@ -316,7 +316,12 @@ const ProjectDetail = ({ project, onClose }: { project: Project; onClose: () => 
         onClick={(e) => e.stopPropagation()}
       >
         {/* Close */}
-        <button onClick={onClose} className="absolute top-4 right-4 z-10 p-2 rounded-full bg-background/50 backdrop-blur-sm border border-foreground/10 hover:border-foreground/20 transition-colors">
+        <button
+          type="button"
+          onClick={onClose}
+          aria-label="Close project details"
+          className="absolute top-4 right-4 z-10 p-2 rounded-full bg-background/70 backdrop-blur-sm border border-foreground/10 hover:border-hydro/40 hover:bg-background/90 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-hydro focus-visible:ring-offset-2 focus-visible:ring-offset-background transition-all"
+        >
           <X className="w-5 h-5" />
         </button>
 
@@ -350,25 +355,11 @@ const ProjectDetail = ({ project, onClose }: { project: Project; onClose: () => 
         </div>
 
         <div className="p-6 md:p-10 space-y-10">
-          {/* Gallery */}
+          {/* Gallery slider */}
           {project.images && project.images.length > 1 && (
             <div>
               <h3 className="font-display text-lg font-semibold mb-4">Case Study Highlights</h3>
-              <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
-                {project.images.map((src, i) => (
-                  <div
-                    key={i}
-                    className="relative w-full aspect-[16/10] rounded-2xl overflow-hidden border border-foreground/10 bg-background/40"
-                  >
-                    <img
-                      src={src}
-                      alt={`${project.title} – ${i + 1}`}
-                      loading="lazy"
-                      className="absolute inset-0 w-full h-full object-contain"
-                    />
-                  </div>
-                ))}
-              </div>
+              <ImageSlider images={project.images} title={project.title} bg={project.imageBg} />
             </div>
           )}
           {/* Overview */}
