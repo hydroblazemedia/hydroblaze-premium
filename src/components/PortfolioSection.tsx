@@ -3,6 +3,7 @@ import { motion, AnimatePresence } from 'framer-motion';
 import { ArrowRight, Sparkles, MessageCircle, X, TrendingUp, Users, BarChart3, Eye, Target, Palette, Globe, CheckCircle2, Quote, Package, Flag } from 'lucide-react';
 import { useContactDialog } from '@/components/ContactFormDialog';
 
+import imgCultfit from '@/assets/portfolio-cultfit.png';
 import imgCultfitMeta from '@/assets/cultfit-meta-ads.png.asset.json';
 import imgCultfitSocial from '@/assets/cultfit-social.png.asset.json';
 import imgBlrkabab from '@/assets/portfolio-blrkabab.jpg';
@@ -46,10 +47,10 @@ const projects: Project[] = [
     service: 'Performance Marketing & Lead Gen',
     description: 'Increased walk-ins & memberships for a highly competitive fitness location through localized Meta Ads and high-converting funnels.',
     objective: 'Increase walk-ins & memberships for a highly competitive fitness location',
-    image: imgCultfitMeta.url,
+    image: imgCultfit,
     images: [imgCultfitMeta.url, imgCultfitSocial.url],
     featured: true,
-    imageFit: 'cover',
+    imageFit: 'contain',
     imageBg: '#000000',
     whatWeDid: [
       'Localized Meta Ads targeting nearby fitness audience',
@@ -243,7 +244,7 @@ const ProjectDetail = ({ project, onClose }: { project: Project; onClose: () => 
 
         {/* Hero image */}
         <div
-          className="relative h-64 md:h-80 overflow-hidden rounded-t-3xl"
+          className="relative h-48 sm:h-64 md:h-80 overflow-hidden rounded-t-3xl"
           style={project.imageBg ? { backgroundColor: project.imageBg } : undefined}
         >
           <img
@@ -254,12 +255,14 @@ const ProjectDetail = ({ project, onClose }: { project: Project; onClose: () => 
           {project.imageFit !== 'contain' && (
             <div className="absolute inset-0 hidden dark:block bg-gradient-to-t from-card via-card/30 to-transparent" />
           )}
-          <div className="absolute bottom-6 left-8 right-8">
-            <span className="inline-block px-3 py-1 rounded-full text-[10px] uppercase tracking-[0.2em] font-semibold bg-hydro/15 text-hydro border border-hydro/20 mb-3">
-              {project.category}
-            </span>
-            <h2 className="font-display text-2xl md:text-4xl font-bold">{project.title}</h2>
-          </div>
+        </div>
+
+        {/* Title block */}
+        <div className="px-6 md:px-10 pt-6 md:pt-8">
+          <span className="inline-block px-3 py-1 rounded-full text-[10px] uppercase tracking-[0.2em] font-semibold bg-hydro/15 text-hydro border border-hydro/20 mb-3">
+            {project.category}
+          </span>
+          <h2 className="font-display text-2xl md:text-4xl font-bold break-words">{project.title}</h2>
         </div>
 
         <div className="p-6 md:p-10 space-y-10">
