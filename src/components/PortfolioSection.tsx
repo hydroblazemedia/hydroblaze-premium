@@ -355,13 +355,6 @@ const ProjectDetail = ({ project, onClose }: { project: Project; onClose: () => 
         </div>
 
         <div className="p-6 md:p-10 space-y-10">
-          {/* Gallery slider */}
-          {project.images && project.images.length > 1 && (
-            <div>
-              <h3 className="font-display text-lg font-semibold mb-4">Case Study Highlights</h3>
-              <ImageSlider images={project.images} title={project.title} bg={project.imageBg} />
-            </div>
-          )}
           {/* Overview */}
           <div className="grid md:grid-cols-3 gap-6">
             <div className="space-y-1">
@@ -421,6 +414,14 @@ const ProjectDetail = ({ project, onClose }: { project: Project; onClose: () => 
               ))}
             </div>
           </div>
+
+          {/* Gallery slider */}
+          {project.images && project.images.length > 1 && (
+            <div>
+              <h3 className="font-display text-lg font-semibold mb-4">Case Study Highlights</h3>
+              <ImageSlider images={project.images} title={project.title} bg={project.imageBg} />
+            </div>
+          )}
         </div>
       </motion.div>
     </motion.div>
