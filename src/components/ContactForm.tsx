@@ -31,7 +31,7 @@ const ContactForm = () => {
       const next = { ...formData, [field]: value };
       const result = contactSchema.safeParse(next);
       const fieldError = !result.success
-        ? result.error.errors.find(err => err.path[0] === field)?.message
+        ? result.error.issues.find(err => err.path[0] === field)?.message
         : undefined;
       setErrors(prev => ({ ...prev, [field]: fieldError }));
     } else if (errors[field]) {
@@ -43,7 +43,7 @@ const ContactForm = () => {
     setTouched(prev => ({ ...prev, [field]: true }));
     const result = contactSchema.safeParse(formData);
     if (!result.success) {
-      const fieldError = result.error.errors.find(err => err.path[0] === field)?.message;
+      const fieldError = result.error.issues.find(err => err.path[0] === field)?.message;
       setErrors(prev => ({ ...prev, [field]: fieldError }));
     }
   };
@@ -54,7 +54,7 @@ const ContactForm = () => {
 
     if (!result.success) {
       const fieldErrors: FormErrors = {};
-      result.error.errors.forEach(err => {
+      result.error.issues.forEach(err => {
         const field = err.path[0] as keyof ContactFormData;
         if (!fieldErrors[field]) fieldErrors[field] = err.message;
       });
