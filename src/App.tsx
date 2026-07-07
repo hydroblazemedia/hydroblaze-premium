@@ -13,6 +13,15 @@ import Blog from "./pages/Blog";
 import Portfolio from "./pages/Portfolio";
 import PrivacyPolicy from "./pages/PrivacyPolicy";
 import NotFound from "./pages/NotFound";
+import { PortalAuthProvider } from "@/portal/PortalAuthContext";
+import PortalLayout from "@/portal/PortalLayout";
+import PortalLogin from "./pages/portal/Login";
+import AcceptInvite from "./pages/portal/AcceptInvite";
+import PortalDashboard from "./pages/portal/Dashboard";
+import PortalTasks from "./pages/portal/Tasks";
+import PortalAnnouncements from "./pages/portal/Announcements";
+import PortalDocuments from "./pages/portal/Documents";
+import PortalAdmin from "./pages/portal/Admin";
 
 const queryClient = new QueryClient();
 
@@ -23,6 +32,7 @@ const App = () => (
       <Sonner />
       <BrowserRouter>
         <ContactDialogProvider>
+          <PortalAuthProvider>
           <Routes>
             <Route path="/" element={<Index />} />
             <Route path="/services" element={<Services />} />
@@ -32,9 +42,19 @@ const App = () => (
             <Route path="/portfolio" element={<Portfolio />} />
             <Route path="/privacy-policy" element={<PrivacyPolicy />} />
             <Route path="/blog" element={<Blog />} />
+            <Route path="/portal/login" element={<PortalLogin />} />
+            <Route path="/portal/accept-invite" element={<AcceptInvite />} />
+            <Route path="/portal" element={<PortalLayout />}>
+              <Route index element={<PortalDashboard />} />
+              <Route path="tasks" element={<PortalTasks />} />
+              <Route path="announcements" element={<PortalAnnouncements />} />
+              <Route path="documents" element={<PortalDocuments />} />
+              <Route path="admin" element={<PortalAdmin />} />
+            </Route>
             {/* ADD ALL CUSTOM ROUTES ABOVE THE CATCH-ALL "*" ROUTE */}
             <Route path="*" element={<NotFound />} />
           </Routes>
+          </PortalAuthProvider>
         </ContactDialogProvider>
       </BrowserRouter>
     </TooltipProvider>
