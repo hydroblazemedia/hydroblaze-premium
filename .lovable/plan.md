@@ -1,29 +1,30 @@
 ## Problem
 
-Your site is hosted on GitHub Pages (via `.github/workflows/pages.yml`). GitHub Pages serves static files only — it has no SPA fallback. When someone visits `/portal/login` directly (or refreshes on any client-side route), GitHub returns its own 404 page instead of `index.html`, so React Router never gets a chance to render.
+The GitHub Actions build fails at `npm ci` because `package-lock.json` is out of sync with `package.json`. When the MCP + portal work was added, new deps (`@supabase/supabase-js`, `@lovable.dev/mcp-js`, plus transitive changes) were installed via Bun, which only updated `bun.lock`. `npm ci` requires an exact match between `package.json` and `package-lock.json` and hard-fails otherwise — that's the `Process completed with exit code 1` in the annotation.
 
-This affects every non-root route: `/portal/login`, `/portal`, `/services`, `/pricing`, `/about`, `/blog`, `/portfolio`, `/portal/accept-invite`, etc.
+The Node.js 20 warning in the same screenshot is unrelated to the failure but worth fixing at the same time (setup-node still targets Node 18, which GitHub is deprecating).
 
-Note: Lovable's own hosting handles SPA routing automatically. This issue is specific to the GitHub Pages deployment.
+Local `npm run build` succeeds, confirming the code itself is fine.
 
 ## Fix
 
-Use the standard GitHub Pages SPA workaround (spa-github-pages technique):
+1. **Regenerate `package-lock.json`** so it matches `package.json` (adds entries for `@supabase/supabase-js`, `@lovable.dev/mcp-js`, and any other drift).
+   - Run: `npm install --package-lock-only`
+   - Commit the updated lockfile. Do not touch `bun.lock`.
 
-1. **Add `public/404.html`** — a small HTML file GitHub serves on any unknown path. It captures the requested path, encodes it into a query string, and redirects to `/` (which serves `index.html`).
+2. **Bump the workflow to Node 20** in `.github/workflows/pages.yml` to clear the deprecation warning and keep the runner on a supported LTS.
+   - `node-version: '18'` → `node-version: '20'`
 
-2. **Add a redirect script snippet in `index.html` `<head>`** — runs before React mounts, decodes the query string back into a real path, and calls `history.replaceState` so React Router sees the original URL (e.g. `/portal/login`).
-
-3. **Ensure `.nojekyll`** — add `public/.nojekyll` so GitHub Pages doesn't run Jekyll (which can hide files starting with `_` and interfere with Vite output).
-
-No changes to router config, routes, or portal code. `BrowserRouter` stays as-is.
+No source, router, or portal changes. `.env` is already committed, so Vite build sees the Supabase URL/key.
 
 ## Files
 
-- `public/404.html` — new (SPA redirect page)
-- `public/.nojekyll` — new (empty file)
-- `index.html` — edit `<head>` to add the ~10-line decode script before the module script
+- `package-lock.json` — regenerated
+- `.github/workflows/pages.yml` — bump Node to 20
 
 ## Verification
 
-After the next GitHub Actions deploy completes, visit `/portal/login` directly on the Pages URL and confirm the login page renders instead of the GitHub 404.
+After push, watch the `build-and-deploy` job on GitHub Actions:
+- `npm ci` completes without lockfile errors
+- `npm run build` finishes
+- `gh-pages` branch updates and the site (including `/portal/login` via the SPA fallback added last turn) loads.
