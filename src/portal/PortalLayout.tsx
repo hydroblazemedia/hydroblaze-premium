@@ -11,7 +11,7 @@ const navItems = [
 ];
 
 const PortalLayout = () => {
-  const { session, loading, isAdmin, user, signOut } = usePortalAuth();
+  const { session, loading, isAdmin, role, user, signOut } = usePortalAuth();
   const navigate = useNavigate();
 
   if (loading) {
@@ -29,9 +29,9 @@ const PortalLayout = () => {
         <div className="p-6 border-b border-foreground/10">
           <div className="font-display text-lg font-bold">Employee Portal</div>
           <div className="text-xs text-muted-foreground mt-1 truncate">{user?.email}</div>
-          {isAdmin && (
-            <div className="inline-flex items-center gap-1 mt-2 px-2 py-0.5 rounded-full text-[10px] font-medium bg-hydro/15 text-hydro border border-hydro/30">
-              <Shield className="w-3 h-3" /> Admin
+          {role && (
+            <div className="inline-flex items-center gap-1 mt-2 px-2 py-0.5 rounded-full text-[10px] font-medium bg-hydro/15 text-hydro border border-hydro/30 capitalize">
+              <Shield className="w-3 h-3" /> {role}
             </div>
           )}
         </div>

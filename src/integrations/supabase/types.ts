@@ -20,6 +20,8 @@ export type Database = {
           created_at: string
           created_by: string | null
           id: string
+          pinned: boolean
+          scheduled_for: string | null
           title: string
           updated_at: string
         }
@@ -28,6 +30,8 @@ export type Database = {
           created_at?: string
           created_by?: string | null
           id?: string
+          pinned?: boolean
+          scheduled_for?: string | null
           title: string
           updated_at?: string
         }
@@ -36,6 +40,8 @@ export type Database = {
           created_at?: string
           created_by?: string | null
           id?: string
+          pinned?: boolean
+          scheduled_for?: string | null
           title?: string
           updated_at?: string
         }
@@ -45,34 +51,54 @@ export type Database = {
         Row: {
           created_at: string
           description: string | null
+          folder: string
           id: string
+          is_current: boolean
           mime_type: string | null
           name: string
+          parent_id: string | null
           size_bytes: number | null
           storage_path: string
           uploaded_by: string | null
+          version: number
         }
         Insert: {
           created_at?: string
           description?: string | null
+          folder?: string
           id?: string
+          is_current?: boolean
           mime_type?: string | null
           name: string
+          parent_id?: string | null
           size_bytes?: number | null
           storage_path: string
           uploaded_by?: string | null
+          version?: number
         }
         Update: {
           created_at?: string
           description?: string | null
+          folder?: string
           id?: string
+          is_current?: boolean
           mime_type?: string | null
           name?: string
+          parent_id?: string | null
           size_bytes?: number | null
           storage_path?: string
           uploaded_by?: string | null
+          version?: number
         }
-        Relationships: []
+        Relationships: [
+          {
+            foreignKeyName: "documents_parent_id_fkey"
+            columns: ["parent_id"]
+            isOneToOne: false
+            referencedRelation: "documents"
+            referencedColumns: ["id"]
+          },
+        ]
       }
       invites: {
         Row: {
@@ -130,6 +156,79 @@ export type Database = {
           updated_at?: string
         }
         Relationships: []
+      }
+      task_attachments: {
+        Row: {
+          created_at: string
+          file_name: string
+          id: string
+          mime_type: string | null
+          size_bytes: number | null
+          storage_path: string
+          task_id: string
+          uploaded_by: string | null
+        }
+        Insert: {
+          created_at?: string
+          file_name: string
+          id?: string
+          mime_type?: string | null
+          size_bytes?: number | null
+          storage_path: string
+          task_id: string
+          uploaded_by?: string | null
+        }
+        Update: {
+          created_at?: string
+          file_name?: string
+          id?: string
+          mime_type?: string | null
+          size_bytes?: number | null
+          storage_path?: string
+          task_id?: string
+          uploaded_by?: string | null
+        }
+        Relationships: [
+          {
+            foreignKeyName: "task_attachments_task_id_fkey"
+            columns: ["task_id"]
+            isOneToOne: false
+            referencedRelation: "tasks"
+            referencedColumns: ["id"]
+          },
+        ]
+      }
+      task_comments: {
+        Row: {
+          author_id: string
+          body: string
+          created_at: string
+          id: string
+          task_id: string
+        }
+        Insert: {
+          author_id: string
+          body: string
+          created_at?: string
+          id?: string
+          task_id: string
+        }
+        Update: {
+          author_id?: string
+          body?: string
+          created_at?: string
+          id?: string
+          task_id?: string
+        }
+        Relationships: [
+          {
+            foreignKeyName: "task_comments_task_id_fkey"
+            columns: ["task_id"]
+            isOneToOne: false
+            referencedRelation: "tasks"
+            referencedColumns: ["id"]
+          },
+        ]
       }
       tasks: {
         Row: {
@@ -213,7 +312,7 @@ export type Database = {
       }
     }
     Enums: {
-      app_role: "admin" | "employee"
+      app_role: "admin" | "employee" | "manager"
     }
     CompositeTypes: {
       [_ in never]: never
@@ -341,7 +440,7 @@ export type CompositeTypes<
 export const Constants = {
   public: {
     Enums: {
-      app_role: ["admin", "employee"],
+      app_role: ["admin", "employee", "manager"],
     },
   },
 } as const

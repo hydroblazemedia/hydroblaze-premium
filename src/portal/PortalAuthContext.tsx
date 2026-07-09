@@ -2,7 +2,7 @@ import { createContext, useContext, useEffect, useState, ReactNode } from "react
 import { supabase } from "@/integrations/supabase/client";
 import type { Session, User } from "@supabase/supabase-js";
 
-type Role = "admin" | "employee" | null;
+type Role = "admin" | "manager" | "employee" | null;
 
 interface Ctx {
   session: Session | null;
@@ -10,6 +10,8 @@ interface Ctx {
   role: Role;
   loading: boolean;
   isAdmin: boolean;
+  isManager: boolean;
+  canManage: boolean;
   signOut: () => Promise<void>;
   refreshRole: () => Promise<void>;
 }
@@ -28,8 +30,10 @@ export const PortalAuthProvider = ({ children }: { children: ReactNode }) => {
       .select("role")
       .eq("user_id", userId);
     if (data && data.length > 0) {
-      const roles = data.map((r) => r.role);
-      setRole(roles.includes("admin") ? "admin" : "employee");
+      const roles = data.map((r) => r.role as string);
+      if (roles.includes("admin")) setRole("admin");
+      else if (roles.includes("manager")) setRole("manager");
+      else setRole("employee");
     } else {
       setRole(null);
     }
@@ -53,6 +57,8 @@ export const PortalAuthProvider = ({ children }: { children: ReactNode }) => {
     role,
     loading,
     isAdmin: role === "admin",
+    isManager: role === "manager",
+    canManage: role === "admin" || role === "manager",
     signOut: async () => {
       await supabase.auth.signOut();
     },
