@@ -9,6 +9,7 @@ import { Switch } from "@/components/ui/switch";
 import { Dialog, DialogContent, DialogHeader, DialogTitle, DialogTrigger } from "@/components/ui/dialog";
 import { toast } from "sonner";
 import { Plus, Trash2, Pin, PinOff, Clock } from "lucide-react";
+import { logActivity } from "@/portal/lib/activity";
 
 interface Announcement { id: string; title: string; body: string; created_at: string; created_by: string | null; pinned: boolean; scheduled_for: string | null; }
 
@@ -29,12 +30,13 @@ const Announcements = () => {
 
   const create = async () => {
     if (!form.title || !form.body) return toast.error("Title and body required");
-    const { error } = await supabase.from("announcements").insert({
+    const { data, error } = await supabase.from("announcements").insert({
       title: form.title, body: form.body, created_by: user!.id,
       pinned: form.pinned,
       scheduled_for: form.scheduled_for ? new Date(form.scheduled_for).toISOString() : null,
-    });
+    }).select("id,title").single();
     if (error) return toast.error(error.message);
+    if (data) await logActivity({ action: "announcement_posted", entityType: "announcement", entityId: data.id, summary: `Posted announcement “${data.title}”` });
     toast.success("Posted");
     setForm({ title: "", body: "", pinned: false, scheduled_for: "" });
     setOpen(false);

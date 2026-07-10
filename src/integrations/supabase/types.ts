@@ -14,6 +14,42 @@ export type Database = {
   }
   public: {
     Tables: {
+      activity_log: {
+        Row: {
+          action: string
+          actor_id: string | null
+          actor_name: string | null
+          created_at: string
+          entity_id: string | null
+          entity_type: string
+          id: string
+          metadata: Json | null
+          summary: string
+        }
+        Insert: {
+          action: string
+          actor_id?: string | null
+          actor_name?: string | null
+          created_at?: string
+          entity_id?: string | null
+          entity_type: string
+          id?: string
+          metadata?: Json | null
+          summary: string
+        }
+        Update: {
+          action?: string
+          actor_id?: string | null
+          actor_name?: string | null
+          created_at?: string
+          entity_id?: string | null
+          entity_type?: string
+          id?: string
+          metadata?: Json | null
+          summary?: string
+        }
+        Relationships: []
+      }
       announcements: {
         Row: {
           body: string
@@ -135,24 +171,39 @@ export type Database = {
       }
       profiles: {
         Row: {
+          avatar_url: string | null
           created_at: string
+          department: string | null
           email: string
           full_name: string | null
           id: string
+          job_title: string | null
+          last_active_at: string | null
+          phone: string | null
           updated_at: string
         }
         Insert: {
+          avatar_url?: string | null
           created_at?: string
+          department?: string | null
           email: string
           full_name?: string | null
           id: string
+          job_title?: string | null
+          last_active_at?: string | null
+          phone?: string | null
           updated_at?: string
         }
         Update: {
+          avatar_url?: string | null
           created_at?: string
+          department?: string | null
           email?: string
           full_name?: string | null
           id?: string
+          job_title?: string | null
+          last_active_at?: string | null
+          phone?: string | null
           updated_at?: string
         }
         Relationships: []

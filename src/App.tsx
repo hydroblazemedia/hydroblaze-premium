@@ -22,6 +22,8 @@ import PortalTasks from "./pages/portal/Tasks";
 import PortalAnnouncements from "./pages/portal/Announcements";
 import PortalDocuments from "./pages/portal/Documents";
 import PortalAdmin from "./pages/portal/Admin";
+import PortalProfile from "./pages/portal/Profile";
+import PortalTeam from "./pages/portal/Team";
 
 const queryClient = new QueryClient();
 
@@ -49,6 +51,8 @@ const App = () => (
               <Route path="tasks" element={<PortalTasks />} />
               <Route path="announcements" element={<PortalAnnouncements />} />
               <Route path="documents" element={<PortalDocuments />} />
+              <Route path="team" element={<PortalTeam />} />
+              <Route path="profile" element={<PortalProfile />} />
               <Route path="admin" element={<PortalAdmin />} />
             </Route>
             {/* ADD ALL CUSTOM ROUTES ABOVE THE CATCH-ALL "*" ROUTE */}

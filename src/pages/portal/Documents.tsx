@@ -8,6 +8,7 @@ import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@
 import { Dialog, DialogContent, DialogHeader, DialogTitle } from "@/components/ui/dialog";
 import { toast } from "sonner";
 import { Upload, Download, Trash2, FileText, History, FolderOpen } from "lucide-react";
+import { logActivity } from "@/portal/lib/activity";
 
 interface Doc {
   id: string; name: string; description: string | null; storage_path: string;
@@ -44,13 +45,14 @@ const Documents = () => {
     const path = `${folder}/${Date.now()}-${file.name.replace(/[^a-zA-Z0-9._-]/g, "_")}`;
     const { error: upErr } = await supabase.storage.from("documents").upload(path, file);
     if (upErr) { setBusy(false); return toast.error(upErr.message); }
-    const { error: insErr } = await supabase.from("documents").insert({
+    const { data: inserted, error: insErr } = await supabase.from("documents").insert({
       name: name || file.name, description: description || null,
       storage_path: path, mime_type: file.type, size_bytes: file.size,
       uploaded_by: user!.id, folder, version: 1, is_current: true,
-    });
+    }).select("id,name,folder").single();
     setBusy(false);
     if (insErr) return toast.error(insErr.message);
+    if (inserted) await logActivity({ action: "document_uploaded", entityType: "document", entityId: inserted.id, summary: `Uploaded “${inserted.name}” to ${inserted.folder}` });
     toast.success("Uploaded");
     setName(""); setDescription("");
     if (fileRef.current) fileRef.current.value = "";

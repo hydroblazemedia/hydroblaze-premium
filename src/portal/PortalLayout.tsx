@@ -1,17 +1,25 @@
-import { NavLink, Outlet, useNavigate, Navigate } from "react-router-dom";
-import { LayoutDashboard, CheckSquare, Megaphone, FileText, Users, LogOut, Shield } from "lucide-react";
+import { NavLink, Outlet, useNavigate, Navigate, Link } from "react-router-dom";
+import { LayoutDashboard, CheckSquare, Megaphone, FileText, Users, LogOut, UserCircle2 } from "lucide-react";
 import { usePortalAuth } from "./PortalAuthContext";
 import { Button } from "@/components/ui/button";
+import UserAvatar from "./UserAvatar";
 
 const navItems = [
   { to: "/portal", label: "Dashboard", icon: LayoutDashboard, end: true },
   { to: "/portal/tasks", label: "Tasks", icon: CheckSquare },
   { to: "/portal/announcements", label: "Announcements", icon: Megaphone },
   { to: "/portal/documents", label: "Documents", icon: FileText },
+  { to: "/portal/team", label: "Team", icon: Users },
 ];
 
+const roleLabel: Record<string, string> = {
+  admin: "Administrator",
+  manager: "Manager",
+  employee: "Team Member",
+};
+
 const PortalLayout = () => {
-  const { session, loading, isAdmin, role, user, signOut } = usePortalAuth();
+  const { session, loading, isAdmin, role, profile, user, signOut } = usePortalAuth();
   const navigate = useNavigate();
 
   if (loading) {
@@ -23,17 +31,28 @@ const PortalLayout = () => {
   }
   if (!session) return <Navigate to="/portal/login" replace />;
 
+  const displayName = profile?.full_name?.trim() || (user?.email ? user.email.split("@")[0] : "Team member");
+  const roleText = role ? roleLabel[role] ?? role : "";
+  const titleLine = [profile?.job_title, roleText].filter(Boolean).join(" • ");
+
   return (
     <div className="min-h-screen flex bg-background text-foreground">
       <aside className="w-64 border-r border-foreground/10 bg-card/50 backdrop-blur-xl flex flex-col">
-        <div className="p-6 border-b border-foreground/10">
-          <div className="font-display text-lg font-bold">Employee Portal</div>
-          <div className="text-xs text-muted-foreground mt-1 truncate">{user?.email}</div>
-          {role && (
-            <div className="inline-flex items-center gap-1 mt-2 px-2 py-0.5 rounded-full text-[10px] font-medium bg-hydro/15 text-hydro border border-hydro/30 capitalize">
-              <Shield className="w-3 h-3" /> {role}
+        <div className="p-5 border-b border-foreground/10">
+          <div className="font-display text-sm font-semibold text-muted-foreground tracking-wide uppercase mb-4">HydroBlaze</div>
+          <Link
+            to="/portal/profile"
+            className="flex items-center gap-3 p-2 -m-2 rounded-lg hover:bg-foreground/5 transition-colors group"
+            aria-label="Open profile"
+          >
+            <UserAvatar profile={profile} email={user?.email ?? null} size={44} />
+            <div className="min-w-0 flex-1">
+              <div className="text-sm font-semibold truncate">{displayName}</div>
+              {titleLine && (
+                <div className="text-[11px] text-muted-foreground truncate">{titleLine}</div>
+              )}
             </div>
-          )}
+          </Link>
         </div>
         <nav className="flex-1 p-3 space-y-1">
           {navItems.map((it) => (
@@ -53,6 +72,19 @@ const PortalLayout = () => {
               {it.label}
             </NavLink>
           ))}
+          <NavLink
+            to="/portal/profile"
+            className={({ isActive }) =>
+              `flex items-center gap-3 px-3 py-2 rounded-lg text-sm transition-colors ${
+                isActive
+                  ? "bg-foreground/10 text-foreground"
+                  : "text-muted-foreground hover:text-foreground hover:bg-foreground/5"
+              }`
+            }
+          >
+            <UserCircle2 className="w-4 h-4" />
+            My Profile
+          </NavLink>
           {isAdmin && (
             <NavLink
               to="/portal/admin"
