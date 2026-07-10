@@ -9,6 +9,7 @@ import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@
 import { Dialog, DialogContent, DialogHeader, DialogTitle, DialogTrigger } from "@/components/ui/dialog";
 import { toast } from "sonner";
 import { Plus, Paperclip, MessageSquare, Download, Trash2, Send } from "lucide-react";
+import { logActivity } from "@/portal/lib/activity";
 
 interface Task {
   id: string; title: string; description: string | null;
@@ -51,12 +52,13 @@ const Tasks = () => {
 
   const create = async () => {
     if (!form.title) return toast.error("Title required");
-    const { error } = await supabase.from("tasks").insert({
+    const { data, error } = await supabase.from("tasks").insert({
       title: form.title, description: form.description || null,
       priority: form.priority, due_date: form.due_date || null,
       assignee_id: form.assignee_id || null, created_by: user!.id,
-    });
+    }).select("id,title").single();
     if (error) return toast.error(error.message);
+    if (data) await logActivity({ action: "task_created", entityType: "task", entityId: data.id, summary: `Created task “${data.title}”` });
     toast.success("Task created");
     setOpen(false);
     setForm({ title: "", description: "", priority: "medium", due_date: "", assignee_id: "" });
@@ -64,8 +66,9 @@ const Tasks = () => {
   };
 
   const updateStatus = async (id: string, status: string) => {
-    const { error } = await supabase.from("tasks").update({ status }).eq("id", id);
+    const { data, error } = await supabase.from("tasks").update({ status }).eq("id", id).select("id,title").single();
     if (error) return toast.error(error.message);
+    if (data && status === "done") await logActivity({ action: "task_completed", entityType: "task", entityId: data.id, summary: `Completed task “${data.title}”` });
     load();
   };
 
