@@ -7,7 +7,7 @@ import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select";
 import { toast } from "sonner";
-import { Camera, Loader2 } from "lucide-react";
+import { Camera, Loader2, ShieldCheck } from "lucide-react";
 
 const DEPARTMENTS = ["Creative", "Performance Marketing", "Operations", "Sales", "Finance"];
 
@@ -90,6 +90,11 @@ const Profile = () => {
           <div className="text-sm text-muted-foreground truncate">
             {[profile?.job_title, role ? roleLabel[role] : null].filter(Boolean).join(" • ")}
           </div>
+          {role === "admin" && (
+            <div className="mt-2 inline-flex items-center gap-1.5 rounded-full border border-blaze/30 bg-blaze/10 px-2 py-0.5 text-xs font-medium text-blaze">
+              <ShieldCheck className="h-3.5 w-3.5" /> Founder / Administrator
+            </div>
+          )}
           <div className="text-xs text-muted-foreground mt-1">{user?.email}</div>
         </div>
       </section>

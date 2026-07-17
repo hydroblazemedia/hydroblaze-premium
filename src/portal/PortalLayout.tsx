@@ -3,6 +3,8 @@ import { LayoutDashboard, CheckSquare, Megaphone, FileText, Users, LogOut, UserC
 import { usePortalAuth } from "./PortalAuthContext";
 import { Button } from "@/components/ui/button";
 import UserAvatar from "./UserAvatar";
+import NotificationsMenu from "./NotificationsMenu";
+import GlobalSearch from "./GlobalSearch";
 
 const navItems = [
   { to: "/portal", label: "Dashboard", icon: LayoutDashboard, end: true },
@@ -115,6 +117,12 @@ const PortalLayout = () => {
         </div>
       </aside>
       <main className="flex-1 overflow-y-auto">
+        <header className="sticky top-0 z-20 border-b border-foreground/10 bg-background/80 backdrop-blur-xl">
+          <div className="mx-auto flex max-w-6xl items-center justify-end gap-2 px-6 py-3 md:px-10">
+            <GlobalSearch />
+            <NotificationsMenu />
+          </div>
+        </header>
         <div className="max-w-6xl mx-auto p-6 md:p-10">
           <Outlet />
         </div>
