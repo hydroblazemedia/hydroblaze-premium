@@ -50,9 +50,39 @@ export type Database = {
         }
         Relationships: []
       }
+      announcement_read_receipts: {
+        Row: {
+          announcement_id: string
+          id: string
+          read_at: string
+          user_id: string
+        }
+        Insert: {
+          announcement_id: string
+          id?: string
+          read_at?: string
+          user_id: string
+        }
+        Update: {
+          announcement_id?: string
+          id?: string
+          read_at?: string
+          user_id?: string
+        }
+        Relationships: [
+          {
+            foreignKeyName: "announcement_read_receipts_announcement_id_fkey"
+            columns: ["announcement_id"]
+            isOneToOne: false
+            referencedRelation: "announcements"
+            referencedColumns: ["id"]
+          },
+        ]
+      }
       announcements: {
         Row: {
           body: string
+          category: string
           created_at: string
           created_by: string | null
           id: string
@@ -63,6 +93,7 @@ export type Database = {
         }
         Insert: {
           body: string
+          category?: string
           created_at?: string
           created_by?: string | null
           id?: string
@@ -73,6 +104,7 @@ export type Database = {
         }
         Update: {
           body?: string
+          category?: string
           created_at?: string
           created_by?: string | null
           id?: string
@@ -85,44 +117,62 @@ export type Database = {
       }
       documents: {
         Row: {
+          category: string | null
+          client: string | null
           created_at: string
           description: string | null
           folder: string
+          google_drive_download_url: string | null
+          google_drive_file_id: string | null
+          google_drive_url: string | null
           id: string
           is_current: boolean
           mime_type: string | null
           name: string
           parent_id: string | null
           size_bytes: number | null
-          storage_path: string
+          storage_path: string | null
+          updated_at: string
           uploaded_by: string | null
           version: number
         }
         Insert: {
+          category?: string | null
+          client?: string | null
           created_at?: string
           description?: string | null
           folder?: string
+          google_drive_download_url?: string | null
+          google_drive_file_id?: string | null
+          google_drive_url?: string | null
           id?: string
           is_current?: boolean
           mime_type?: string | null
           name: string
           parent_id?: string | null
           size_bytes?: number | null
-          storage_path: string
+          storage_path?: string | null
+          updated_at?: string
           uploaded_by?: string | null
           version?: number
         }
         Update: {
+          category?: string | null
+          client?: string | null
           created_at?: string
           description?: string | null
           folder?: string
+          google_drive_download_url?: string | null
+          google_drive_file_id?: string | null
+          google_drive_url?: string | null
           id?: string
           is_current?: boolean
           mime_type?: string | null
           name?: string
           parent_id?: string | null
           size_bytes?: number | null
-          storage_path?: string
+          storage_path?: string | null
+          updated_at?: string
           uploaded_by?: string | null
           version?: number
         }
@@ -135,6 +185,27 @@ export type Database = {
             referencedColumns: ["id"]
           },
         ]
+      }
+      integration_settings: {
+        Row: {
+          key: string
+          updated_at: string
+          updated_by: string | null
+          value: Json
+        }
+        Insert: {
+          key: string
+          updated_at?: string
+          updated_by?: string | null
+          value?: Json
+        }
+        Update: {
+          key?: string
+          updated_at?: string
+          updated_by?: string | null
+          value?: Json
+        }
+        Relationships: []
       }
       invites: {
         Row: {
@@ -166,6 +237,42 @@ export type Database = {
           invited_by?: string | null
           role?: Database["public"]["Enums"]["app_role"]
           token?: string
+        }
+        Relationships: []
+      }
+      notifications: {
+        Row: {
+          body: string | null
+          created_at: string
+          entity_id: string | null
+          entity_type: string | null
+          id: string
+          read_at: string | null
+          title: string
+          type: Database["public"]["Enums"]["notification_type"]
+          user_id: string
+        }
+        Insert: {
+          body?: string | null
+          created_at?: string
+          entity_id?: string | null
+          entity_type?: string | null
+          id?: string
+          read_at?: string | null
+          title: string
+          type: Database["public"]["Enums"]["notification_type"]
+          user_id: string
+        }
+        Update: {
+          body?: string | null
+          created_at?: string
+          entity_id?: string | null
+          entity_type?: string | null
+          id?: string
+          read_at?: string | null
+          title?: string
+          type?: Database["public"]["Enums"]["notification_type"]
+          user_id?: string
         }
         Relationships: []
       }
@@ -249,6 +356,44 @@ export type Database = {
           },
         ]
       }
+      task_checklist_items: {
+        Row: {
+          completed: boolean
+          created_at: string
+          created_by: string | null
+          id: string
+          task_id: string
+          title: string
+          updated_at: string
+        }
+        Insert: {
+          completed?: boolean
+          created_at?: string
+          created_by?: string | null
+          id?: string
+          task_id: string
+          title: string
+          updated_at?: string
+        }
+        Update: {
+          completed?: boolean
+          created_at?: string
+          created_by?: string | null
+          id?: string
+          task_id?: string
+          title?: string
+          updated_at?: string
+        }
+        Relationships: [
+          {
+            foreignKeyName: "task_checklist_items_task_id_fkey"
+            columns: ["task_id"]
+            isOneToOne: false
+            referencedRelation: "tasks"
+            referencedColumns: ["id"]
+          },
+        ]
+      }
       task_comments: {
         Row: {
           author_id: string
@@ -284,36 +429,45 @@ export type Database = {
       tasks: {
         Row: {
           assignee_id: string | null
+          checklist_done: number
+          checklist_total: number
           created_at: string
           created_by: string | null
           description: string | null
           due_date: string | null
           id: string
           priority: string
+          start_date: string | null
           status: string
           title: string
           updated_at: string
         }
         Insert: {
           assignee_id?: string | null
+          checklist_done?: number
+          checklist_total?: number
           created_at?: string
           created_by?: string | null
           description?: string | null
           due_date?: string | null
           id?: string
           priority?: string
+          start_date?: string | null
           status?: string
           title: string
           updated_at?: string
         }
         Update: {
           assignee_id?: string | null
+          checklist_done?: number
+          checklist_total?: number
           created_at?: string
           created_by?: string | null
           description?: string | null
           due_date?: string | null
           id?: string
           priority?: string
+          start_date?: string | null
           status?: string
           title?: string
           updated_at?: string
@@ -364,6 +518,14 @@ export type Database = {
     }
     Enums: {
       app_role: "admin" | "employee" | "manager"
+      notification_type:
+        | "task_assigned"
+        | "task_updated"
+        | "review_requested"
+        | "comment_added"
+        | "document_uploaded"
+        | "announcement_posted"
+        | "deadline_tomorrow"
     }
     CompositeTypes: {
       [_ in never]: never
@@ -492,6 +654,15 @@ export const Constants = {
   public: {
     Enums: {
       app_role: ["admin", "employee", "manager"],
+      notification_type: [
+        "task_assigned",
+        "task_updated",
+        "review_requested",
+        "comment_added",
+        "document_uploaded",
+        "announcement_posted",
+        "deadline_tomorrow",
+      ],
     },
   },
 } as const
