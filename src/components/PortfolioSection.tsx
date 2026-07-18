@@ -1,6 +1,6 @@
 import { useState, useEffect, useCallback } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
-import { ArrowRight, ArrowLeft, Sparkles, MessageCircle, X, TrendingUp, Users, BarChart3, Eye, Target, Palette, Globe, CheckCircle2, Quote, Package, Flag } from 'lucide-react';
+import { ArrowRight, ArrowLeft, Sparkles, MessageCircle, X, TrendingUp, Users, BarChart3, Eye, Target, Palette, Globe, CheckCircle2, Quote, Package, Flag, Instagram } from 'lucide-react';
 import { useContactDialog } from '@/components/ContactFormDialog';
 
 import imgCultfit from '@/assets/portfolio-cultfit.png';
@@ -11,7 +11,7 @@ import imgAayara from '@/assets/portfolio-aayara.jpg';
 import imgAquasplash from '@/assets/portfolio-aquasplash.jpg';
 import imgAmsc from '@/assets/portfolio-amsc.jpg';
 
-const categories = ['All', 'Lead Generation', 'Social Media', 'Brand Building', 'Design & Branding'] as const;
+const categories = ['Lead Generation', 'Social Media', 'Brand Building', 'Design & Branding'] as const;
 type Category = typeof categories[number];
 
 interface Project {
@@ -27,6 +27,7 @@ interface Project {
   imageFit?: 'cover' | 'contain';
   imageBg?: string;
   images?: string[];
+  instagram?: string;
   whatWeDid: string[];
   impact: string[];
   details: {
