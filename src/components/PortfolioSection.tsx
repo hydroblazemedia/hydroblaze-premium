@@ -456,20 +456,21 @@ const ProjectDetail = ({ project, onClose }: { project: Project; onClose: () => 
 };
 
 /* ─── Portfolio Card ─── */
-const PortfolioCard = ({ project, onClick }: { project: Project; onClick: () => void }) => {
+const PortfolioCard = ({ project }: { project: Project }) => {
   return (
-    <motion.button
+    <motion.div
       layout
-      type="button"
-      onClick={onClick}
-      aria-label={`View ${project.title} case study`}
       initial={{ opacity: 0, y: 30 }}
       animate={{ opacity: 1, y: 0 }}
       exit={{ opacity: 0, scale: 0.95 }}
       transition={{ duration: 0.4 }}
       whileHover={{ y: -4 }}
-      className="group block w-full text-left cursor-pointer rounded-2xl focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-hydro focus-visible:ring-offset-2 focus-visible:ring-offset-background"
     >
+      <Link
+        to={`/portfolio/${project.slug}`}
+        aria-label={`View ${project.title} case study`}
+        className="group block w-full text-left cursor-pointer rounded-2xl focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-hydro focus-visible:ring-offset-2 focus-visible:ring-offset-background"
+      >
       <div className="relative rounded-2xl overflow-hidden bg-card/50 border border-foreground/5 group-hover:border-hydro/30 group-hover:shadow-[0_20px_60px_-20px_hsl(var(--hydro)/0.35)] transition-all duration-500">
         {/* Image */}
         <div
@@ -512,7 +513,8 @@ const PortfolioCard = ({ project, onClick }: { project: Project; onClick: () => 
           </p>
         </div>
       </div>
-    </motion.button>
+      </Link>
+    </motion.div>
   );
 };
 
