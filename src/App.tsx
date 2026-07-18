@@ -11,6 +11,7 @@ import About from "./pages/About";
 
 import Blog from "./pages/Blog";
 import Portfolio from "./pages/Portfolio";
+import PortfolioDetail from "./pages/PortfolioDetail";
 import PrivacyPolicy from "./pages/PrivacyPolicy";
 import NotFound from "./pages/NotFound";
 import { PortalAuthProvider } from "@/portal/PortalAuthContext";
@@ -42,6 +43,7 @@ const App = () => (
             <Route path="/about" element={<About />} />
             
             <Route path="/portfolio" element={<Portfolio />} />
+            <Route path="/portfolio/:slug" element={<PortfolioDetail />} />
             <Route path="/privacy-policy" element={<PrivacyPolicy />} />
             <Route path="/blog" element={<Blog />} />
             <Route path="/portal/login" element={<PortalLogin />} />
