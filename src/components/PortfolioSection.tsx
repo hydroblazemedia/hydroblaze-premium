@@ -636,14 +636,7 @@ const TestimonialsCarousel = () => {
 /* ─── Main Section ─── */
 const PortfolioSection = () => {
   const { open } = useContactDialog();
-  const [activeCategory, setActiveCategory] = useState<Category>('All');
   const [selectedProject, setSelectedProject] = useState<Project | null>(null);
-
-  const filteredProjects = activeCategory === 'All'
-    ? projects
-    : projects.filter(p => p.category === activeCategory);
-
-  const featuredProjects = projects.filter(p => p.featured);
 
   return (
     <section className="relative z-10 overflow-hidden">
