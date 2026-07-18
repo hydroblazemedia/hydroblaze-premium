@@ -6,6 +6,8 @@ import {
   BarChart3, MousePointerClick, Eye, Percent
 } from 'lucide-react';
 import { useContactDialog } from '@/components/ContactFormDialog';
+import hydroStrategyImg from '@/assets/hydro-strategy.png';
+import blazeCreativeImg from '@/assets/blaze-creative.png';
 
 /* ── What We Do ── */
 const quickServices = [
@@ -108,10 +110,21 @@ const PagePreviewSection = () => {
               whileInView={{ opacity: 1, x: 0 }}
               viewport={{ once: true }}
               transition={{ duration: 0.6 }}
-              className="group relative p-8 md:p-10 rounded-2xl border border-foreground/10 bg-card/50 backdrop-blur-sm hover:border-hydro/30 transition-all duration-500 overflow-hidden"
+              className="group relative rounded-2xl border border-foreground/10 bg-card/50 backdrop-blur-sm hover:border-hydro/30 transition-all duration-500 overflow-hidden"
             >
               <div className="absolute inset-0 bg-gradient-to-br from-hydro/5 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-500 pointer-events-none" />
-              <div className="relative z-10">
+              <div className="relative aspect-[16/10] overflow-hidden">
+                <img
+                  src={hydroStrategyImg}
+                  alt="Data-driven strategy visualization"
+                  loading="lazy"
+                  width={1280}
+                  height={800}
+                  className="w-full h-full object-cover transition-transform duration-700 group-hover:scale-105"
+                />
+                <div className="absolute inset-0 bg-gradient-to-t from-card via-card/20 to-transparent pointer-events-none" />
+              </div>
+              <div className="relative z-10 p-8 md:p-10 pt-6">
                 <div className="w-12 h-12 rounded-xl bg-hydro/10 border border-hydro/20 flex items-center justify-center mb-5">
                   <Droplets className="w-6 h-6 text-hydro" />
                 </div>
@@ -127,10 +140,21 @@ const PagePreviewSection = () => {
               whileInView={{ opacity: 1, x: 0 }}
               viewport={{ once: true }}
               transition={{ duration: 0.6, delay: 0.1 }}
-              className="group relative p-8 md:p-10 rounded-2xl border border-foreground/10 bg-card/50 backdrop-blur-sm hover:border-blaze/30 transition-all duration-500 overflow-hidden"
+              className="group relative rounded-2xl border border-foreground/10 bg-card/50 backdrop-blur-sm hover:border-blaze/30 transition-all duration-500 overflow-hidden"
             >
               <div className="absolute inset-0 bg-gradient-to-br from-blaze/5 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-500 pointer-events-none" />
-              <div className="relative z-10">
+              <div className="relative aspect-[16/10] overflow-hidden">
+                <img
+                  src={blazeCreativeImg}
+                  alt="Creative content production visualization"
+                  loading="lazy"
+                  width={1280}
+                  height={800}
+                  className="w-full h-full object-cover transition-transform duration-700 group-hover:scale-105"
+                />
+                <div className="absolute inset-0 bg-gradient-to-t from-card via-card/20 to-transparent pointer-events-none" />
+              </div>
+              <div className="relative z-10 p-8 md:p-10 pt-6">
                 <div className="w-12 h-12 rounded-xl bg-blaze/10 border border-blaze/20 flex items-center justify-center mb-5">
                   <Flame className="w-6 h-6 text-blaze" />
                 </div>
