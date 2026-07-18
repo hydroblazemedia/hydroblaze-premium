@@ -1,4 +1,5 @@
 import { useState, useEffect, useCallback } from 'react';
+import { Link } from 'react-router-dom';
 import { motion, AnimatePresence } from 'framer-motion';
 import { ArrowRight, ArrowLeft, Sparkles, MessageCircle, X, TrendingUp, Users, BarChart3, Eye, Target, Palette, Globe, CheckCircle2, Quote, Package, Flag, Instagram } from 'lucide-react';
 import { useContactDialog } from '@/components/ContactFormDialog';
@@ -11,12 +12,13 @@ import imgAayara from '@/assets/portfolio-aayara.jpg';
 import imgAquasplash from '@/assets/portfolio-aquasplash.jpg';
 import imgAmsc from '@/assets/portfolio-amsc.jpg';
 
-const categories = ['Lead Generation', 'Social Media', 'Brand Building', 'Design & Branding'] as const;
-type Category = typeof categories[number];
+export const categories = ['Lead Generation', 'Social Media', 'Brand Building', 'Design & Branding'] as const;
+export type Category = typeof categories[number];
 void categories;
 
-interface Project {
+export interface Project {
   id: number;
+  slug: string;
   title: string;
   emoji: string;
   category: Category;
@@ -40,9 +42,10 @@ interface Project {
   };
 }
 
-const projects: Project[] = [
+export const projects: Project[] = [
   {
     id: 1,
+    slug: 'cultfit-rajajinagar',
     title: 'Cult.fit – Rajajinagar',
     emoji: '🏋️',
     category: 'Lead Generation',
@@ -81,6 +84,7 @@ const projects: Project[] = [
   },
   {
     id: 2,
+    slug: 'blr-kabab',
     title: 'BLR Kabab',
     emoji: '🍢',
     category: 'Social Media',
@@ -118,6 +122,7 @@ const projects: Project[] = [
   },
   {
     id: 3,
+    slug: 'aayara-boutique',
     title: 'Aayara Boutique',
     emoji: '👗',
     category: 'Brand Building',
@@ -155,6 +160,7 @@ const projects: Project[] = [
   },
   {
     id: 4,
+    slug: 'aqua-splash',
     title: 'Aqua Splash',
     emoji: '🚗',
     category: 'Design & Branding',
@@ -189,6 +195,7 @@ const projects: Project[] = [
   },
   {
     id: 5,
+    slug: 'amsc-motorsport',
     title: 'AMSC Motorsport Team',
     emoji: '🏎️',
     category: 'Design & Branding',
