@@ -231,7 +231,7 @@ export const projects: Project[] = [
 ];
 
 /* ─── Image Slider ─── */
-const ImageSlider = ({ images, title, bg }: { images: string[]; title: string; bg?: string }) => {
+export const ImageSlider = ({ images, title, bg }: { images: string[]; title: string; bg?: string }) => {
   const [index, setIndex] = useState(0);
   const count = images.length;
 
