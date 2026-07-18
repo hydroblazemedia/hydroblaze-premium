@@ -1,4 +1,5 @@
 import { useState, useEffect, useCallback } from 'react';
+import { Link } from 'react-router-dom';
 import { motion, AnimatePresence } from 'framer-motion';
 import { ArrowRight, ArrowLeft, Sparkles, MessageCircle, X, TrendingUp, Users, BarChart3, Eye, Target, Palette, Globe, CheckCircle2, Quote, Package, Flag, Instagram } from 'lucide-react';
 import { useContactDialog } from '@/components/ContactFormDialog';
@@ -11,12 +12,13 @@ import imgAayara from '@/assets/portfolio-aayara.jpg';
 import imgAquasplash from '@/assets/portfolio-aquasplash.jpg';
 import imgAmsc from '@/assets/portfolio-amsc.jpg';
 
-const categories = ['Lead Generation', 'Social Media', 'Brand Building', 'Design & Branding'] as const;
-type Category = typeof categories[number];
+export const categories = ['Lead Generation', 'Social Media', 'Brand Building', 'Design & Branding'] as const;
+export type Category = typeof categories[number];
 void categories;
 
-interface Project {
+export interface Project {
   id: number;
+  slug: string;
   title: string;
   emoji: string;
   category: Category;
@@ -40,9 +42,10 @@ interface Project {
   };
 }
 
-const projects: Project[] = [
+export const projects: Project[] = [
   {
     id: 1,
+    slug: 'cultfit-rajajinagar',
     title: 'Cult.fit – Rajajinagar',
     emoji: '🏋️',
     category: 'Lead Generation',
@@ -81,6 +84,7 @@ const projects: Project[] = [
   },
   {
     id: 2,
+    slug: 'blr-kabab',
     title: 'BLR Kabab',
     emoji: '🍢',
     category: 'Social Media',
@@ -118,6 +122,7 @@ const projects: Project[] = [
   },
   {
     id: 3,
+    slug: 'aayara-boutique',
     title: 'Aayara Boutique',
     emoji: '👗',
     category: 'Brand Building',
@@ -155,6 +160,7 @@ const projects: Project[] = [
   },
   {
     id: 4,
+    slug: 'aqua-splash',
     title: 'Aqua Splash',
     emoji: '🚗',
     category: 'Design & Branding',
@@ -189,6 +195,7 @@ const projects: Project[] = [
   },
   {
     id: 5,
+    slug: 'amsc-motorsport',
     title: 'AMSC Motorsport Team',
     emoji: '🏎️',
     category: 'Design & Branding',
@@ -224,7 +231,7 @@ const projects: Project[] = [
 ];
 
 /* ─── Image Slider ─── */
-const ImageSlider = ({ images, title, bg }: { images: string[]; title: string; bg?: string }) => {
+export const ImageSlider = ({ images, title, bg }: { images: string[]; title: string; bg?: string }) => {
   const [index, setIndex] = useState(0);
   const count = images.length;
 
@@ -449,20 +456,21 @@ const ProjectDetail = ({ project, onClose }: { project: Project; onClose: () => 
 };
 
 /* ─── Portfolio Card ─── */
-const PortfolioCard = ({ project, onClick }: { project: Project; onClick: () => void }) => {
+const PortfolioCard = ({ project }: { project: Project }) => {
   return (
-    <motion.button
+    <motion.div
       layout
-      type="button"
-      onClick={onClick}
-      aria-label={`View ${project.title} case study`}
       initial={{ opacity: 0, y: 30 }}
       animate={{ opacity: 1, y: 0 }}
       exit={{ opacity: 0, scale: 0.95 }}
       transition={{ duration: 0.4 }}
       whileHover={{ y: -4 }}
-      className="group block w-full text-left cursor-pointer rounded-2xl focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-hydro focus-visible:ring-offset-2 focus-visible:ring-offset-background"
     >
+      <Link
+        to={`/portfolio/${project.slug}`}
+        aria-label={`View ${project.title} case study`}
+        className="group block w-full text-left cursor-pointer rounded-2xl focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-hydro focus-visible:ring-offset-2 focus-visible:ring-offset-background"
+      >
       <div className="relative rounded-2xl overflow-hidden bg-card/50 border border-foreground/5 group-hover:border-hydro/30 group-hover:shadow-[0_20px_60px_-20px_hsl(var(--hydro)/0.35)] transition-all duration-500">
         {/* Image */}
         <div
@@ -505,7 +513,8 @@ const PortfolioCard = ({ project, onClick }: { project: Project; onClick: () => 
           </p>
         </div>
       </div>
-    </motion.button>
+      </Link>
+    </motion.div>
   );
 };
 
@@ -637,7 +646,6 @@ const TestimonialsCarousel = () => {
 /* ─── Main Section ─── */
 const PortfolioSection = () => {
   const { open } = useContactDialog();
-  const [selectedProject, setSelectedProject] = useState<Project | null>(null);
 
   return (
     <section className="relative z-10 overflow-hidden">
@@ -708,7 +716,7 @@ const PortfolioSection = () => {
 
           <div className="grid sm:grid-cols-2 lg:grid-cols-3 gap-6">
             {projects.map((project) => (
-              <PortfolioCard key={project.id} project={project} onClick={() => setSelectedProject(project)} />
+              <PortfolioCard key={project.id} project={project} />
             ))}
           </div>
         </div>
@@ -770,12 +778,6 @@ const PortfolioSection = () => {
         </motion.div>
       </div>
 
-      {/* ── Project Detail Modal ── */}
-      <AnimatePresence>
-        {selectedProject && (
-          <ProjectDetail project={selectedProject} onClose={() => setSelectedProject(null)} />
-        )}
-      </AnimatePresence>
     </section>
   );
 };
