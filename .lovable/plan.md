@@ -1,30 +1,39 @@
-## Problem
+## Goal
+Add premium AI-generated imagery to two home-page sections: the Hero and the "How We Work" (Hydro Strategy / Blaze Creative) cards.
 
-The GitHub Actions build fails at `npm ci` because `package-lock.json` is out of sync with `package.json`. When the MCP + portal work was added, new deps (`@supabase/supabase-js`, `@lovable.dev/mcp-js`, plus transitive changes) were installed via Bun, which only updated `bun.lock`. `npm ci` requires an exact match between `package.json` and `package-lock.json` and hard-fails otherwise — that's the `Process completed with exit code 1` in the annotation.
+## What to build
 
-The Node.js 20 warning in the same screenshot is unrelated to the failure but worth fixing at the same time (setup-node still targets Node 18, which GitHub is deprecating).
+### 1. Hero visual
+Convert the current centered text hero into a two-column layout on `lg+` (stacked on mobile):
+- Left: existing badge, headline, subtitle, CTAs (unchanged copy/animations)
+- Right: a floating "device stack" visual — a tilted dashboard/phone mockup composed of an AI-generated image, wrapped in the existing glass card treatment (rounded-2xl, border, backdrop-blur), with hydro/blaze ambient glow orbs behind it
+- Keep the scroll-parallax and opacity fade on the whole block
+- Preserve mobile: image stacks below CTAs, scaled down
 
-Local `npm run build` succeeds, confirming the code itself is fine.
+### 2. How We Work section
+Give each of the two methodology cards (Hydro Strategy, Blaze Creative) a visual header image at the top of the card:
+- Hydro Strategy: abstract blueprint / data-grid visual in cyan-blue tones
+- Blaze Creative: abstract content/creative visual in orange-red tones
+- Image sits in a `rounded-xl` frame above the icon, ~16:10 aspect, with subtle inner border and gradient tint overlay to blend with the card
 
-## Fix
+## Assets to generate
+Using the agent-side `generate_image` tool (premium quality, saved to `src/assets/` as `.asset.json` pointers):
 
-1. **Regenerate `package-lock.json`** so it matches `package.json` (adds entries for `@supabase/supabase-js`, `@lovable.dev/mcp-js`, and any other drift).
-   - Run: `npm install --package-lock-only`
-   - Commit the updated lockfile. Do not touch `bun.lock`.
+1. `hero-dashboard.png` — dark premium analytics dashboard mockup with cyan and orange accent charts, glassmorphic UI, floating on transparent-friendly dark bg
+2. `hydro-strategy.png` — abstract blueprint grid with data nodes and flow lines, cyan/blue palette, minimal dark bg
+3. `blaze-creative.png` — abstract collage of content shapes (reels frames, spark bursts), orange/red palette, minimal dark bg
 
-2. **Bump the workflow to Node 20** in `.github/workflows/pages.yml` to clear the deprecation warning and keep the runner on a supported LTS.
-   - `node-version: '18'` → `node-version: '20'`
+All images will look correct in both light and dark themes (dark backgrounds framed inside cards work in both — matches the pattern already used in PortfolioSection).
 
-No source, router, or portal changes. `.env` is already committed, so Vite build sees the Supabase URL/key.
+## Files to change
 
-## Files
+- `src/components/Hero.tsx` — restructure to two-column grid, add image column
+- `src/components/PagePreviewSection.tsx` — add image header to each of the two "How We Work" cards
+- `src/assets/hero-dashboard.png.asset.json` (new, via `lovable-assets`)
+- `src/assets/hydro-strategy.png.asset.json` (new)
+- `src/assets/blaze-creative.png.asset.json` (new)
 
-- `package-lock.json` — regenerated
-- `.github/workflows/pages.yml` — bump Node to 20
-
-## Verification
-
-After push, watch the `build-and-deploy` job on GitHub Actions:
-- `npm ci` completes without lockfile errors
-- `npm run build` finishes
-- `gh-pages` branch updates and the site (including `/portal/login` via the SPA fallback added last turn) loads.
+## Out of scope
+- No changes to "What We Do" cards, Results, Why Us, or Final CTA sections
+- No new sections, no featured-work strip
+- No copy changes
