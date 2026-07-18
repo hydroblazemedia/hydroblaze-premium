@@ -355,7 +355,22 @@ const ProjectDetail = ({ project, onClose }: { project: Project; onClose: () => 
           <span className="inline-block px-3 py-1 rounded-full text-[10px] uppercase tracking-[0.2em] font-semibold bg-hydro/15 text-hydro border border-hydro/20 mb-3">
             {project.category}
           </span>
-          <h2 className="font-display text-2xl md:text-4xl font-bold break-words">{project.title}</h2>
+          <div className="flex flex-wrap items-center gap-4">
+            <h2 className="font-display text-2xl md:text-4xl font-bold break-words">{project.title}</h2>
+            {project.instagram && (
+              <a
+                href={project.instagram}
+                target="_blank"
+                rel="noopener noreferrer"
+                onClick={(e) => e.stopPropagation()}
+                aria-label={`Visit ${project.title} on Instagram`}
+                className="inline-flex items-center gap-1.5 px-3 py-1.5 rounded-full text-xs font-semibold border border-foreground/10 hover:border-hydro/40 bg-background/60 hover:bg-background/90 transition-all"
+              >
+                <Instagram className="w-3.5 h-3.5 text-hydro" />
+                Instagram
+              </a>
+            )}
+          </div>
         </div>
 
         <div className="p-6 md:p-10 space-y-10">
