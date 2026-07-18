@@ -53,6 +53,7 @@ const projects: Project[] = [
     featured: true,
     imageFit: 'contain',
     imageBg: '#000000',
+    instagram: 'https://www.instagram.com/cultfitrajajinagar/',
     whatWeDid: [
       'Localized Meta Ads targeting nearby fitness audience',
       'High-converting lead generation funnels',
@@ -89,6 +90,7 @@ const projects: Project[] = [
     featured: true,
     imageFit: 'contain',
     imageBg: '#E30613',
+    instagram: 'https://www.instagram.com/blrkabab/',
     whatWeDid: [
       'Scroll-stopping food content & reels',
       'Hyperlocal ad campaigns for order generation',
@@ -125,6 +127,7 @@ const projects: Project[] = [
     featured: true,
     imageFit: 'contain',
     imageBg: '#ffffff',
+    instagram: 'https://www.instagram.com/aayara_weaving_dreams/',
     whatWeDid: [
       'Complete brand positioning & identity development',
       'Premium content strategy aligned with target audience',
