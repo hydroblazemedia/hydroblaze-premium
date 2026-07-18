@@ -13,6 +13,7 @@ import imgAmsc from '@/assets/portfolio-amsc.jpg';
 
 const categories = ['Lead Generation', 'Social Media', 'Brand Building', 'Design & Branding'] as const;
 type Category = typeof categories[number];
+void categories;
 
 interface Project {
   id: number;
