@@ -646,7 +646,6 @@ const TestimonialsCarousel = () => {
 /* ─── Main Section ─── */
 const PortfolioSection = () => {
   const { open } = useContactDialog();
-  const [selectedProject, setSelectedProject] = useState<Project | null>(null);
 
   return (
     <section className="relative z-10 overflow-hidden">
@@ -717,7 +716,7 @@ const PortfolioSection = () => {
 
           <div className="grid sm:grid-cols-2 lg:grid-cols-3 gap-6">
             {projects.map((project) => (
-              <PortfolioCard key={project.id} project={project} onClick={() => setSelectedProject(project)} />
+              <PortfolioCard key={project.id} project={project} />
             ))}
           </div>
         </div>
