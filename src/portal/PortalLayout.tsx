@@ -1,5 +1,5 @@
 import { NavLink, Outlet, useNavigate, Navigate, Link } from "react-router-dom";
-import { LayoutDashboard, CheckSquare, Megaphone, FileText, Users, LogOut, UserCircle2 } from "lucide-react";
+import { LayoutDashboard, CheckSquare, Megaphone, FileText, Users, LogOut, UserCircle2, BookOpen } from "lucide-react";
 import { usePortalAuth } from "./PortalAuthContext";
 import { Button } from "@/components/ui/button";
 import UserAvatar from "./UserAvatar";
@@ -100,6 +100,21 @@ const PortalLayout = () => {
             >
               <Users className="w-4 h-4" />
               Team & Invites
+            </NavLink>
+          )}
+          {isAdmin && (
+            <NavLink
+              to="/portal/blogs"
+              className={({ isActive }) =>
+                `flex items-center gap-3 px-3 py-2 rounded-lg text-sm transition-colors ${
+                  isActive
+                    ? "bg-foreground/10 text-foreground"
+                    : "text-muted-foreground hover:text-foreground hover:bg-foreground/5"
+                }`
+              }
+            >
+              <BookOpen className="w-4 h-4" />
+              Blogs
             </NavLink>
           )}
         </nav>
