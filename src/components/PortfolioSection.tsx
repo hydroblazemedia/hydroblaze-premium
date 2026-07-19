@@ -9,8 +9,8 @@ import imgCultfitMeta from '@/assets/cultfit-meta-ads.png.asset.json';
 import imgCultfitSocial from '@/assets/cultfit-social.png.asset.json';
 import imgBlrkabab from '@/assets/portfolio-blrkabab.jpg';
 import imgAayara from '@/assets/portfolio-aayara.jpg';
-import imgAquasplash from '@/assets/portfolio-aquasplash.jpg';
-import imgAmsc from '@/assets/portfolio-amsc.jpg';
+import imgAquasplash from '@/assets/aquasplash-logo.png.asset.json';
+import imgAmsc from '@/assets/amsc-logo.png.asset.json';
 
 export const categories = ['Lead Generation', 'Social Media', 'Brand Building', 'Design & Branding'] as const;
 export type Category = typeof categories[number];
@@ -167,8 +167,10 @@ export const projects: Project[] = [
     service: 'Product Label & Packaging Design',
     description: 'Created high-impact product labels for an automotive care brand that stand out on shelves and communicate quality instantly.',
     objective: 'Create high-impact product labels that stand out on shelves and instantly communicate product function, quality, and performance',
-    image: imgAquasplash,
+    image: imgAquasplash.url,
     featured: true,
+    imageFit: 'contain',
+    imageBg: '#ffffff',
     whatWeDid: [
       'Bold, performance-oriented label design tailored for automotive buyers',
       'Distinct visual identity across multiple SKUs (cleaners, polish, lubricants)',
@@ -202,8 +204,10 @@ export const projects: Project[] = [
     service: 'Portfolio & Sponsorship Deck Design',
     description: 'Developed a high-impact sponsorship portfolio to strengthen brand credibility and enable effective sponsor outreach for a motorsport team.',
     objective: 'Develop a high-impact portfolio to support event presentation, strengthen brand credibility, and enable effective sponsor outreach',
-    image: imgAmsc,
+    image: imgAmsc.url,
     featured: true,
+    imageFit: 'contain',
+    imageBg: '#000000',
     whatWeDid: [
       'Strategically structured sponsorship deck for pitching and presentations',
       'High-energy visual direction aligned with motorsport branding',
@@ -524,30 +528,40 @@ const testimonials = [
     name: "Cult.fit Team",
     business: "Cult.fit – Rajajinagar, Bangalore",
     emoji: "🏋️",
+    logo: imgCultfit,
+    logoBg: '#000000',
   },
   {
     quote: "Our daily order volume increased noticeably after partnering with HydroBlaze. The scroll-stopping food content and hyperlocal campaigns they ran positioned BLR Kabab as a go-to brand. We saw higher engagement and more repeat customers than ever.",
     name: "BLR Kabab Team",
     business: "BLR Kabab, Bangalore",
     emoji: "🍢",
+    logo: imgBlrkabab,
+    logoBg: '#E30613',
   },
   {
     quote: "HydroBlaze helped us build Aayara Boutique's brand from scratch with a clear premium positioning. From identity development to social media setup, their aesthetic-first approach gave us a strong foundation even before launch. Highly recommended!",
     name: "Aayara Boutique Team",
     business: "Aayara Boutique",
     emoji: "👗",
+    logo: imgAayara,
+    logoBg: '#ffffff',
   },
   {
     quote: "The product labels HydroBlaze designed for Aqua Splash completely elevated our brand presence on shelves. The bold, professional design instantly communicates quality. Our customers notice the difference and so do retailers.",
     name: "Aqua Splash Team",
     business: "Aqua Splash, Automotive Care",
     emoji: "🚗",
+    logo: imgAquasplash.url,
+    logoBg: '#ffffff',
   },
   {
     quote: "HydroBlaze created an outstanding sponsorship deck for our motorsport team. The professional layout and high-energy visuals helped us strengthen credibility with potential sponsors. It's been a game-changer for our outreach.",
     name: "AMSC Team",
     business: "AMSC Motorsport",
     emoji: "🏎️",
+    logo: imgAmsc.url,
+    logoBg: '#000000',
   },
 ];
 
@@ -617,7 +631,16 @@ const TestimonialsCarousel = () => {
                 <Quote className="w-8 h-8 text-hydro/30 mb-4" />
                 <p className="text-foreground/80 text-sm leading-relaxed mb-6">"{t.quote}"</p>
                 <div className="flex items-center gap-3">
-                  <span className="text-2xl">{t.emoji}</span>
+                  {t.logo ? (
+                    <div
+                      className="w-10 h-10 rounded-full overflow-hidden border border-foreground/10 shrink-0 flex items-center justify-center"
+                      style={{ backgroundColor: t.logoBg }}
+                    >
+                      <img src={t.logo} alt={`${t.name} logo`} className="w-full h-full object-contain p-1" />
+                    </div>
+                  ) : (
+                    <span className="text-2xl">{t.emoji}</span>
+                  )}
                   <div>
                     <p className="font-display font-semibold text-sm">{t.name}</p>
                     <p className="text-muted-foreground text-xs">{t.business}</p>
