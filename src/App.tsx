@@ -10,6 +10,7 @@ import Pricing from "./pages/Pricing";
 import About from "./pages/About";
 
 import Blog from "./pages/Blog";
+import BlogPost from "./pages/BlogPost";
 import Portfolio from "./pages/Portfolio";
 import PortfolioDetail from "./pages/PortfolioDetail";
 import PrivacyPolicy from "./pages/PrivacyPolicy";
@@ -25,6 +26,8 @@ import PortalDocuments from "./pages/portal/Documents";
 import PortalAdmin from "./pages/portal/Admin";
 import PortalProfile from "./pages/portal/Profile";
 import PortalTeam from "./pages/portal/Team";
+import BlogsList from "./pages/portal/BlogsList";
+import BlogEditor from "./pages/portal/BlogEditor";
 
 const queryClient = new QueryClient();
 
@@ -46,6 +49,7 @@ const App = () => (
             <Route path="/portfolio/:slug" element={<PortfolioDetail />} />
             <Route path="/privacy-policy" element={<PrivacyPolicy />} />
             <Route path="/blog" element={<Blog />} />
+            <Route path="/blog/:slug" element={<BlogPost />} />
             <Route path="/portal/login" element={<PortalLogin />} />
             <Route path="/portal/accept-invite" element={<AcceptInvite />} />
             <Route path="/portal" element={<PortalLayout />}>
@@ -56,6 +60,9 @@ const App = () => (
               <Route path="team" element={<PortalTeam />} />
               <Route path="profile" element={<PortalProfile />} />
               <Route path="admin" element={<PortalAdmin />} />
+              <Route path="blogs" element={<BlogsList />} />
+              <Route path="blogs/new" element={<BlogEditor />} />
+              <Route path="blogs/:id" element={<BlogEditor />} />
             </Route>
             {/* ADD ALL CUSTOM ROUTES ABOVE THE CATCH-ALL "*" ROUTE */}
             <Route path="*" element={<NotFound />} />
