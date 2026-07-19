@@ -72,7 +72,7 @@ const BlogsList = () => {
     const base = slugify(String(full.title) + "-copy");
     let slug = base; let n = 2;
     while ((await supabase.from("blogs").select("id").eq("slug", slug).maybeSingle()).data) { slug = `${base}-${n++}`; }
-    const rest: Record<string, unknown> = { ...full };
+    const rest: Record<string, unknown> = { ...(full as Record<string, unknown>) };
     delete rest.id; delete rest.created_at; delete rest.updated_at; delete rest.published_at;
     const { error } = await supabase.from("blogs").insert({ ...(rest as never), title: String(full.title) + " (Copy)", slug, status: "draft", featured: false, published_at: null } as never);
     if (error) return toast.error(error.message);
