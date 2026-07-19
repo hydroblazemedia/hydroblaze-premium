@@ -51,9 +51,9 @@ const BlogsList = () => {
   const togglePublish = async (r: Blog) => {
     setBusy(true);
     const next = r.status === "published" ? "draft" : "published";
-    const patch: Record<string, unknown> = { status: next };
+    const patch: { status: string; published_at?: string } = { status: next };
     if (next === "published" && !r.published_at) patch.published_at = new Date().toISOString();
-    const { error } = await supabase.from("blogs").update(patch).eq("id", r.id);
+    const { error } = await supabase.from("blogs").update(patch as never).eq("id", r.id);
     setBusy(false);
     if (error) return toast.error(error.message);
     toast.success(next === "published" ? "Published" : "Unpublished");
@@ -67,14 +67,14 @@ const BlogsList = () => {
   };
 
   const duplicate = async (r: Blog) => {
-    const { data: full } = await supabase.from("blogs").select("*").eq("id", r.id).maybeSingle();
+    const { data: full } = await supabase.from("blogs").select("*").eq("id", r.id).maybeSingle<Record<string, unknown>>();
     if (!full) return;
-    const base = slugify(full.title + "-copy");
+    const base = slugify(String(full.title) + "-copy");
     let slug = base; let n = 2;
     while ((await supabase.from("blogs").select("id").eq("slug", slug).maybeSingle()).data) { slug = `${base}-${n++}`; }
-    // eslint-disable-next-line @typescript-eslint/no-unused-vars
-    const { id, created_at, updated_at, published_at, ...rest } = full as never;
-    const { error } = await supabase.from("blogs").insert({ ...rest, title: full.title + " (Copy)", slug, status: "draft", featured: false, published_at: null });
+    const { id: _id, created_at: _c, updated_at: _u, published_at: _p, ...rest } = full;
+    void _id; void _c; void _u; void _p;
+    const { error } = await supabase.from("blogs").insert({ ...(rest as never), title: String(full.title) + " (Copy)", slug, status: "draft", featured: false, published_at: null } as never);
     if (error) return toast.error(error.message);
     toast.success("Duplicated");
     load();
