@@ -72,8 +72,8 @@ const BlogsList = () => {
     const base = slugify(String(full.title) + "-copy");
     let slug = base; let n = 2;
     while ((await supabase.from("blogs").select("id").eq("slug", slug).maybeSingle()).data) { slug = `${base}-${n++}`; }
-    const { id: _id, created_at: _c, updated_at: _u, published_at: _p, ...rest } = full;
-    void _id; void _c; void _u; void _p;
+    const rest: Record<string, unknown> = { ...full };
+    delete rest.id; delete rest.created_at; delete rest.updated_at; delete rest.published_at;
     const { error } = await supabase.from("blogs").insert({ ...(rest as never), title: String(full.title) + " (Copy)", slug, status: "draft", featured: false, published_at: null } as never);
     if (error) return toast.error(error.message);
     toast.success("Duplicated");
