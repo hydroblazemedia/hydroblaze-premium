@@ -2,8 +2,6 @@ import { motion, useScroll, useTransform } from 'framer-motion';
 import { useContactDialog } from '@/components/ContactFormDialog';
 import { useRef } from 'react';
 import { ArrowRight, Sparkles, Search } from 'lucide-react';
-import heroDashboard from '@/assets/hero-dashboard.png';
-
 
 const Hero = () => {
   const { open } = useContactDialog();
@@ -40,8 +38,8 @@ const Hero = () => {
         />
       </div>
 
-      <motion.div style={{ y: textY, opacity }} className="max-w-7xl mx-auto relative z-10 grid lg:grid-cols-[1.05fr_0.95fr] gap-12 lg:gap-16 items-center">
-       <div className="text-center lg:text-left">
+      <motion.div style={{ y: textY, opacity }} className="max-w-5xl mx-auto relative z-10">
+       <div className="text-center">
         {/* Badge */}
         <motion.div
           initial={{ opacity: 0, y: 20, filter: 'blur(10px)' }}
@@ -95,7 +93,7 @@ const Hero = () => {
           initial={{ opacity: 0, y: 20, filter: 'blur(8px)' }}
           animate={{ opacity: 1, y: 0, filter: 'blur(0px)' }}
           transition={{ duration: 0.7, delay: 1.1 }}
-          className="text-base md:text-lg lg:text-xl text-muted-foreground max-w-2xl mx-auto lg:mx-0 leading-[1.7] mb-12 tracking-[-0.005em]"
+          className="text-base md:text-lg lg:text-xl text-muted-foreground max-w-2xl mx-auto leading-[1.7] mb-12 tracking-[-0.005em]"
         >
           We help brands grow through structured social media, performance marketing, and high-impact content — built to convert, not just look good.
         </motion.p>
@@ -105,7 +103,7 @@ const Hero = () => {
           initial={{ opacity: 0, y: 20 }}
           animate={{ opacity: 1, y: 0 }}
           transition={{ duration: 0.6, delay: 1.3 }}
-          className="flex flex-col sm:flex-row items-center justify-center lg:justify-start gap-4"
+          className="flex flex-col sm:flex-row items-center justify-center gap-4"
         >
           <button
             onClick={() => open("Start Your Growth")}
@@ -123,36 +121,6 @@ const Hero = () => {
           </button>
         </motion.div>
        </div>
-
-        {/* Hero visual */}
-        <motion.div
-          initial={{ opacity: 0, x: 40, filter: 'blur(12px)' }}
-          animate={{ opacity: 1, x: 0, filter: 'blur(0px)' }}
-          transition={{ duration: 1, delay: 0.9, ease: [0.22, 1, 0.36, 1] }}
-          className="relative mx-auto w-full max-w-xl lg:max-w-none"
-        >
-          {/* ambient glows behind image */}
-          <div className="absolute -inset-8 -z-10 pointer-events-none">
-            <div className="absolute top-1/4 -left-8 w-64 h-64 rounded-full opacity-40 blur-3xl" style={{ background: 'radial-gradient(circle, hsl(var(--hydro)/0.5), transparent 70%)' }} />
-            <div className="absolute bottom-0 -right-8 w-72 h-72 rounded-full opacity-40 blur-3xl" style={{ background: 'radial-gradient(circle, hsl(var(--blaze)/0.5), transparent 70%)' }} />
-          </div>
-
-          <motion.div
-            animate={{ y: [0, -12, 0] }}
-            transition={{ duration: 6, repeat: Infinity, ease: 'easeInOut' }}
-            className="relative rounded-2xl border border-foreground/10 bg-card/40 backdrop-blur-sm p-2 shadow-[0_40px_80px_-20px_hsl(var(--hydro)/0.35)] overflow-hidden"
-            style={{ transform: 'perspective(1400px) rotateY(-6deg) rotateX(4deg)' }}
-          >
-            <div className="absolute -inset-px rounded-2xl pointer-events-none" style={{ background: 'linear-gradient(135deg, hsl(var(--hydro)/0.5), transparent 40%, hsl(var(--blaze)/0.35) 100%)', WebkitMask: 'linear-gradient(#000 0 0) content-box, linear-gradient(#000 0 0)', WebkitMaskComposite: 'xor', maskComposite: 'exclude', padding: '1px' }} />
-            <img
-              src={heroDashboard}
-              alt="Analytics dashboard showing campaign performance"
-              width={1280}
-              height={1280}
-              className="w-full h-auto rounded-xl block"
-            />
-          </motion.div>
-        </motion.div>
 
         {/* Scroll indicator */}
         <motion.div
