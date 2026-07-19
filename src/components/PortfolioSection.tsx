@@ -9,8 +9,8 @@ import imgCultfitMeta from '@/assets/cultfit-meta-ads.png.asset.json';
 import imgCultfitSocial from '@/assets/cultfit-social.png.asset.json';
 import imgBlrkabab from '@/assets/portfolio-blrkabab.jpg';
 import imgAayara from '@/assets/portfolio-aayara.jpg';
-import imgAquasplash from '@/assets/portfolio-aquasplash.jpg';
-import imgAmsc from '@/assets/portfolio-amsc.jpg';
+import imgAquasplash from '@/assets/aquasplash-logo.png.asset.json';
+import imgAmsc from '@/assets/amsc-logo.png.asset.json';
 
 export const categories = ['Lead Generation', 'Social Media', 'Brand Building', 'Design & Branding'] as const;
 export type Category = typeof categories[number];
@@ -167,8 +167,10 @@ export const projects: Project[] = [
     service: 'Product Label & Packaging Design',
     description: 'Created high-impact product labels for an automotive care brand that stand out on shelves and communicate quality instantly.',
     objective: 'Create high-impact product labels that stand out on shelves and instantly communicate product function, quality, and performance',
-    image: imgAquasplash,
+    image: imgAquasplash.url,
     featured: true,
+    imageFit: 'contain',
+    imageBg: '#ffffff',
     whatWeDid: [
       'Bold, performance-oriented label design tailored for automotive buyers',
       'Distinct visual identity across multiple SKUs (cleaners, polish, lubricants)',
@@ -202,8 +204,10 @@ export const projects: Project[] = [
     service: 'Portfolio & Sponsorship Deck Design',
     description: 'Developed a high-impact sponsorship portfolio to strengthen brand credibility and enable effective sponsor outreach for a motorsport team.',
     objective: 'Develop a high-impact portfolio to support event presentation, strengthen brand credibility, and enable effective sponsor outreach',
-    image: imgAmsc,
+    image: imgAmsc.url,
     featured: true,
+    imageFit: 'contain',
+    imageBg: '#000000',
     whatWeDid: [
       'Strategically structured sponsorship deck for pitching and presentations',
       'High-energy visual direction aligned with motorsport branding',
