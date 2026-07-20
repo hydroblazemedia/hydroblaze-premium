@@ -58,54 +58,63 @@ const About = () => {
         </section>
 
         {/* Manifesto / Story */}
-        <section className="relative py-28 md:py-40 px-6 md:px-12 lg:px-16 border-t border-foreground/[0.06] overflow-hidden">
+        <section className="relative py-32 md:py-48 px-6 md:px-12 lg:px-16 border-t border-foreground/[0.06] overflow-hidden">
           <div className="absolute inset-0 -z-10 pointer-events-none">
-            <div className="absolute -top-32 left-1/2 -translate-x-1/2 w-[900px] h-[900px] rounded-full bg-gradient-to-br from-hydro/10 via-transparent to-blaze/10 blur-[160px] opacity-70" />
+            <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[1100px] h-[1100px] rounded-full bg-[radial-gradient(circle_at_center,hsl(var(--hydro)/0.14),transparent_55%)] blur-[120px]" />
+            <div className="absolute top-1/2 left-1/2 -translate-x-[30%] -translate-y-[70%] w-[700px] h-[700px] rounded-full bg-[radial-gradient(circle_at_center,hsl(var(--blaze)/0.12),transparent_60%)] blur-[120px]" />
           </div>
-          <div className="max-w-6xl mx-auto grid md:grid-cols-[auto_1fr] gap-10 md:gap-16 items-start">
+
+          <div className="max-w-6xl mx-auto">
             <motion.div
               initial={{ opacity: 0, y: 20 }}
               whileInView={{ opacity: 1, y: 0 }}
               viewport={{ once: true }}
               transition={{ duration: 0.6 }}
-              className="flex md:flex-col items-center md:items-start gap-4 md:sticky md:top-32"
+              className="flex items-center justify-center gap-4 mb-14"
             >
-              <div className="text-xs uppercase tracking-[0.25em] text-muted-foreground whitespace-nowrap">
-                Manifesto
-              </div>
-              <div className="hidden md:block h-px w-16 bg-gradient-to-r from-hydro to-blaze" />
-              <div className="text-xs font-mono text-muted-foreground/60">01 / 04</div>
+              <div className="h-px w-10 bg-gradient-to-r from-transparent to-hydro/60" />
+              <span className="text-[11px] uppercase tracking-[0.35em] text-muted-foreground">
+                The Manifesto
+              </span>
+              <div className="h-px w-10 bg-gradient-to-l from-transparent to-blaze/60" />
             </motion.div>
 
             <motion.blockquote
-              initial={{ opacity: 0, y: 20 }}
+              initial={{ opacity: 0, y: 30 }}
               whileInView={{ opacity: 1, y: 0 }}
               viewport={{ once: true }}
-              transition={{ duration: 0.7 }}
-              className="relative"
+              transition={{ duration: 0.8 }}
+              className="relative text-center max-w-5xl mx-auto"
             >
               <span
                 aria-hidden
-                className="absolute -top-8 -left-2 md:-top-12 md:-left-6 font-display text-[120px] md:text-[180px] leading-none text-transparent bg-clip-text bg-gradient-to-br from-hydro/30 to-blaze/30 select-none"
+                className="pointer-events-none select-none absolute -top-16 md:-top-24 left-1/2 -translate-x-1/2 font-display text-[220px] md:text-[340px] leading-none text-transparent bg-clip-text bg-gradient-to-br from-hydro/25 via-foreground/[0.04] to-blaze/25"
               >
                 “
               </span>
-              <p className="font-display text-3xl md:text-5xl lg:text-[3.5rem] leading-[1.15] tracking-tight">
-                <span className="text-foreground">
-                  Most agencies are either all strategy with boring execution — or all creative
-                  with no measurable results.
-                </span>{' '}
-                <span className="text-muted-foreground/60">
-                  We refused to pick a side. HydroBlaze exists to fuse analytical rigor with
-                  scroll-stopping craft, so growth stops feeling like a gamble and starts feeling
-                  like a system.
-                </span>
+
+              <p className="relative font-display text-[2rem] md:text-5xl lg:text-6xl font-semibold leading-[1.12] tracking-[-0.02em]">
+                Most agencies are either{' '}
+                <span className="text-gradient-hydro">all strategy</span>{' '}
+                with boring execution — or{' '}
+                <span className="text-gradient-blaze">all creative</span>{' '}
+                with no measurable results.
               </p>
-              <div className="mt-10 flex items-center gap-4">
-                <div className="h-px w-12 bg-gradient-to-r from-hydro to-blaze" />
-                <div className="text-sm text-muted-foreground">
-                  <span className="text-foreground font-medium">HydroBlaze</span> — founding principle
+
+              <p className="relative mt-10 md:mt-12 max-w-3xl mx-auto text-lg md:text-2xl leading-relaxed text-muted-foreground">
+                We refused to pick a side. HydroBlaze exists to fuse analytical rigor with
+                scroll-stopping craft — so growth stops feeling like a gamble and starts
+                behaving like a system.
+              </p>
+
+              <div className="relative mt-14 flex items-center justify-center gap-4">
+                <div className="h-px w-12 bg-gradient-to-r from-transparent to-hydro" />
+                <div className="text-xs md:text-sm tracking-wide text-muted-foreground">
+                  <span className="text-foreground font-semibold">HydroBlaze</span>
+                  <span className="mx-2 text-muted-foreground/50">—</span>
+                  Founding Principle
                 </div>
+                <div className="h-px w-12 bg-gradient-to-l from-transparent to-blaze" />
               </div>
             </motion.blockquote>
           </div>
