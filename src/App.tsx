@@ -7,7 +7,6 @@ import { ContactDialogProvider } from "@/components/ContactFormDialog";
 import ScrollToTop from "@/components/ScrollToTop";
 import Index from "./pages/Index";
 import Services from "./pages/Services";
-import Pricing from "./pages/Pricing";
 import About from "./pages/About";
 
 import Blog from "./pages/Blog";
@@ -29,6 +28,7 @@ import PortalProfile from "./pages/portal/Profile";
 import PortalTeam from "./pages/portal/Team";
 import BlogsList from "./pages/portal/BlogsList";
 import BlogEditor from "./pages/portal/BlogEditor";
+import Pricing from "./pages/Pricing";
 
 const queryClient = new QueryClient();
 
@@ -44,7 +44,6 @@ const App = () => (
           <Routes>
             <Route path="/" element={<Index />} />
             <Route path="/services" element={<Services />} />
-            <Route path="/pricing" element={<Pricing />} />
             <Route path="/about" element={<About />} />
             
             <Route path="/portfolio" element={<Portfolio />} />
@@ -65,6 +64,7 @@ const App = () => (
               <Route path="blogs" element={<BlogsList />} />
               <Route path="blogs/new" element={<BlogEditor />} />
               <Route path="blogs/:id" element={<BlogEditor />} />
+              <Route path="pricing" element={<Pricing />} />
             </Route>
             {/* ADD ALL CUSTOM ROUTES ABOVE THE CATCH-ALL "*" ROUTE */}
             <Route path="*" element={<NotFound />} />
