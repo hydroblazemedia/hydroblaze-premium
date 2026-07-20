@@ -360,6 +360,10 @@ const ProjectDetail = ({ project, onClose }: { project: Project; onClose: () => 
           <img
             src={project.image}
             alt={project.title}
+            loading="lazy"
+            decoding="async"
+            width="1600"
+            height="900"
             className={`relative w-full h-full ${project.imageFit === 'contain' ? 'object-contain p-8 sm:p-10 md:p-12' : 'object-cover'}`}
           />
           {project.imageFit !== 'contain' && (
@@ -495,6 +499,10 @@ const PortfolioCard = ({ project }: { project: Project }) => {
           <img
             src={project.image}
             alt={project.title}
+            loading="lazy"
+            decoding="async"
+            width="800"
+            height="600"
             className={`relative w-full h-full transition-transform duration-700 group-hover:scale-110 ${project.imageFit === 'contain' ? 'object-contain p-10 sm:p-12' : 'object-cover'}`}
           />
           {project.imageFit !== 'contain' && (
