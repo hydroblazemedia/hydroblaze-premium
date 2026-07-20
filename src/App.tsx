@@ -1,4 +1,4 @@
-import { lazy, Suspense } from "react";
+import { lazy, Suspense, type ReactNode } from "react";
 import { Toaster } from "@/components/ui/toaster";
 import { Toaster as Sonner } from "@/components/ui/sonner";
 import { TooltipProvider } from "@/components/ui/tooltip";
@@ -49,7 +49,7 @@ const PortalUnavailable = () => (
   </div>
 );
 
-const BackendRequired = ({ children }: { children: React.ReactNode }) => (
+const BackendRequired = ({ children }: { children: ReactNode }) => (
   hasBackendConfig ? <>{children}</> : <PortalUnavailable />
 );
 
