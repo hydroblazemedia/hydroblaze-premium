@@ -121,15 +121,6 @@ const testimonials = [
   { name: 'Chethana Reddy', company: 'Aayara', quote: 'They understood our brand instantly. The content and funnels feel premium — exactly like our product.', rating: 5 },
 ];
 
-const faqs = [
-  { q: 'How long before I see results?', a: 'Paid campaigns typically show early signals in 2–3 weeks; meaningful compounding growth from strategy + content usually takes 60–90 days.' },
-  { q: 'Do you work with startups?', a: 'Yes — from early-stage founders to scaling brands. We tailor engagement scope to your stage and budget.' },
-  { q: 'Do you provide content creation?', a: 'Absolutely. We shoot, edit, design, and script — reels, product photography, motion graphics, and static creative.' },
-  { q: 'Do I need a long-term contract?', a: 'We recommend a 3-month minimum to see compounding results, but we do not lock you into rigid annual contracts.' },
-  { q: 'How do you report performance?', a: 'Live dashboards, weekly reviews, and a monthly executive summary tied to revenue and pipeline KPIs.' },
-  { q: 'Can you manage ads and social media together?', a: 'Yes — this is where we shine. Unified creative + media strategy under one team beats stitched-together vendors.' },
-];
-
 const ServiceBlock = ({ service, index }: { service: typeof services[0]; index: number }) => {
   const { open } = useContactDialog();
   const isReversed = index % 2 !== 0;
