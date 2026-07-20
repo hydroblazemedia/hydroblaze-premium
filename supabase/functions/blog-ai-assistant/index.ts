@@ -1,6 +1,7 @@
 // Blog AI Assistant — helps writers with outlines, rewrites, SEO, meta, internal links, excerpts.
 // Uses the Lovable AI Gateway (LOVABLE_API_KEY).
 import { corsHeaders } from "npm:@supabase/supabase-js@2/cors";
+import { createClient } from "npm:@supabase/supabase-js@2";
 
 const GATEWAY_URL = "https://ai.gateway.lovable.dev/v1/chat/completions";
 const MODEL = "google/gemini-3-flash-preview";
@@ -54,6 +55,27 @@ Deno.serve(async (req) => {
   try {
     const key = Deno.env.get("LOVABLE_API_KEY");
     if (!key) return new Response(JSON.stringify({ error: "Missing LOVABLE_API_KEY" }), { status: 500, headers: { ...corsHeaders, "Content-Type": "application/json" } });
+
+    // Require an authenticated admin or manager (blog editors only)
+    const authHeader = req.headers.get("Authorization") ?? "";
+    if (!authHeader.startsWith("Bearer ")) {
+      return new Response(JSON.stringify({ error: "Unauthorized" }), { status: 401, headers: { ...corsHeaders, "Content-Type": "application/json" } });
+    }
+    const supabaseUrl = Deno.env.get("SUPABASE_URL");
+    const anonKey = Deno.env.get("SUPABASE_ANON_KEY") ?? Deno.env.get("SUPABASE_PUBLISHABLE_KEY");
+    if (!supabaseUrl || !anonKey) {
+      return new Response(JSON.stringify({ error: "Auth not configured" }), { status: 500, headers: { ...corsHeaders, "Content-Type": "application/json" } });
+    }
+    const authed = createClient(supabaseUrl, anonKey, { global: { headers: { Authorization: authHeader } } });
+    const { data: userData, error: userErr } = await authed.auth.getUser();
+    if (userErr || !userData.user) {
+      return new Response(JSON.stringify({ error: "Unauthorized" }), { status: 401, headers: { ...corsHeaders, "Content-Type": "application/json" } });
+    }
+    const { data: roles } = await authed.from("user_roles").select("role").eq("user_id", userData.user.id);
+    const allowed = (roles ?? []).some((r: { role: string }) => r.role === "admin" || r.role === "manager");
+    if (!allowed) {
+      return new Response(JSON.stringify({ error: "Forbidden" }), { status: 403, headers: { ...corsHeaders, "Content-Type": "application/json" } });
+    }
 
     const body = await req.json();
     const action = body?.action as Action;
