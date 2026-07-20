@@ -8,6 +8,7 @@ import { useContactDialog } from '@/components/ContactFormDialog';
 import ThemeToggle, { useTheme } from '@/components/ThemeToggle';
 
 const navLinks = [
+  { path: '/', label: 'Home' },
   { path: '/services', label: 'Services' },
   { path: '/portfolio', label: 'Portfolio' },
   { path: '/about', label: 'About' },
