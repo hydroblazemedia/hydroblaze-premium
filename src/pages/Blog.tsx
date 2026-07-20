@@ -133,13 +133,20 @@ const Blog = () => {
                     <motion.article key={post.slug} initial={{ opacity: 0, y: 20 }} whileInView={{ opacity: 1, y: 0 }} viewport={{ once: true }} transition={{ duration: 0.6, delay: index * 0.1 }} className="group">
                       <Link to={`/blog/${post.slug}`} className="block relative rounded-3xl bg-card/50 border border-foreground/10 backdrop-blur-sm overflow-hidden hover:border-hydro/30 transition-all duration-300 hover:-translate-y-1 h-full">
                         <span className="absolute top-6 right-6 z-10 px-3 py-1 rounded-full text-xs bg-gradient-to-r from-hydro/20 to-blaze/20 text-foreground border border-foreground/10">Featured</span>
-                        {post.featured_image ? (
-                          <div className="h-56 overflow-hidden">
-                            <img src={post.featured_image} alt={post.title} loading="lazy" className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500" />
-                          </div>
-                        ) : (
-                          <div className="h-56 bg-gradient-to-br from-hydro/20 to-blaze/20" />
-                        )}
+                        <div className="h-56 overflow-hidden bg-gradient-to-br from-hydro/20 to-blaze/20 relative flex items-center justify-center">
+                          {post.featured_image ? (
+                            <img
+                              src={post.featured_image}
+                              alt={post.title}
+                              loading="lazy"
+                              width={800}
+                              height={224}
+                              onError={(e) => { (e.currentTarget as HTMLImageElement).style.display = 'none'; }}
+                              className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500"
+                            />
+                          ) : null}
+                          <span className="absolute text-5xl font-display font-bold text-foreground/10 -z-0">HB</span>
+                        </div>
                         <div className="p-8">
                           {post.category && (
                             <span className={`inline-block px-3 py-1 rounded-full text-xs border ${getCategoryColor(post.category)} mb-4`}>{post.category}</span>
@@ -162,15 +169,20 @@ const Blog = () => {
                   {regularPosts.map((post, index) => (
                     <motion.article key={post.slug} initial={{ opacity: 0, y: 20 }} whileInView={{ opacity: 1, y: 0 }} viewport={{ once: true }} transition={{ duration: 0.6, delay: index * 0.1 }} className="group">
                       <Link to={`/blog/${post.slug}`} className="block rounded-2xl bg-card/50 border border-foreground/10 backdrop-blur-sm overflow-hidden hover:border-hydro/30 transition-all duration-300 hover:-translate-y-1 h-full">
-                        {post.featured_image ? (
-                          <div className="h-48 overflow-hidden">
-                            <img src={post.featured_image} alt={post.title} loading="lazy" className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500" />
-                          </div>
-                        ) : (
-                          <div className="h-48 bg-gradient-to-br from-hydro/20 to-blaze/20 flex items-center justify-center">
-                            <span className="text-4xl font-display font-bold text-foreground/10">HB</span>
-                          </div>
-                        )}
+                        <div className="h-48 overflow-hidden bg-gradient-to-br from-hydro/20 to-blaze/20 relative flex items-center justify-center">
+                          {post.featured_image ? (
+                            <img
+                              src={post.featured_image}
+                              alt={post.title}
+                              loading="lazy"
+                              width={640}
+                              height={192}
+                              onError={(e) => { (e.currentTarget as HTMLImageElement).style.display = 'none'; }}
+                              className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500"
+                            />
+                          ) : null}
+                          <span className="absolute text-4xl font-display font-bold text-foreground/10 -z-0">HB</span>
+                        </div>
                         <div className="p-6">
                           {post.category && (
                             <span className={`inline-block px-3 py-1 rounded-full text-xs border ${getCategoryColor(post.category)} mb-3`}>{post.category}</span>
