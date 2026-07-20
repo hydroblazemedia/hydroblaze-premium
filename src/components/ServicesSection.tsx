@@ -121,13 +121,6 @@ const testimonials = [
   { name: 'Chethana Reddy', company: 'Aayara', quote: 'They understood our brand instantly. The content and funnels feel premium — exactly like our product.', rating: 5 },
 ];
 
-const serviceFaqs = [
-  { q: 'How quickly will I see results?', a: 'Most clients see measurable traction within 30-60 days. Paid campaigns can show signal in the first 2 weeks; SEO and content compound over 3-6 months.' },
-  { q: 'Do you work with small businesses?', a: 'Yes. Our Starter engagements are designed for founders and small teams who need senior strategy without a full agency retainer.' },
-  { q: 'What industries do you specialize in?', a: 'D2C, fitness, F&B, automotive, and services. Our frameworks translate across categories — we lead with strategy, not templates.' },
-  { q: 'Is there a long-term contract?', a: "No lock-ins. We work on rolling monthly engagements. If we're not the right fit, you can pause anytime." },
-  { q: 'How do you report on performance?', a: "Live dashboards plus a monthly strategy review. You always know what's working, what's not, and what's next." },
-];
 
 const ServiceBlock = ({ service, index }: { service: typeof services[0]; index: number }) => {
   const { open } = useContactDialog();
@@ -447,68 +440,6 @@ const Testimonials = () => {
   );
 };
 
-const FAQ = () => {
-  const [open, setOpen] = useState<number | null>(0);
-  return (
-    <section className="relative z-10 px-6 md:px-12 lg:px-16 py-20 md:py-28 border-t border-foreground/5">
-      <div className="max-w-3xl mx-auto">
-        <motion.div
-          initial={{ opacity: 0, y: 20 }}
-          whileInView={{ opacity: 1, y: 0 }}
-          viewport={{ once: true }}
-          transition={{ duration: 0.6 }}
-          className="text-center mb-12"
-        >
-          <span className="inline-flex items-center gap-2 px-3 py-1 rounded-full text-[10px] uppercase tracking-[0.2em] font-semibold bg-blaze/10 text-blaze border border-blaze/20 mb-5">
-            FAQ
-          </span>
-          <h2 className="font-display text-3xl md:text-5xl font-bold tracking-tight">
-            Questions, <span className="text-gradient">Answered</span>
-          </h2>
-        </motion.div>
-
-        <div className="space-y-3">
-          {serviceFaqs.map((f, idx) => (
-            <motion.div
-              key={f.q}
-              initial={{ opacity: 0, y: 10 }}
-              whileInView={{ opacity: 1, y: 0 }}
-              viewport={{ once: true }}
-              transition={{ duration: 0.4, delay: idx * 0.05 }}
-              className="rounded-2xl bg-card/40 backdrop-blur-sm border border-foreground/10 hover:border-hydro/20 overflow-hidden transition-colors"
-            >
-              <button
-                onClick={() => setOpen(open === idx ? null : idx)}
-                className="w-full flex items-center justify-between gap-4 p-5 md:p-6 text-left"
-                aria-expanded={open === idx}
-              >
-                <span className="font-display text-base md:text-lg font-semibold">{f.q}</span>
-                <motion.div animate={{ rotate: open === idx ? 180 : 0 }} transition={{ duration: 0.3 }}>
-                  <ChevronDown className="w-5 h-5 text-hydro shrink-0" />
-                </motion.div>
-              </button>
-              <AnimatePresence initial={false}>
-                {open === idx && (
-                  <motion.div
-                    initial={{ height: 0, opacity: 0 }}
-                    animate={{ height: 'auto', opacity: 1 }}
-                    exit={{ height: 0, opacity: 0 }}
-                    transition={{ duration: 0.3, ease: [0.22, 1, 0.36, 1] }}
-                    className="overflow-hidden"
-                  >
-                    <div className="px-5 md:px-6 pb-5 md:pb-6 text-muted-foreground text-sm md:text-base leading-relaxed">
-                      {f.a}
-                    </div>
-                  </motion.div>
-                )}
-              </AnimatePresence>
-            </motion.div>
-          ))}
-        </div>
-      </div>
-    </section>
-  );
-};
 
 const ServicesSection = () => {
   const { open } = useContactDialog();
@@ -619,7 +550,6 @@ const ServicesSection = () => {
       <WhyHydroBlaze />
       <CaseStudies />
       <Testimonials />
-      <FAQ />
 
       {/* Final CTA */}
       <div className="px-6 md:px-12 lg:px-16 py-20 md:py-28">
