@@ -221,14 +221,14 @@ const ServiceBlock = ({ service, index }: { service: typeof services[0]; index: 
 };
 
 const ProcessSection = () => (
-  <section className="relative z-10 px-6 md:px-12 lg:px-16 py-20 md:py-28 border-t border-foreground/5">
-    <div className="max-w-6xl mx-auto">
+  <section className="relative z-10 px-6 md:px-12 lg:px-16 py-20 md:py-28 border-t border-foreground/5 overflow-hidden">
+    <div className="max-w-7xl mx-auto">
       <motion.div
         initial={{ opacity: 0, y: 20 }}
         whileInView={{ opacity: 1, y: 0 }}
         viewport={{ once: true }}
         transition={{ duration: 0.6 }}
-        className="text-center mb-16 max-w-2xl mx-auto"
+        className="text-center mb-20 max-w-2xl mx-auto"
       >
         <span className="inline-flex items-center gap-2 px-3 py-1 rounded-full text-[10px] uppercase tracking-[0.2em] font-semibold bg-hydro/10 text-hydro border border-hydro/20 mb-5">
           Our Process
@@ -236,79 +236,162 @@ const ProcessSection = () => (
         <h2 className="font-display text-3xl md:text-5xl font-bold tracking-tight">
           From Discovery to <span className="text-gradient">Scale</span>
         </h2>
-        <p className="text-muted-foreground mt-4 text-base md:text-lg">A repeatable growth system, not a one-off project.</p>
+        <p className="text-muted-foreground mt-4 text-base md:text-lg">A repeatable six-stage journey, not a one-off project.</p>
       </motion.div>
 
-      <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-5">
-        {processSteps.map((step, i) => {
-          const Icon = step.icon;
-          return (
-            <motion.div
-              key={step.title}
-              initial={{ opacity: 0, y: 30 }}
-              whileInView={{ opacity: 1, y: 0 }}
-              viewport={{ once: true }}
-              transition={{ duration: 0.5, delay: i * 0.08 }}
-              whileHover={{ y: -4 }}
-              className="group relative p-6 rounded-2xl bg-card/50 backdrop-blur-sm border border-foreground/10 hover:border-hydro/30 transition-all duration-500"
-            >
-              <div className="absolute inset-0 rounded-2xl opacity-0 group-hover:opacity-100 transition-opacity duration-500 pointer-events-none bg-gradient-to-br from-hydro/5 via-transparent to-blaze/5" />
-              <div className="relative flex items-start gap-4">
-                <div className="w-11 h-11 rounded-xl bg-gradient-to-br from-hydro/15 to-blaze/15 border border-hydro/20 flex items-center justify-center shrink-0">
-                  <Icon className="w-5 h-5 text-hydro" />
+      {/* Desktop horizontal timeline */}
+      <div className="hidden lg:block relative">
+        {/* Base line */}
+        <div className="absolute top-8 left-0 right-0 h-px bg-foreground/10" />
+        {/* Animated progress line */}
+        <motion.div
+          initial={{ scaleX: 0 }}
+          whileInView={{ scaleX: 1 }}
+          viewport={{ once: true }}
+          transition={{ duration: 2, ease: [0.22, 1, 0.36, 1] }}
+          style={{ transformOrigin: 'left' }}
+          className="absolute top-8 left-0 right-0 h-px bg-gradient-to-r from-hydro via-hydro to-blaze"
+        />
+        <div className="grid grid-cols-6 gap-4 relative">
+          {processSteps.map((step, i) => {
+            const Icon = step.icon;
+            return (
+              <motion.div
+                key={step.title}
+                initial={{ opacity: 0, y: 30 }}
+                whileInView={{ opacity: 1, y: 0 }}
+                viewport={{ once: true }}
+                transition={{ duration: 0.5, delay: 0.3 + i * 0.15 }}
+                className="group relative flex flex-col items-center text-center"
+              >
+                {/* Node */}
+                <div className="relative w-16 h-16 rounded-full bg-background border border-hydro/30 flex items-center justify-center z-10 transition-all duration-500 group-hover:scale-110 group-hover:border-hydro group-hover:shadow-[0_0_30px_hsl(var(--hydro)/0.5)]">
+                  <div className="absolute inset-1 rounded-full bg-gradient-to-br from-hydro/15 to-blaze/15" />
+                  <Icon className="w-6 h-6 text-hydro relative z-10 transition-transform duration-500 group-hover:scale-110" />
+                  {/* Pulse ring on hover */}
+                  <div className="absolute inset-0 rounded-full border border-hydro opacity-0 group-hover:opacity-100 group-hover:animate-ping" />
                 </div>
-                <div>
-                  <div className="text-[10px] uppercase tracking-[0.2em] text-foreground/40 font-semibold mb-1">Step {String(i + 1).padStart(2, '0')}</div>
-                  <h3 className="font-display text-lg font-semibold mb-1">{step.title}</h3>
-                  <p className="text-muted-foreground text-sm leading-relaxed">{step.desc}</p>
+                <div className="mt-6 space-y-2 px-1 transition-transform duration-500 group-hover:-translate-y-1">
+                  <div className="text-[10px] uppercase tracking-[0.2em] text-foreground/40 font-semibold">Step {String(i + 1).padStart(2, '0')}</div>
+                  <h3 className="font-display text-base font-semibold">{step.title}</h3>
+                  <p className="text-muted-foreground text-xs leading-relaxed">{step.desc}</p>
                 </div>
-              </div>
-            </motion.div>
-          );
-        })}
+                {/* Arrow between */}
+                {i < processSteps.length - 1 && (
+                  <ChevronRight className="hidden xl:block absolute top-5 -right-3 w-5 h-5 text-hydro/40 z-10" />
+                )}
+              </motion.div>
+            );
+          })}
+        </div>
+      </div>
+
+      {/* Mobile / tablet vertical timeline */}
+      <div className="lg:hidden relative pl-10">
+        <div className="absolute left-4 top-0 bottom-0 w-px bg-foreground/10" />
+        <motion.div
+          initial={{ scaleY: 0 }}
+          whileInView={{ scaleY: 1 }}
+          viewport={{ once: true }}
+          transition={{ duration: 1.8, ease: [0.22, 1, 0.36, 1] }}
+          style={{ transformOrigin: 'top' }}
+          className="absolute left-4 top-0 bottom-0 w-px bg-gradient-to-b from-hydro via-hydro to-blaze"
+        />
+        <div className="space-y-10">
+          {processSteps.map((step, i) => {
+            const Icon = step.icon;
+            return (
+              <motion.div
+                key={step.title}
+                initial={{ opacity: 0, x: -20 }}
+                whileInView={{ opacity: 1, x: 0 }}
+                viewport={{ once: true }}
+                transition={{ duration: 0.5, delay: i * 0.1 }}
+                className="group relative"
+              >
+                <div className="absolute -left-10 top-0 w-8 h-8 rounded-full bg-background border border-hydro/30 flex items-center justify-center transition-all group-hover:border-hydro group-hover:shadow-[0_0_20px_hsl(var(--hydro)/0.4)]">
+                  <Icon className="w-4 h-4 text-hydro" />
+                </div>
+                <div className="text-[10px] uppercase tracking-[0.2em] text-foreground/40 font-semibold mb-1">Step {String(i + 1).padStart(2, '0')}</div>
+                <h3 className="font-display text-lg font-semibold mb-1">{step.title}</h3>
+                <p className="text-muted-foreground text-sm leading-relaxed">{step.desc}</p>
+              </motion.div>
+            );
+          })}
+        </div>
       </div>
     </div>
   </section>
 );
 
 const WhyHydroBlaze = () => (
-  <section className="relative z-10 px-6 md:px-12 lg:px-16 py-20 md:py-28 border-t border-foreground/5">
+  <section className="relative z-10 px-6 md:px-12 lg:px-16 py-24 md:py-36 border-t border-foreground/5 overflow-hidden">
+    {/* Ambient */}
+    <div className="absolute inset-0 -z-10 pointer-events-none">
+      <div className="absolute top-1/4 -left-32 w-[500px] h-[500px] rounded-full opacity-[0.05]" style={{ background: 'radial-gradient(circle, hsl(var(--blaze)), transparent 70%)' }} />
+      <div className="absolute bottom-1/4 -right-32 w-[500px] h-[500px] rounded-full opacity-[0.05]" style={{ background: 'radial-gradient(circle, hsl(var(--hydro)), transparent 70%)' }} />
+    </div>
+
     <div className="max-w-6xl mx-auto">
+      {/* Editorial header */}
       <motion.div
         initial={{ opacity: 0, y: 20 }}
         whileInView={{ opacity: 1, y: 0 }}
         viewport={{ once: true }}
-        transition={{ duration: 0.6 }}
-        className="text-center mb-16 max-w-2xl mx-auto"
+        transition={{ duration: 0.7 }}
+        className="grid grid-cols-1 md:grid-cols-12 gap-8 mb-24 md:mb-32"
       >
-        <span className="inline-flex items-center gap-2 px-3 py-1 rounded-full text-[10px] uppercase tracking-[0.2em] font-semibold bg-blaze/10 text-blaze border border-blaze/20 mb-5">
-          Why HydroBlaze
-        </span>
-        <h2 className="font-display text-3xl md:text-5xl font-bold tracking-tight">
-          Not Another <span className="text-gradient">Marketing Agency</span>
-        </h2>
+        <div className="md:col-span-5">
+          <span className="inline-flex items-center gap-2 px-3 py-1 rounded-full text-[10px] uppercase tracking-[0.2em] font-semibold bg-blaze/10 text-blaze border border-blaze/20 mb-6">
+            Why HydroBlaze
+          </span>
+          <h2 className="font-display text-4xl md:text-6xl lg:text-7xl font-bold tracking-tight leading-[1.02]">
+            Not another<br />
+            <span className="text-gradient italic font-light">marketing agency.</span>
+          </h2>
+        </div>
+        <div className="md:col-span-6 md:col-start-7 flex items-end">
+          <p className="text-lg md:text-xl text-muted-foreground leading-relaxed">
+            Six principles shape every engagement — the difference between renting attention and building a growth engine that compounds.
+          </p>
+        </div>
       </motion.div>
 
-      <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-5">
+      {/* Alternating editorial rows */}
+      <div className="divide-y divide-foreground/10">
         {whyPoints.map((point, i) => {
           const Icon = point.icon;
+          const isReversed = i % 2 !== 0;
           return (
             <motion.div
               key={point.title}
-              initial={{ opacity: 0, y: 30 }}
+              initial={{ opacity: 0, y: 40 }}
               whileInView={{ opacity: 1, y: 0 }}
-              viewport={{ once: true }}
-              transition={{ duration: 0.5, delay: i * 0.08 }}
-              whileHover={{ y: -4 }}
-              className="group relative p-7 rounded-2xl bg-card/40 backdrop-blur-xl border border-foreground/10 hover:border-hydro/30 transition-all duration-500 overflow-hidden"
+              viewport={{ once: true, margin: '-60px' }}
+              transition={{ duration: 0.7, ease: [0.22, 1, 0.36, 1] }}
+              className="group grid grid-cols-1 md:grid-cols-12 gap-6 md:gap-10 items-center py-12 md:py-16"
             >
-              <div className="absolute -top-16 -right-16 w-40 h-40 rounded-full opacity-0 group-hover:opacity-100 transition-opacity duration-700 pointer-events-none" style={{ background: 'radial-gradient(circle, hsl(var(--hydro)/0.15), transparent 70%)' }} />
-              <div className="relative">
-                <div className="w-12 h-12 rounded-xl bg-gradient-to-br from-hydro/15 to-blaze/15 border border-hydro/20 flex items-center justify-center mb-4">
-                  <Icon className="w-5 h-5 text-hydro" />
+              <div className={`md:col-span-2 flex md:justify-center ${isReversed ? 'md:order-3' : ''}`}>
+                <div className="font-display text-5xl md:text-6xl font-light text-foreground/20 group-hover:text-transparent group-hover:bg-gradient-to-br group-hover:from-hydro group-hover:to-blaze group-hover:bg-clip-text transition-all duration-500">
+                  {point.number}
                 </div>
-                <h3 className="font-display text-lg font-semibold mb-2">{point.title}</h3>
-                <p className="text-muted-foreground text-sm leading-relaxed">{point.desc}</p>
+              </div>
+              <div className={`md:col-span-7 ${isReversed ? 'md:order-2 md:text-right' : ''}`}>
+                <h3 className="font-display text-2xl md:text-4xl font-semibold tracking-tight mb-3 md:mb-4 transition-colors duration-500 group-hover:text-transparent group-hover:bg-gradient-to-r group-hover:from-hydro group-hover:to-blaze group-hover:bg-clip-text">
+                  {point.title}
+                </h3>
+                <p className="text-muted-foreground text-base md:text-lg leading-relaxed max-w-xl md:max-w-none md:inline-block">
+                  {point.desc}
+                </p>
+              </div>
+              <div className={`md:col-span-3 flex md:justify-center ${isReversed ? 'md:order-1' : ''}`}>
+                <motion.div
+                  whileHover={{ rotate: 6, scale: 1.05 }}
+                  transition={{ type: 'spring', stiffness: 200, damping: 15 }}
+                  className="relative w-20 h-20 md:w-24 md:h-24 rounded-2xl bg-gradient-to-br from-hydro/10 to-blaze/10 border border-foreground/10 flex items-center justify-center group-hover:border-hydro/40 group-hover:shadow-[0_20px_50px_-15px_hsl(var(--hydro)/0.4)] transition-all duration-500"
+                >
+                  <Icon className="w-8 h-8 md:w-10 md:h-10 text-hydro" strokeWidth={1.5} />
+                </motion.div>
               </div>
             </motion.div>
           );
@@ -379,7 +462,36 @@ const CaseStudies = () => (
 
 const Testimonials = () => {
   const [i, setI] = useState(0);
+  const [paused, setPaused] = useState(false);
+  const [dir, setDir] = useState(1);
+  const touchStart = useRef<number | null>(null);
+
+  const go = (next: number) => {
+    const total = testimonials.length;
+    const idx = ((next % total) + total) % total;
+    setDir(next > i ? 1 : -1);
+    setI(idx);
+  };
+
+  useEffect(() => {
+    if (paused) return;
+    const id = setInterval(() => {
+      setDir(1);
+      setI((prev) => (prev + 1) % testimonials.length);
+    }, 4500);
+    return () => clearInterval(id);
+  }, [paused]);
+
   const t = testimonials[i];
+
+  const onTouchStart = (e: React.TouchEvent) => { touchStart.current = e.touches[0].clientX; };
+  const onTouchEnd = (e: React.TouchEvent) => {
+    if (touchStart.current === null) return;
+    const delta = e.changedTouches[0].clientX - touchStart.current;
+    if (Math.abs(delta) > 50) go(delta < 0 ? i + 1 : i - 1);
+    touchStart.current = null;
+  };
+
   return (
     <section className="relative z-10 px-6 md:px-12 lg:px-16 py-20 md:py-28 border-t border-foreground/5">
       <div className="max-w-4xl mx-auto text-center">
@@ -390,41 +502,68 @@ const Testimonials = () => {
           What Founders <span className="text-gradient">Say About Us</span>
         </h2>
 
-        <AnimatePresence mode="wait">
-          <motion.div
-            key={i}
-            initial={{ opacity: 0, y: 20 }}
-            animate={{ opacity: 1, y: 0 }}
-            exit={{ opacity: 0, y: -20 }}
-            transition={{ duration: 0.4 }}
-            className="relative p-8 md:p-12 rounded-3xl bg-card/50 backdrop-blur-xl border border-foreground/10"
+        <div
+          className="relative"
+          onMouseEnter={() => setPaused(true)}
+          onMouseLeave={() => setPaused(false)}
+          onTouchStart={onTouchStart}
+          onTouchEnd={onTouchEnd}
+        >
+          <div className="relative overflow-hidden rounded-3xl min-h-[340px] md:min-h-[300px]">
+            <AnimatePresence mode="wait" custom={dir}>
+              <motion.div
+                key={i}
+                custom={dir}
+                initial={{ opacity: 0, x: dir * 60 }}
+                animate={{ opacity: 1, x: 0 }}
+                exit={{ opacity: 0, x: dir * -60 }}
+                transition={{ duration: 0.5, ease: [0.22, 1, 0.36, 1] }}
+                className="relative p-8 md:p-12 rounded-3xl bg-card/50 backdrop-blur-xl border border-foreground/10"
+              >
+                <div className="absolute inset-0 rounded-3xl bg-gradient-to-br from-hydro/5 via-transparent to-blaze/5 pointer-events-none" />
+                <div className="relative">
+                  <div className="flex justify-center gap-1 mb-6">
+                    {Array.from({ length: t.rating }).map((_, s) => (
+                      <Star key={s} className="w-5 h-5 fill-blaze text-blaze" />
+                    ))}
+                  </div>
+                  <p className="text-lg md:text-2xl font-display leading-relaxed text-foreground/90 mb-8">"{t.quote}"</p>
+                  <div className="flex items-center justify-center gap-4">
+                    <div className="w-12 h-12 rounded-full bg-gradient-to-br from-hydro to-blaze flex items-center justify-center text-white font-semibold">
+                      {t.name.charAt(0)}
+                    </div>
+                    <div className="text-left">
+                      <div className="font-semibold">{t.name}</div>
+                      <div className="text-sm text-muted-foreground">{t.company}</div>
+                    </div>
+                  </div>
+                </div>
+              </motion.div>
+            </AnimatePresence>
+          </div>
+
+          {/* Arrows */}
+          <button
+            onClick={() => go(i - 1)}
+            aria-label="Previous testimonial"
+            className="absolute left-0 md:-left-4 top-1/2 -translate-y-1/2 w-11 h-11 rounded-full bg-card/80 backdrop-blur-xl border border-foreground/10 hover:border-hydro/40 hover:shadow-[0_0_20px_hsl(var(--hydro)/0.3)] flex items-center justify-center transition-all z-10"
           >
-            <div className="absolute inset-0 rounded-3xl bg-gradient-to-br from-hydro/5 via-transparent to-blaze/5 pointer-events-none" />
-            <div className="relative">
-              <div className="flex justify-center gap-1 mb-6">
-                {Array.from({ length: t.rating }).map((_, s) => (
-                  <Star key={s} className="w-5 h-5 fill-blaze text-blaze" />
-                ))}
-              </div>
-              <p className="text-lg md:text-2xl font-display leading-relaxed text-foreground/90 mb-8">"{t.quote}"</p>
-              <div className="flex items-center justify-center gap-4">
-                <div className="w-12 h-12 rounded-full bg-gradient-to-br from-hydro to-blaze flex items-center justify-center text-white font-semibold">
-                  {t.name.charAt(0)}
-                </div>
-                <div className="text-left">
-                  <div className="font-semibold">{t.name}</div>
-                  <div className="text-sm text-muted-foreground">{t.company}</div>
-                </div>
-              </div>
-            </div>
-          </motion.div>
-        </AnimatePresence>
+            <ChevronLeft className="w-5 h-5" />
+          </button>
+          <button
+            onClick={() => go(i + 1)}
+            aria-label="Next testimonial"
+            className="absolute right-0 md:-right-4 top-1/2 -translate-y-1/2 w-11 h-11 rounded-full bg-card/80 backdrop-blur-xl border border-foreground/10 hover:border-hydro/40 hover:shadow-[0_0_20px_hsl(var(--hydro)/0.3)] flex items-center justify-center transition-all z-10"
+          >
+            <ChevronRight className="w-5 h-5" />
+          </button>
+        </div>
 
         <div className="flex justify-center gap-2 mt-8">
           {testimonials.map((_, idx) => (
             <button
               key={idx}
-              onClick={() => setI(idx)}
+              onClick={() => go(idx)}
               aria-label={`Show testimonial ${idx + 1}`}
               className={`h-2 rounded-full transition-all duration-300 ${idx === i ? 'w-8 bg-gradient-to-r from-hydro to-blaze' : 'w-2 bg-foreground/20 hover:bg-foreground/40'}`}
             />
