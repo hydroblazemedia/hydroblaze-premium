@@ -2,12 +2,12 @@ import { useEffect, useMemo, useState } from "react";
 import { Link, useParams, useSearchParams } from "react-router-dom";
 import { Helmet } from "react-helmet-async";
 import { motion } from "framer-motion";
-import { supabase } from "@/integrations/supabase/client";
 import Navbar from "@/components/Navbar";
 import Footer from "@/components/Footer";
 import PageTransition from "@/components/PageTransition";
 import { Calendar, Clock, ArrowLeft, ArrowRight, Twitter, Linkedin, Facebook, Link2, User } from "lucide-react";
 import { extractHeadings, formatDate, injectHeadingIds } from "@/lib/blog";
+import { getOptionalSupabase } from "@/lib/optionalSupabase";
 import { toast } from "sonner";
 
 interface Blog {
@@ -32,6 +32,8 @@ const BlogPost = () => {
     if (!slug) return;
     (async () => {
       setLoading(true); setNotFound(false);
+      const supabase = await getOptionalSupabase();
+      if (!supabase) { setNotFound(true); setLoading(false); return; }
       let q = supabase.from("blogs").select("*").eq("slug", slug);
       if (!preview) q = q.eq("status", "published");
       const { data } = await q.maybeSingle();

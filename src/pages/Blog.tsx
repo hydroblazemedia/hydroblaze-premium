@@ -6,8 +6,8 @@ import { BookOpen, Calendar, ArrowRight, Search, Clock } from 'lucide-react';
 import Navbar from '@/components/Navbar';
 import Footer from '@/components/Footer';
 import PageTransition from '@/components/PageTransition';
-import { supabase } from '@/integrations/supabase/client';
 import { formatDate } from '@/lib/blog';
+import { getOptionalSupabase } from '@/lib/optionalSupabase';
 
 interface Post {
   id: string;
@@ -38,6 +38,12 @@ const Blog = () => {
   useEffect(() => {
     (async () => {
       setLoading(true);
+      const supabase = await getOptionalSupabase();
+      if (!supabase) {
+        setPosts([]);
+        setLoading(false);
+        return;
+      }
       const { data } = await supabase
         .from('blogs')
         .select('id,title,slug,excerpt,featured_image,category,tags,author,reading_time,published_at')

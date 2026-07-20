@@ -2,7 +2,7 @@ import { useState, useEffect } from 'react';
 import { Link } from 'react-router-dom';
 import { motion } from 'framer-motion';
 import { ArrowRight, Calendar } from 'lucide-react';
-import { supabase } from '@/integrations/supabase/client';
+import { getOptionalSupabase } from '@/lib/optionalSupabase';
 import { formatDate } from '@/lib/blog';
 
 interface Post {
@@ -21,16 +21,29 @@ const BlogSection = () => {
   const [loading, setLoading] = useState(true);
 
   useEffect(() => {
-    supabase
+    let mounted = true;
+
+    getOptionalSupabase().then((supabase) => {
+      if (!supabase) {
+        if (mounted) setLoading(false);
+        return;
+      }
+
+      supabase
       .from('blogs')
       .select('id,title,excerpt,slug,featured_image,published_at,category,reading_time')
       .eq('status', 'published')
       .order('published_at', { ascending: false })
       .limit(3)
       .then(({ data }) => {
+        if (!mounted) return;
         setPosts((data as unknown as Post[]) ?? []);
         setLoading(false);
       });
+
+    });
+
+    return () => { mounted = false; };
   }, []);
 
   return (
