@@ -82,8 +82,20 @@ const BlogPost = () => {
     "@context": "https://schema.org", "@type": "BlogPosting",
     headline: post.title, description: seoDesc, image: ogImage || undefined,
     author: { "@type": "Person", name: post.author || "HydroBlaze Media" },
-    datePublished: post.published_at, url: canonical,
+    datePublished: post.published_at,
+    dateModified: post.published_at,
+    mainEntityOfPage: canonical,
+    url: canonical,
     publisher: { "@type": "Organization", name: "HydroBlaze Media" },
+  };
+  const breadcrumbLd = {
+    "@context": "https://schema.org",
+    "@type": "BreadcrumbList",
+    itemListElement: [
+      { "@type": "ListItem", position: 1, name: "Home", item: "https://hydroblazemedia.com/" },
+      { "@type": "ListItem", position: 2, name: "Blog", item: "https://hydroblazemedia.com/blog" },
+      { "@type": "ListItem", position: 3, name: post.title, item: canonical },
+    ],
   };
 
   return (
@@ -99,6 +111,7 @@ const BlogPost = () => {
         {ogImage && <meta property="og:image" content={ogImage} />}
         <meta name="twitter:card" content="summary_large_image" />
         <script type="application/ld+json">{JSON.stringify(ld)}</script>
+        <script type="application/ld+json">{JSON.stringify(breadcrumbLd)}</script>
       </Helmet>
       <div className="noise-overlay" />
       <Navbar />

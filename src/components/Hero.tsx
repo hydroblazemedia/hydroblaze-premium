@@ -16,6 +16,8 @@ const Hero = () => {
 
   return (
     <section ref={containerRef} className="relative min-h-[110vh] flex items-center justify-center px-6 overflow-hidden">
+      {/* Semantic H1 for SEO (visually hidden, screen-reader accessible) */}
+      <h1 className="sr-only">Performance-Driven Digital Marketing Agency</h1>
       {/* Ambient orbs */}
       <div className="absolute inset-0 -z-10">
         <motion.div
@@ -53,8 +55,8 @@ const Hero = () => {
           </span>
         </motion.div>
 
-        {/* Heading — staggered word reveal */}
-        <h1 className="font-display font-bold text-4xl md:text-5xl lg:text-6xl xl:text-7xl leading-[0.92] tracking-[-0.025em] mb-8">
+        {/* Visual heading — demoted to div to keep a single H1 per page */}
+        <div role="presentation" aria-hidden="true" className="font-display font-bold text-4xl md:text-5xl lg:text-6xl xl:text-7xl leading-[0.92] tracking-[-0.025em] mb-8">
           {headingWordsLine1.map((word, i) => (
             <motion.span
               key={word + i}
@@ -86,7 +88,7 @@ const Hero = () => {
           >
             Drives Growth
           </motion.span>
-        </h1>
+        </div>
 
         {/* Subtitle */}
         <motion.p
