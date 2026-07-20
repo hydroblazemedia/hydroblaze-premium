@@ -18,7 +18,9 @@ async function requireUser(req: Request) {
   const client = createClient(supabaseUrl, anonKey, { global: { headers: { Authorization: authHeader } } });
   const { data, error } = await client.auth.getUser();
   if (error || !data.user) return { error: json({ error: 'Invalid session' }, 401) };
-  return { user: data.user };
+  const { data: roleRows } = await client.from('user_roles').select('role').eq('user_id', data.user.id);
+  const roles = new Set((roleRows ?? []).map((r: { role: string }) => r.role));
+  return { user: data.user, roles };
 }
 
 function serviceClient() {
@@ -119,6 +121,18 @@ Deno.serve(async (req) => {
     if ('error' in auth) return auth.error;
     const body = await req.json().catch(() => null) as { type?: string; payload?: Record<string, unknown> } | null;
     if (!body?.type || !body.payload || typeof body.payload !== 'object') return json({ error: 'type and payload are required' }, 400);
+
+    const roles = auth.roles ?? new Set<string>();
+    const isAdmin = roles.has('admin');
+    const isManager = roles.has('manager');
+    // Only managers/admins can sync any register type; clients register is admin-only.
+    if (!isAdmin && !isManager) {
+      return json({ error: 'Forbidden' }, 403);
+    }
+    if (body.type === 'client' && !isAdmin) {
+      return json({ error: 'Only admins can sync client rows' }, 403);
+    }
+
     const { range, values } = rowFor(body.type, body.payload);
     const spreadsheetId = await getRegisterSpreadsheetId(auth.user.id);
 
