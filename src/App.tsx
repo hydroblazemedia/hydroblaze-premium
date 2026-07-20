@@ -7,7 +7,6 @@ import { BrowserRouter, Routes, Route } from "react-router-dom";
 import { ContactDialogProvider } from "@/components/ContactFormDialog";
 import ScrollToTop from "@/components/ScrollToTop";
 import Index from "./pages/Index";
-import { PortalAuthProvider } from "@/portal/PortalAuthContext";
 
 // Route-level code splitting — keeps the initial bundle lean.
 const Services = lazy(() => import("./pages/Services"));
@@ -18,7 +17,7 @@ const Portfolio = lazy(() => import("./pages/Portfolio"));
 const PortfolioDetail = lazy(() => import("./pages/PortfolioDetail"));
 const PrivacyPolicy = lazy(() => import("./pages/PrivacyPolicy"));
 const NotFound = lazy(() => import("./pages/NotFound"));
-const PortalLayout = lazy(() => import("@/portal/PortalLayout"));
+const PortalShell = lazy(() => import("@/portal/PortalShell"));
 const PortalLogin = lazy(() => import("./pages/portal/Login"));
 const AcceptInvite = lazy(() => import("./pages/portal/AcceptInvite"));
 const PortalDashboard = lazy(() => import("./pages/portal/Dashboard"));
@@ -41,7 +40,6 @@ const App = () => (
       <Sonner />
       <BrowserRouter>
         <ContactDialogProvider>
-          <PortalAuthProvider>
           <ScrollToTop />
           <Suspense fallback={<div className="min-h-dvh bg-background" />}>
           <Routes>
@@ -56,7 +54,7 @@ const App = () => (
             <Route path="/blog/:slug" element={<BlogPost />} />
             <Route path="/portal/login" element={<PortalLogin />} />
             <Route path="/portal/accept-invite" element={<AcceptInvite />} />
-            <Route path="/portal" element={<PortalLayout />}>
+            <Route path="/portal" element={<PortalShell />}>
               <Route index element={<PortalDashboard />} />
               <Route path="tasks" element={<PortalTasks />} />
               <Route path="announcements" element={<PortalAnnouncements />} />
@@ -73,7 +71,6 @@ const App = () => (
             <Route path="*" element={<NotFound />} />
           </Routes>
           </Suspense>
-          </PortalAuthProvider>
         </ContactDialogProvider>
       </BrowserRouter>
     </TooltipProvider>
