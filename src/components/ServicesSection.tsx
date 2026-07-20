@@ -12,8 +12,6 @@ import serviceContent from '@/assets/service-content-creation.jpg';
 import serviceFunnels from '@/assets/service-lead-funnels.jpg';
 import serviceWebsite from '@/assets/service-website-design.jpg';
 import serviceStrategy from '@/assets/service-strategy.jpg';
-import cultfitMetaAds from '@/assets/cultfit-meta-ads.png.asset.json';
-import cultfitSocial from '@/assets/cultfit-social.png.asset.json';
 import portfolioBlr from '@/assets/portfolio-blrkabab.jpg';
 import portfolioCultfit from '@/assets/portfolio-cultfit.png';
 import portfolioAayara from '@/assets/portfolio-aayara.jpg';
