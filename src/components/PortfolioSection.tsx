@@ -5,12 +5,12 @@ import { ArrowRight, ArrowLeft, Sparkles, MessageCircle, X, TrendingUp, Users, B
 import { useContactDialog } from '@/components/ContactFormDialog';
 
 import imgCultfit from '@/assets/portfolio-cultfit.png';
-import imgCultfitMetaSrc from '@/assets/cdn/cultfit-meta-ads.png';
-import imgCultfitSocialSrc from '@/assets/cdn/cultfit-social.png';
+import imgCultfitMetaSrc from '@/assets/cdn/cultfit-meta-ads.webp';
+import imgCultfitSocialSrc from '@/assets/cdn/cultfit-social.webp';
 import imgBlrkabab from '@/assets/portfolio-blrkabab.jpg';
 import imgAayara from '@/assets/portfolio-aayara.jpg';
-import imgAquasplashSrc from '@/assets/cdn/aquasplash-logo.png';
-import imgAmscSrc from '@/assets/cdn/amsc-logo.png';
+import imgAquasplashSrc from '@/assets/cdn/aquasplash-logo.webp';
+import imgAmscSrc from '@/assets/cdn/amsc-logo.webp';
 
 const imgCultfitMeta = { url: imgCultfitMetaSrc };
 const imgCultfitSocial = { url: imgCultfitSocialSrc };
