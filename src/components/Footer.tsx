@@ -50,7 +50,10 @@ const Footer = () => {
               <a href="https://wa.me/919876543210" target="_blank" rel="noopener noreferrer" className="block hover:text-hydro transition-colors">
                 WhatsApp: +91 98765 43210
               </a>
-              <p>📍 India</p>
+              <address className="not-italic space-y-1">
+                <p>Bangalore, Karnataka, India</p>
+                <p className="text-muted-foreground/70">Mon–Sat · 10:00–19:00 IST</p>
+              </address>
             </div>
           </motion.div>
 
