@@ -5,12 +5,17 @@ import { ArrowRight, ArrowLeft, Sparkles, MessageCircle, X, TrendingUp, Users, B
 import { useContactDialog } from '@/components/ContactFormDialog';
 
 import imgCultfit from '@/assets/portfolio-cultfit.png';
-import imgCultfitMeta from '@/assets/cultfit-meta-ads.png.asset.json';
-import imgCultfitSocial from '@/assets/cultfit-social.png.asset.json';
+import imgCultfitMetaSrc from '@/assets/cdn/cultfit-meta-ads.png';
+import imgCultfitSocialSrc from '@/assets/cdn/cultfit-social.png';
 import imgBlrkabab from '@/assets/portfolio-blrkabab.jpg';
 import imgAayara from '@/assets/portfolio-aayara.jpg';
-import imgAquasplash from '@/assets/aquasplash-logo.png.asset.json';
-import imgAmsc from '@/assets/amsc-logo.png.asset.json';
+import imgAquasplashSrc from '@/assets/cdn/aquasplash-logo.png';
+import imgAmscSrc from '@/assets/cdn/amsc-logo.png';
+
+const imgCultfitMeta = { url: imgCultfitMetaSrc };
+const imgCultfitSocial = { url: imgCultfitSocialSrc };
+const imgAquasplash = { url: imgAquasplashSrc };
+const imgAmsc = { url: imgAmscSrc };
 
 export const categories = ['Lead Generation', 'Social Media', 'Brand Building', 'Design & Branding'] as const;
 export type Category = typeof categories[number];
