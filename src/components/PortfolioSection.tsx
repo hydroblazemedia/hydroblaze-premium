@@ -5,12 +5,12 @@ import { ArrowRight, ArrowLeft, Sparkles, MessageCircle, X, TrendingUp, Users, B
 import { useContactDialog } from '@/components/ContactFormDialog';
 
 import imgCultfit from '@/assets/portfolio-cultfit.png';
-import imgCultfitMetaSrc from '@/assets/cdn/cultfit-meta-ads.png';
-import imgCultfitSocialSrc from '@/assets/cdn/cultfit-social.png';
+import imgCultfitMetaSrc from '@/assets/cdn/cultfit-meta-ads.webp';
+import imgCultfitSocialSrc from '@/assets/cdn/cultfit-social.webp';
 import imgBlrkabab from '@/assets/portfolio-blrkabab.jpg';
 import imgAayara from '@/assets/portfolio-aayara.jpg';
-import imgAquasplashSrc from '@/assets/cdn/aquasplash-logo.png';
-import imgAmscSrc from '@/assets/cdn/amsc-logo.png';
+import imgAquasplashSrc from '@/assets/cdn/aquasplash-logo.webp';
+import imgAmscSrc from '@/assets/cdn/amsc-logo.webp';
 
 const imgCultfitMeta = { url: imgCultfitMetaSrc };
 const imgCultfitSocial = { url: imgCultfitSocialSrc };
@@ -360,6 +360,10 @@ const ProjectDetail = ({ project, onClose }: { project: Project; onClose: () => 
           <img
             src={project.image}
             alt={project.title}
+            loading="lazy"
+            decoding="async"
+            width="1600"
+            height="900"
             className={`relative w-full h-full ${project.imageFit === 'contain' ? 'object-contain p-8 sm:p-10 md:p-12' : 'object-cover'}`}
           />
           {project.imageFit !== 'contain' && (
@@ -495,6 +499,10 @@ const PortfolioCard = ({ project }: { project: Project }) => {
           <img
             src={project.image}
             alt={project.title}
+            loading="lazy"
+            decoding="async"
+            width="800"
+            height="600"
             className={`relative w-full h-full transition-transform duration-700 group-hover:scale-110 ${project.imageFit === 'contain' ? 'object-contain p-10 sm:p-12' : 'object-cover'}`}
           />
           {project.imageFit !== 'contain' && (
