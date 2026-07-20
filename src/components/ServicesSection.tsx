@@ -116,9 +116,9 @@ const caseStudies = [
 ];
 
 const testimonials = [
-  { name: 'Rohit Sharma', company: 'BLR Kabab', quote: 'HydroBlaze rebuilt our online ordering pipeline. Orders tripled in a quarter and we finally understand what our marketing spend does.', rating: 5 },
-  { name: 'Priya Nair', company: 'CultFit Rajajinagar', quote: 'The team feels like an in-house growth department. Strategy, creative, ads — all under one roof, all measurable.', rating: 5 },
-  { name: 'Ananya Rao', company: 'Aayara', quote: 'They understood our brand instantly. The content and funnels feel premium — exactly like our product.', rating: 5 },
+  { name: 'Pavan B K', company: 'BLR Kabab', quote: 'HydroBlaze rebuilt our online ordering pipeline. Orders tripled in a quarter and we finally understand what our marketing spend does.', rating: 5 },
+  { name: 'Karan', company: 'CultFit Rajajinagar', quote: 'The team feels like an in-house growth department. Strategy, creative, ads — all under one roof, all measurable.', rating: 5 },
+  { name: 'Chethana Reddy', company: 'Aayara', quote: 'They understood our brand instantly. The content and funnels feel premium — exactly like our product.', rating: 5 },
 ];
 
 const faqs = [
