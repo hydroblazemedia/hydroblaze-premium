@@ -2,7 +2,7 @@ import type { supabase as SupabaseClient } from "@/integrations/supabase/client"
 
 type SupabaseModule = { supabase: typeof SupabaseClient };
 
-const hasBackendConfig = Boolean(
+export const hasBackendConfig = Boolean(
   import.meta.env.VITE_SUPABASE_URL && import.meta.env.VITE_SUPABASE_PUBLISHABLE_KEY,
 );
 
