@@ -1,12 +1,12 @@
 const industries = [
-  { icon: Utensils, name: 'Restaurants & F&B', desc: 'Reels, geo-targeted Meta Ads and delivery-app funnels.' },
-  { icon: Dumbbell, name: 'Fitness & Wellness', desc: 'Membership lead generation and community building.' },
-  { icon: Home, name: 'Real Estate', desc: 'High-intent lead capture and long-form video campaigns.' },
-  { icon: ShoppingBag, name: 'D2C & E-commerce', desc: 'ROAS-focused Meta and Google Ads with creative testing.' },
-  { icon: GraduationCap, name: 'Education & Coaching', desc: 'Webinar funnels, retargeting and organic content systems.' },
-  { icon: Stethoscope, name: 'Healthcare & Clinics', desc: 'Local SEO, reputation and appointment lead flows.' },
-  { icon: Building2, name: 'B2B & Professional', desc: 'LinkedIn thought leadership and Google search capture.' },
-  { icon: Sparkles, name: 'Beauty & Lifestyle', desc: 'Influencer collaborations and content-led social growth.' },
+  { name: 'Restaurants & F&B', desc: 'Reels, geo-targeted Meta Ads and delivery-app funnels.' },
+  { name: 'Fitness & Wellness', desc: 'Membership lead generation and community building.' },
+  { name: 'Real Estate', desc: 'High-intent lead capture and long-form video campaigns.' },
+  { name: 'D2C & E-commerce', desc: 'ROAS-focused Meta and Google Ads with creative testing.' },
+  { name: 'Education & Coaching', desc: 'Webinar funnels, retargeting and organic content systems.' },
+  { name: 'Healthcare & Clinics', desc: 'Local SEO, reputation and appointment lead flows.' },
+  { name: 'B2B & Professional', desc: 'LinkedIn thought leadership and Google search capture.' },
+  { name: 'Beauty & Lifestyle', desc: 'Influencer collaborations and content-led social growth.' },
 ];
 
 const faqs = [
