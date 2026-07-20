@@ -1,3 +1,4 @@
+import { lazy, Suspense } from "react";
 import { Toaster } from "@/components/ui/toaster";
 import { Toaster as Sonner } from "@/components/ui/sonner";
 import { TooltipProvider } from "@/components/ui/tooltip";
@@ -6,29 +7,30 @@ import { BrowserRouter, Routes, Route } from "react-router-dom";
 import { ContactDialogProvider } from "@/components/ContactFormDialog";
 import ScrollToTop from "@/components/ScrollToTop";
 import Index from "./pages/Index";
-import Services from "./pages/Services";
-import About from "./pages/About";
-
-import Blog from "./pages/Blog";
-import BlogPost from "./pages/BlogPost";
-import Portfolio from "./pages/Portfolio";
-import PortfolioDetail from "./pages/PortfolioDetail";
-import PrivacyPolicy from "./pages/PrivacyPolicy";
-import NotFound from "./pages/NotFound";
 import { PortalAuthProvider } from "@/portal/PortalAuthContext";
-import PortalLayout from "@/portal/PortalLayout";
-import PortalLogin from "./pages/portal/Login";
-import AcceptInvite from "./pages/portal/AcceptInvite";
-import PortalDashboard from "./pages/portal/Dashboard";
-import PortalTasks from "./pages/portal/Tasks";
-import PortalAnnouncements from "./pages/portal/Announcements";
-import PortalDocuments from "./pages/portal/Documents";
-import PortalAdmin from "./pages/portal/Admin";
-import PortalProfile from "./pages/portal/Profile";
-import PortalTeam from "./pages/portal/Team";
-import BlogsList from "./pages/portal/BlogsList";
-import BlogEditor from "./pages/portal/BlogEditor";
-import Pricing from "./pages/Pricing";
+
+// Route-level code splitting — keeps the initial bundle lean.
+const Services = lazy(() => import("./pages/Services"));
+const About = lazy(() => import("./pages/About"));
+const Blog = lazy(() => import("./pages/Blog"));
+const BlogPost = lazy(() => import("./pages/BlogPost"));
+const Portfolio = lazy(() => import("./pages/Portfolio"));
+const PortfolioDetail = lazy(() => import("./pages/PortfolioDetail"));
+const PrivacyPolicy = lazy(() => import("./pages/PrivacyPolicy"));
+const NotFound = lazy(() => import("./pages/NotFound"));
+const PortalLayout = lazy(() => import("@/portal/PortalLayout"));
+const PortalLogin = lazy(() => import("./pages/portal/Login"));
+const AcceptInvite = lazy(() => import("./pages/portal/AcceptInvite"));
+const PortalDashboard = lazy(() => import("./pages/portal/Dashboard"));
+const PortalTasks = lazy(() => import("./pages/portal/Tasks"));
+const PortalAnnouncements = lazy(() => import("./pages/portal/Announcements"));
+const PortalDocuments = lazy(() => import("./pages/portal/Documents"));
+const PortalAdmin = lazy(() => import("./pages/portal/Admin"));
+const PortalProfile = lazy(() => import("./pages/portal/Profile"));
+const PortalTeam = lazy(() => import("./pages/portal/Team"));
+const BlogsList = lazy(() => import("./pages/portal/BlogsList"));
+const BlogEditor = lazy(() => import("./pages/portal/BlogEditor"));
+const Pricing = lazy(() => import("./pages/Pricing"));
 
 const queryClient = new QueryClient();
 
@@ -41,6 +43,7 @@ const App = () => (
         <ContactDialogProvider>
           <PortalAuthProvider>
           <ScrollToTop />
+          <Suspense fallback={<div className="min-h-dvh bg-background" />}>
           <Routes>
             <Route path="/" element={<Index />} />
             <Route path="/services" element={<Services />} />
@@ -69,6 +72,7 @@ const App = () => (
             {/* ADD ALL CUSTOM ROUTES ABOVE THE CATCH-ALL "*" ROUTE */}
             <Route path="*" element={<NotFound />} />
           </Routes>
+          </Suspense>
           </PortalAuthProvider>
         </ContactDialogProvider>
       </BrowserRouter>
