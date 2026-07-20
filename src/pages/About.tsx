@@ -117,7 +117,7 @@ const About = () => {
             {[
               { k: '40+', v: 'Brands scaled' },
               { k: '3.2x', v: 'Avg. ROAS lift' },
-              { k: '12M+', v: 'Impressions driven' },
+              { k: '2M+', v: 'Impressions driven' },
               { k: '100%', v: 'Transparent reporting' },
             ].map((s, i) => (
               <motion.div
