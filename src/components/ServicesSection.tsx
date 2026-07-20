@@ -84,12 +84,12 @@ const processSteps = [
 ];
 
 const whyPoints = [
-  { title: 'Strategy Before Execution', desc: 'We diagnose before we prescribe. No cookie-cutter playbooks.', icon: Compass },
-  { title: 'Creative + Performance, One Team', desc: 'Media buyers and creatives sit at the same table. Faster iteration, better results.', icon: Zap },
-  { title: 'Transparent Reporting', desc: 'Live dashboards. Weekly reviews. Zero vanity metrics.', icon: BarChart3 },
-  { title: 'Dedicated Strategy Partner', desc: 'A senior operator on your account — not a rotating junior team.', icon: Users },
-  { title: 'ROI-Focused Marketing', desc: 'Every rupee tied to a pipeline metric that matters.', icon: TrendingUp },
-  { title: 'Long-Term Growth Systems', desc: 'We build engines, not one-off campaigns.', icon: Shield },
+  { number: '01', title: 'Strategy Before Execution', desc: 'We diagnose before we prescribe. Every engagement starts with a growth audit, not a template — because the wrong strategy scales the wrong problem.', icon: Compass },
+  { number: '02', title: 'Creative + Performance, One Team', desc: 'Media buyers and creatives sit at the same table. Faster iteration, sharper hooks, better ROAS — no agency ping-pong.', icon: Zap },
+  { number: '03', title: 'Transparent Reporting', desc: 'Live dashboards. Weekly reviews. Zero vanity metrics. You always know exactly where every rupee went and what it earned back.', icon: Eye },
+  { number: '04', title: 'Dedicated Partner Involvement', desc: 'A senior operator on your account from day one — not a rotating junior team learning your business on your budget.', icon: Handshake },
+  { number: '05', title: 'ROI-Focused Marketing', desc: 'We tie every campaign to a pipeline metric that actually matters — CAC, LTV, revenue. Impressions do not pay salaries.', icon: TrendingUp },
+  { number: '06', title: 'Long-Term Growth Systems', desc: 'We build engines, not one-off campaigns. The work compounds — creative libraries, funnels, and data that keep paying dividends.', icon: Shield },
 ];
 
 const caseStudies = [
