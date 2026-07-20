@@ -441,6 +441,13 @@ const Testimonials = () => {
 
 const FAQ = () => {
   const [open, setOpen] = useState<number | null>(0);
+  const faqs = [
+    { q: "How quickly will I see results?", a: "Most clients see measurable traction within 30-60 days. Paid campaigns can show signal in the first 2 weeks; SEO and content compound over 3-6 months." },
+    { q: "Do you work with small businesses?", a: "Yes. Our Starter engagements are designed for founders and small teams who need senior strategy without a full agency retainer." },
+    { q: "What industries do you specialize in?", a: "D2C, fitness, F&B, automotive, and services. Our frameworks translate across categories — we lead with strategy, not templates." },
+    { q: "Is there a long-term contract?", a: "No lock-ins. We work on rolling monthly engagements. If we're not the right fit, you can pause anytime." },
+    { q: "How do you report on performance?", a: "Live dashboards plus a monthly strategy review. You always know what's working, what's not, and what's next." },
+  ];
   return (
     <section className="relative z-10 px-6 md:px-12 lg:px-16 py-20 md:py-28 border-t border-foreground/5">
       <div className="max-w-3xl mx-auto">
