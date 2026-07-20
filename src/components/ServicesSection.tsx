@@ -1,8 +1,9 @@
 import { motion, AnimatePresence } from 'framer-motion';
-import { useState } from 'react';
+import { useState, useEffect, useRef } from 'react';
 import {
   ArrowRight, Sparkles, MessageCircle, Check, TrendingUp, Target, LineChart,
   Users, Shield, Zap, Star, Compass, PenTool, Rocket, Gauge, BarChart3,
+  ChevronLeft, ChevronRight, Eye, Handshake,
 } from 'lucide-react';
 import { useContactDialog } from '@/components/ContactFormDialog';
 
@@ -212,12 +213,6 @@ const ServiceBlock = ({ service, index }: { service: typeof services[0]; index: 
               Book Free Strategy Call
               <ArrowRight className="w-4 h-4 transition-transform group-hover:translate-x-1.5" />
             </button>
-            <a
-              href="/portfolio"
-              className="inline-flex items-center gap-2 px-6 py-3.5 rounded-full text-sm font-semibold border border-foreground/10 hover:border-foreground/20 text-muted-foreground hover:text-foreground transition-all duration-300"
-            >
-              View Case Studies
-            </a>
           </div>
         </div>
       </div>
