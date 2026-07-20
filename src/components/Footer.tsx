@@ -11,7 +11,6 @@ const serviceLinks = [
 
 const quickLinks = [
   { name: 'Portfolio', path: '/portfolio' },
-  { name: 'Pricing', path: '/pricing' },
   { name: 'About', path: '/about' },
   { name: 'Blog', path: '/blog' },
 ];
