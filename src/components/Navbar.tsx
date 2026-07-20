@@ -73,6 +73,9 @@ const Navbar = () => {
             {/* Mobile hamburger */}
             <button
               onClick={() => setIsMobileOpen(!isMobileOpen)}
+              aria-label={isMobileOpen ? "Close menu" : "Open menu"}
+              aria-expanded={isMobileOpen}
+              aria-controls="mobile-menu"
               className="md:hidden relative z-50 w-10 h-10 flex items-center justify-center rounded-lg border border-foreground/10 bg-foreground/5"
             >
               <AnimatePresence mode="wait">
