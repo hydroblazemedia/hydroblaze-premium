@@ -2,7 +2,7 @@ import { motion, AnimatePresence } from 'framer-motion';
 import { useState } from 'react';
 import {
   ArrowRight, Sparkles, MessageCircle, Check, TrendingUp, Target, LineChart,
-  Users, Shield, Zap, Star, ChevronDown, Compass, PenTool, Rocket, Gauge, BarChart3,
+  Users, Shield, Zap, Star, Compass, PenTool, Rocket, Gauge, BarChart3,
 } from 'lucide-react';
 import { useContactDialog } from '@/components/ContactFormDialog';
 
