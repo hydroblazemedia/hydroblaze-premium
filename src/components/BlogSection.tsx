@@ -84,20 +84,20 @@ const BlogSection = () => {
                   to={`/blog/${post.slug}`}
                   className="block rounded-2xl bg-card/50 border border-foreground/10 backdrop-blur-sm overflow-hidden hover:border-hydro/30 transition-all duration-300 hover:-translate-y-1 h-full"
                 >
-                  {post.featured_image ? (
-                    <div className="h-48 overflow-hidden">
+                  <div className="h-48 overflow-hidden bg-gradient-to-br from-hydro/20 to-blaze/20 flex items-center justify-center relative">
+                    {post.featured_image ? (
                       <img
                         src={post.featured_image}
                         alt={post.title}
                         loading="lazy"
+                        width={640}
+                        height={192}
+                        onError={(e) => { (e.currentTarget as HTMLImageElement).style.display = 'none'; }}
                         className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500"
                       />
-                    </div>
-                  ) : (
-                    <div className="h-48 bg-gradient-to-br from-hydro/20 to-blaze/20 flex items-center justify-center">
-                      <span className="text-4xl font-display font-bold text-foreground/10">HB</span>
-                    </div>
-                  )}
+                    ) : null}
+                    <span className="absolute text-4xl font-display font-bold text-foreground/10 -z-0">HB</span>
+                  </div>
                   <div className="p-6">
                     <div className="flex items-center gap-2 text-xs text-muted-foreground mb-3">
                       <Calendar className="w-3.5 h-3.5" />
