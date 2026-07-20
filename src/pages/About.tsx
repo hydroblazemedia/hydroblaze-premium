@@ -4,6 +4,7 @@ import Navbar from '@/components/Navbar';
 import Footer from '@/components/Footer';
 import PageTransition from '@/components/PageTransition';
 import { useContactDialog } from '@/components/ContactFormDialog';
+import { Seo } from '@/lib/seo';
 
 const About = () => {
   const { open: openContact } = useContactDialog();
@@ -17,6 +18,12 @@ const About = () => {
 
   return (
     <PageTransition>
+      <Seo
+        title="About HydroBlaze Media — Strategy-First Growth Partner"
+        description="We're a strategy-first growth partner blending performance marketing with editorial-grade creative for ambitious brands."
+        path="/about"
+        breadcrumbs={[{ name: 'Home', path: '/' }, { name: 'About', path: '/about' }]}
+      />
       <div className="noise-overlay" />
       <Navbar />
 
