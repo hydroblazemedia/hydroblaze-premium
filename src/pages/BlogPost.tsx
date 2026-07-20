@@ -77,7 +77,7 @@ const BlogPost = () => {
   const seoTitle = post.seo_title || `${post.title} — HydroBlaze Media`;
   const seoDesc = post.seo_description || post.excerpt || "";
   const ogImage = post.og_image || post.featured_image || "";
-  const canonical = `https://hydro-blaze-elevate.lovable.app/blog/${post.slug}`;
+  const canonical = `https://hydroblazemedia.com/blog/${post.slug}`;
   const ld = {
     "@context": "https://schema.org", "@type": "BlogPosting",
     headline: post.title, description: seoDesc, image: ogImage || undefined,

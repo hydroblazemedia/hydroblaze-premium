@@ -2,10 +2,16 @@ import Navbar from '@/components/Navbar';
 import Footer from '@/components/Footer';
 import PageTransition from '@/components/PageTransition';
 import { motion } from 'framer-motion';
+import { Seo } from '@/lib/seo';
 
 const PrivacyPolicy = () => {
   return (
     <PageTransition>
+      <Seo
+        title="Privacy Policy"
+        description="How HydroBlaze Media collects, uses, and protects your personal information."
+        path="/privacy-policy"
+      />
       <div className="noise-overlay" />
       <Navbar />
       <main className="pt-24 pb-16">

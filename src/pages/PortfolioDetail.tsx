@@ -5,6 +5,7 @@ import Navbar from '@/components/Navbar';
 import Footer from '@/components/Footer';
 import PageTransition from '@/components/PageTransition';
 import { projects, ImageSlider } from '@/components/PortfolioSection';
+import { Seo } from '@/lib/seo';
 
 const PortfolioDetail = () => {
   const { slug } = useParams<{ slug: string }>();
@@ -14,6 +15,17 @@ const PortfolioDetail = () => {
 
   return (
     <PageTransition>
+      <Seo
+        title={`${project.title} — Case Study`}
+        description={`${project.title}: ${project.category} — a HydroBlaze Media case study.`}
+        path={`/portfolio/${project.slug}`}
+        image={project.image}
+        breadcrumbs={[
+          { name: 'Home', path: '/' },
+          { name: 'Portfolio', path: '/portfolio' },
+          { name: project.title, path: `/portfolio/${project.slug}` },
+        ]}
+      />
       <div className="noise-overlay" />
       <Navbar />
       <main className="pt-24 pb-20">

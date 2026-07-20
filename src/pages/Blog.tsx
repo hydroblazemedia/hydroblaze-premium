@@ -66,7 +66,13 @@ const Blog = () => {
       <Helmet>
         <title>Blog — HydroBlaze Media</title>
         <meta name="description" content="Strategy breakdowns, creative inspiration, and technical deep-dives from the HydroBlaze team." />
-        <link rel="canonical" href="https://hydro-blaze-elevate.lovable.app/blog" />
+        <link rel="canonical" href="https://hydroblazemedia.com/blog" />
+        <meta property="og:title" content="Blog — HydroBlaze Media" />
+        <meta property="og:description" content="Strategy breakdowns, creative inspiration, and technical deep-dives from the HydroBlaze team." />
+        <meta property="og:url" content="https://hydroblazemedia.com/blog" />
+        <meta property="og:type" content="website" />
+        <meta property="og:image" content="https://hydroblazemedia.com/og-image.png" />
+        <meta name="twitter:card" content="summary_large_image" />
       </Helmet>
       <div className="noise-overlay" />
       <Navbar />
