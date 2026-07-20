@@ -1,5 +1,5 @@
 import { useState, useEffect, useMemo } from 'react';
-import { Link, useSearchParams } from 'react-router-dom';
+import { Link } from 'react-router-dom';
 import { Helmet } from 'react-helmet-async';
 import { motion } from 'framer-motion';
 import { BookOpen, Calendar, ArrowRight, Search, Clock } from 'lucide-react';
@@ -7,7 +7,7 @@ import Navbar from '@/components/Navbar';
 import Footer from '@/components/Footer';
 import PageTransition from '@/components/PageTransition';
 import { supabase } from '@/integrations/supabase/client';
-import { BLOG_CATEGORIES, formatDate } from '@/lib/blog';
+import { formatDate } from '@/lib/blog';
 
 interface Post {
   id: string;
@@ -33,41 +33,33 @@ const getCategoryColor = (category: string) => {
 const Blog = () => {
   const [posts, setPosts] = useState<Post[]>([]);
   const [loading, setLoading] = useState(true);
-  const [sp, setSp] = useSearchParams();
-  const category = sp.get('category') ?? '';
-  const search = sp.get('q') ?? '';
-  const [searchInput, setSearchInput] = useState(search);
+  const [searchInput, setSearchInput] = useState('');
 
   useEffect(() => {
     (async () => {
       setLoading(true);
-      let q = supabase
+      const { data } = await supabase
         .from('blogs')
         .select('id,title,slug,excerpt,featured_image,category,tags,author,reading_time,published_at')
         .eq('status', 'published')
         .order('published_at', { ascending: false });
-      if (category) q = q.eq('category', category);
-      if (search) q = q.or(`title.ilike.%${search}%,excerpt.ilike.%${search}%`);
-      const { data } = await q;
       setPosts((data as unknown as Post[]) ?? []);
       setLoading(false);
     })();
-  }, [category, search]);
+  }, []);
 
-  const featuredPosts = useMemo(() => posts.slice(0, 2), [posts]);
-  const regularPosts = useMemo(() => posts.slice(2), [posts]);
-
-  const applySearch = (e: React.FormEvent) => {
-    e.preventDefault();
-    const next = new URLSearchParams(sp);
-    if (searchInput) next.set('q', searchInput); else next.delete('q');
-    setSp(next);
-  };
-  const setCategory = (c: string) => {
-    const next = new URLSearchParams(sp);
-    if (c) next.set('category', c); else next.delete('category');
-    setSp(next);
-  };
+  const filtered = useMemo(() => {
+    const t = searchInput.trim().toLowerCase();
+    if (!t) return posts;
+    return posts.filter(
+      (p) =>
+        p.title.toLowerCase().includes(t) ||
+        (p.excerpt ?? '').toLowerCase().includes(t) ||
+        (p.tags ?? []).some((tag) => tag.toLowerCase().includes(t))
+    );
+  }, [posts, searchInput]);
+  const featuredPosts = useMemo(() => filtered.slice(0, 2), [filtered]);
+  const regularPosts = useMemo(() => filtered.slice(2), [filtered]);
 
   return (
     <PageTransition>
@@ -95,23 +87,26 @@ const Blog = () => {
               </p>
             </motion.div>
 
-            <div className="flex flex-col md:flex-row gap-4 items-stretch md:items-center justify-between mb-10">
-              <form onSubmit={applySearch} className="relative w-full md:max-w-md">
-                <Search className="absolute left-4 top-1/2 -translate-y-1/2 w-4 h-4 text-muted-foreground" />
-                <input
-                  value={searchInput}
-                  onChange={(e) => setSearchInput(e.target.value)}
-                  placeholder="Search articles…"
-                  className="w-full pl-11 pr-4 py-3 rounded-full bg-card/50 border border-foreground/10 text-foreground placeholder:text-muted-foreground focus:outline-none focus:border-hydro transition"
-                />
-              </form>
-              <div className="flex flex-wrap gap-2">
-                <button onClick={() => setCategory('')} className={`px-3 py-1.5 rounded-full text-xs border transition ${!category ? 'bg-hydro/10 text-hydro border-hydro/20' : 'bg-card/40 text-muted-foreground border-foreground/10 hover:text-foreground'}`}>All</button>
-                {BLOG_CATEGORIES.map((c) => (
-                  <button key={c} onClick={() => setCategory(c)} className={`px-3 py-1.5 rounded-full text-xs border transition ${category === c ? 'bg-hydro/10 text-hydro border-hydro/20' : 'bg-card/40 text-muted-foreground border-foreground/10 hover:text-foreground'}`}>{c}</button>
-                ))}
+            <motion.div
+              initial={{ opacity: 0, y: 10 }}
+              animate={{ opacity: 1, y: 0 }}
+              transition={{ duration: 0.5, delay: 0.1 }}
+              className="max-w-2xl mx-auto mb-14"
+            >
+              <div className="relative group">
+                <div className="absolute -inset-0.5 rounded-full bg-gradient-to-r from-hydro/40 to-blaze/40 opacity-0 group-focus-within:opacity-100 blur transition-opacity duration-500" />
+                <div className="relative flex items-center rounded-full bg-card/60 backdrop-blur-xl border border-foreground/10 focus-within:border-hydro/40 transition-all duration-300">
+                  <Search className="absolute left-5 top-1/2 -translate-y-1/2 w-5 h-5 text-muted-foreground pointer-events-none" />
+                  <input
+                    value={searchInput}
+                    onChange={(e) => setSearchInput(e.target.value)}
+                    placeholder="Search articles..."
+                    aria-label="Search articles"
+                    className="w-full pl-14 pr-6 py-4 md:py-5 rounded-full bg-transparent text-base md:text-lg text-foreground placeholder:text-muted-foreground focus:outline-none"
+                  />
+                </div>
               </div>
-            </div>
+            </motion.div>
 
             {loading ? (
               <div className="grid sm:grid-cols-2 lg:grid-cols-3 gap-6">
@@ -126,7 +121,7 @@ const Blog = () => {
                   </div>
                 ))}
               </div>
-            ) : posts.length === 0 ? (
+            ) : filtered.length === 0 ? (
               <div className="text-center py-20">
                 <p className="text-muted-foreground text-lg">No posts found.</p>
               </div>
