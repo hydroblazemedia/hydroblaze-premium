@@ -52,7 +52,6 @@ const Footer = () => {
               </a>
               <address className="not-italic space-y-1">
                 <p>Bangalore, Karnataka, India</p>
-                <p className="text-muted-foreground/70">Mon–Sat · 10:00–19:00 IST</p>
               </address>
             </div>
           </motion.div>
