@@ -2,8 +2,8 @@ import { useState, useEffect } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
 import { Link, useLocation } from 'react-router-dom';
 import { Menu, X } from 'lucide-react';
-import logoDark from '@/assets/logo.png';
-import logoLight from '@/assets/logo-light.png';
+import logoDark from '@/assets/navbar-logo-dark.png.asset.json';
+import logoLight from '@/assets/navbar-logo-light.png.asset.json';
 import { useContactDialog } from '@/components/ContactFormDialog';
 import ThemeToggle, { useTheme } from '@/components/ThemeToggle';
 
@@ -49,7 +49,11 @@ const Navbar = () => {
       >
         <div className="flex items-center justify-between max-w-7xl mx-auto">
           <Link to="/" className="flex items-center gap-3">
-            <img src={isDark ? logoDark : logoLight} alt="HydroBlaze" className="h-[42px] w-[168px] object-contain" />
+            <img
+              src={isDark ? logoDark.url : logoLight.url}
+              alt="HydroBlaze Media"
+              className={`${isDark ? 'h-11 w-11' : 'h-11 w-auto'} object-contain`}
+            />
           </Link>
 
           {/* Desktop Navigation */}
