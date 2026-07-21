@@ -52,7 +52,7 @@ const Navbar = () => {
             <img
               src={isDark ? logoDark : logoLight}
               alt="HydroBlaze Media"
-              className={`${isDark ? 'h-16 w-16' : 'h-12 w-auto'} object-contain`}
+              className={`${isDark ? 'h-14 w-auto' : 'h-12 w-auto'} object-contain`}
             />
           </Link>
 
