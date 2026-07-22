@@ -8,6 +8,7 @@ import Footer from '@/components/Footer';
 import PageTransition from '@/components/PageTransition';
 import { formatDate } from '@/lib/blog';
 import { getOptionalSupabase } from '@/lib/optionalSupabase';
+import { resolveBlogImageUrl } from '@/lib/blogImages';
 
 interface Post {
   id: string;
@@ -49,7 +50,13 @@ const Blog = () => {
         .select('id,title,slug,excerpt,featured_image,category,tags,author,reading_time,published_at')
         .eq('status', 'published')
         .order('published_at', { ascending: false });
-      setPosts((data as unknown as Post[]) ?? []);
+      const resolvedPosts = await Promise.all(
+        ((data as unknown as Post[]) ?? []).map(async (post) => ({
+          ...post,
+          featured_image: (await resolveBlogImageUrl(post.featured_image)) || post.featured_image,
+        }))
+      );
+      setPosts(resolvedPosts);
       setLoading(false);
     })();
   }, []);

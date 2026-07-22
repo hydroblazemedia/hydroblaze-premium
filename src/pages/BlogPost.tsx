@@ -8,6 +8,7 @@ import PageTransition from "@/components/PageTransition";
 import { Calendar, Clock, ArrowLeft, ArrowRight, Twitter, Linkedin, Facebook, Link2, User } from "lucide-react";
 import { extractHeadings, formatDate, injectHeadingIds } from "@/lib/blog";
 import { getOptionalSupabase } from "@/lib/optionalSupabase";
+import { resolveBlogContentImages, resolveBlogImageUrl } from "@/lib/blogImages";
 import { toast } from "sonner";
 
 interface Blog {
@@ -39,7 +40,12 @@ const BlogPost = () => {
       const { data } = await q.maybeSingle();
       if (!data) { setNotFound(true); setLoading(false); return; }
       const b = data as unknown as Blog;
-      setPost(b);
+      const [featuredImage, ogImage, content] = await Promise.all([
+        resolveBlogImageUrl(b.featured_image),
+        resolveBlogImageUrl(b.og_image),
+        resolveBlogContentImages(b.content),
+      ]);
+      setPost({ ...b, featured_image: featuredImage || b.featured_image, og_image: ogImage || b.og_image, content });
 
       const { data: prevData } = await supabase.from("blogs").select("slug,title,published_at").eq("status", "published").lt("published_at", b.published_at || new Date().toISOString()).order("published_at", { ascending: false }).limit(1).maybeSingle();
       setPrev(prevData ? { slug: (prevData as never as Blog).slug, title: (prevData as never as Blog).title } : null);

@@ -4,6 +4,7 @@ import { motion } from 'framer-motion';
 import { ArrowRight, Calendar } from 'lucide-react';
 import { getOptionalSupabase } from '@/lib/optionalSupabase';
 import { formatDate } from '@/lib/blog';
+import { resolveBlogImageUrl } from '@/lib/blogImages';
 
 interface Post {
   id: string;
@@ -35,9 +36,16 @@ const BlogSection = () => {
       .eq('status', 'published')
       .order('published_at', { ascending: false })
       .limit(3)
-      .then(({ data }) => {
+      .then(async ({ data }) => {
         if (!mounted) return;
-        setPosts((data as unknown as Post[]) ?? []);
+        const resolvedPosts = await Promise.all(
+          ((data as unknown as Post[]) ?? []).map(async (post) => ({
+            ...post,
+            featured_image: (await resolveBlogImageUrl(post.featured_image)) || post.featured_image,
+          }))
+        );
+        if (!mounted) return;
+        setPosts(resolvedPosts);
         setLoading(false);
       });
 
