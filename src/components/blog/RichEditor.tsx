@@ -9,14 +9,14 @@ import { Table } from "@tiptap/extension-table";
 import { TableRow } from "@tiptap/extension-table-row";
 import { TableCell } from "@tiptap/extension-table-cell";
 import { TableHeader } from "@tiptap/extension-table-header";
-import { useCallback, useEffect, useRef } from "react";
+import { useCallback, useEffect, useRef, useState } from "react";
 import {
   Bold, Italic, Underline as UnderlineIcon, List, ListOrdered, Quote, Code, Minus,
   Link as LinkIcon, Image as ImageIcon, Youtube as YoutubeIcon, Table as TableIcon,
   Heading1, Heading2, Heading3, Heading4, Info, Undo, Redo,
 } from "lucide-react";
 import { Button } from "@/components/ui/button";
-import { resolveBlogImageUrl, uploadBlogImage } from "@/lib/blogImages";
+import { resolveBlogContentImages, resolveBlogImageUrl, uploadBlogImage } from "@/lib/blogImages";
 import { toast } from "sonner";
 
 interface Props {
@@ -115,6 +115,16 @@ const Toolbar = ({ editor }: { editor: Editor }) => {
 };
 
 const RichEditor = ({ value, onChange, placeholder }: Props) => {
+  const [resolvedValue, setResolvedValue] = useState(value || "");
+
+  useEffect(() => {
+    let mounted = true;
+    resolveBlogContentImages(value || "").then((html) => {
+      if (mounted) setResolvedValue(html);
+    });
+    return () => { mounted = false; };
+  }, [value]);
+
   const editor = useEditor({
     extensions: [
       StarterKit.configure({ heading: { levels: [1, 2, 3, 4] } }),
@@ -126,7 +136,7 @@ const RichEditor = ({ value, onChange, placeholder }: Props) => {
       Table.configure({ resizable: true }),
       TableRow, TableHeader, TableCell,
     ],
-    content: value || "",
+    content: resolvedValue || "",
     editorProps: {
       attributes: {
         class: "prose prose-invert dark:prose-invert max-w-none focus:outline-none min-h-[400px] p-6 blog-editor",
@@ -148,11 +158,11 @@ const RichEditor = ({ value, onChange, placeholder }: Props) => {
   });
 
   useEffect(() => {
-    if (editor && value !== editor.getHTML()) {
-      editor.commands.setContent(value || "", { emitUpdate: false });
+    if (editor && resolvedValue !== editor.getHTML()) {
+      editor.commands.setContent(resolvedValue || "", { emitUpdate: false });
     }
     // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [value === "" ? "" : "loaded"]);
+  }, [resolvedValue === "" ? "" : "loaded"]);
 
   if (!editor) return <div className="h-96 rounded-lg border border-foreground/10 bg-card/40 animate-pulse" />;
 
