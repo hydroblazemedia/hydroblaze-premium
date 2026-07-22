@@ -16,7 +16,7 @@ import {
   Heading1, Heading2, Heading3, Heading4, Info, Undo, Redo,
 } from "lucide-react";
 import { Button } from "@/components/ui/button";
-import { supabase } from "@/integrations/supabase/client";
+import { resolveBlogImageUrl, uploadBlogImage } from "@/lib/blogImages";
 import { toast } from "sonner";
 
 interface Props {
@@ -26,12 +26,13 @@ interface Props {
 }
 
 const uploadImage = async (file: File): Promise<string | null> => {
-  const ext = file.name.split(".").pop() || "jpg";
-  const path = `content/${Date.now()}-${Math.random().toString(36).slice(2, 8)}.${ext}`;
-  const { error } = await supabase.storage.from("blog-images").upload(path, file, { cacheControl: "31536000", upsert: false });
-  if (error) { toast.error(error.message); return null; }
-  const { data } = supabase.storage.from("blog-images").getPublicUrl(path);
-  return data.publicUrl;
+  try {
+    const imageRef = await uploadBlogImage(file, "content");
+    return await resolveBlogImageUrl(imageRef);
+  } catch (err) {
+    toast.error(err instanceof Error ? err.message : "Image upload failed");
+    return null;
+  }
 };
 
 const ToolbarBtn = ({ onClick, active, disabled, children, title }: { onClick: () => void; active?: boolean; disabled?: boolean; children: React.ReactNode; title: string }) => (
