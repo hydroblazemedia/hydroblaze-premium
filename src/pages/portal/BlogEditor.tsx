@@ -12,6 +12,12 @@ import { toast } from "sonner";
 import { ArrowLeft, Save, Send, Eye, Upload, Sparkles, X, Loader2 } from "lucide-react";
 import RichEditor from "@/components/blog/RichEditor";
 import { BLOG_CATEGORIES, calculateReadingTime, slugify } from "@/lib/blog";
+import {
+  normalizeBlogContentImageReferences,
+  normalizeBlogImageReference,
+  resolveBlogImageUrl,
+  uploadBlogImage,
+} from "@/lib/blogImages";
 
 interface Form {
   id?: string;
@@ -26,14 +32,6 @@ const empty = (name: string): Form => ({
   tags: "", author: name || "", seo_title: "", seo_description: "", og_image: "",
   status: "draft", featured: false, published_at: null,
 });
-
-const uploadImage = async (file: File): Promise<string | null> => {
-  const ext = file.name.split(".").pop() || "jpg";
-  const path = `covers/${Date.now()}-${Math.random().toString(36).slice(2, 8)}.${ext}`;
-  const { error } = await supabase.storage.from("blog-images").upload(path, file, { cacheControl: "31536000" });
-  if (error) { toast.error(error.message); return null; }
-  return supabase.storage.from("blog-images").getPublicUrl(path).data.publicUrl;
-};
 
 const AI_ACTIONS = [
   { key: "outline",       label: "Generate outline" },
@@ -59,6 +57,7 @@ const BlogEditor = () => {
   const [aiBusy, setAiBusy] = useState<AiKey | null>(null);
   const [aiOutput, setAiOutput] = useState<string>("");
   const [aiPrompt, setAiPrompt] = useState<string>("");
+  const [coverPreview, setCoverPreview] = useState("");
   const coverRef = useRef<HTMLInputElement>(null);
 
   useEffect(() => {
@@ -94,6 +93,14 @@ const BlogEditor = () => {
     if (!slugTouched && form.title) setForm((f) => ({ ...f, slug: slugify(f.title) }));
   }, [form.title, slugTouched]);
 
+  useEffect(() => {
+    let mounted = true;
+    resolveBlogImageUrl(form.featured_image).then((url) => {
+      if (mounted) setCoverPreview(url);
+    });
+    return () => { mounted = false; };
+  }, [form.featured_image]);
+
   if (loading || initialLoading) return <p className="text-muted-foreground">Loading…</p>;
   if (!isAdmin) return <Navigate to="/portal" replace />;
 
@@ -109,8 +116,8 @@ const BlogEditor = () => {
       title: form.title.trim(),
       slug: form.slug.trim(),
       excerpt: form.excerpt || null,
-      content: form.content,
-      featured_image: form.featured_image || null,
+      content: normalizeBlogContentImageReferences(form.content),
+      featured_image: normalizeBlogImageReference(form.featured_image) || null,
       category: form.category || null,
       tags: form.tags.split(",").map((t) => t.trim()).filter(Boolean),
       author: form.author || null,
@@ -118,7 +125,7 @@ const BlogEditor = () => {
       reading_time: readingTime,
       seo_title: form.seo_title || null,
       seo_description: form.seo_description || null,
-      og_image: form.og_image || null,
+      og_image: normalizeBlogImageReference(form.og_image) || null,
       status,
       featured: form.featured,
       published_at: status === "published" ? (form.published_at || new Date().toISOString()) : null,
@@ -142,8 +149,12 @@ const BlogEditor = () => {
   const handleCover = async (e: React.ChangeEvent<HTMLInputElement>) => {
     const file = e.target.files?.[0]; e.target.value = "";
     if (!file) return;
-    const url = await uploadImage(file);
-    if (url) setForm((f) => ({ ...f, featured_image: url, og_image: f.og_image || url }));
+    try {
+      const imageRef = await uploadBlogImage(file, "covers");
+      setForm((f) => ({ ...f, featured_image: imageRef, og_image: f.og_image || imageRef }));
+    } catch (err) {
+      toast.error(err instanceof Error ? err.message : "Image upload failed");
+    }
   };
 
   const runAi = async (action: AiKey) => {
@@ -238,8 +249,8 @@ const BlogEditor = () => {
             <h3 className="font-semibold text-sm">Featured image</h3>
             {form.featured_image ? (
               <div className="relative">
-                <img src={form.featured_image} alt="cover" className="w-full h-40 object-cover rounded-lg" />
-                <button type="button" onClick={() => setForm({ ...form, featured_image: "" })} className="absolute top-2 right-2 p-1 rounded-full bg-background/80 border border-foreground/10"><X className="w-3.5 h-3.5" /></button>
+                <img src={coverPreview || form.featured_image} alt="cover" className="w-full h-40 object-cover rounded-lg" />
+                <button type="button" onClick={() => setForm({ ...form, featured_image: "", og_image: form.og_image === form.featured_image ? "" : form.og_image })} className="absolute top-2 right-2 p-1 rounded-full bg-background/80 border border-foreground/10"><X className="w-3.5 h-3.5" /></button>
               </div>
             ) : (
               <button type="button" onClick={() => coverRef.current?.click()} className="w-full h-40 rounded-lg border border-dashed border-foreground/20 flex flex-col items-center justify-center text-muted-foreground hover:border-hydro hover:text-hydro transition-colors">
