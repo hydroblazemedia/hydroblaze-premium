@@ -1,39 +1,43 @@
-## Goal
-Add premium AI-generated imagery to two home-page sections: the Hero and the "How We Work" (Hydro Strategy / Blaze Creative) cards.
+## Plan: Premium 404 Page Redesign
 
-## What to build
+### Current State
+- `src/pages/NotFound.tsx` exists and is wired as the catch-all route (`path="*"`) in `src/App.tsx`.
+- The current page is bare: plain "404" text, "Oops! Page not found", and a basic link on a muted background.
+- `public/404.html` handles the GitHub Pages SPA fallback redirect.
+- SEO is already covered with `noindex` and a `Page Not Found` title via the `Seo` component.
 
-### 1. Hero visual
-Convert the current centered text hero into a two-column layout on `lg+` (stacked on mobile):
-- Left: existing badge, headline, subtitle, CTAs (unchanged copy/animations)
-- Right: a floating "device stack" visual — a tilted dashboard/phone mockup composed of an AI-generated image, wrapped in the existing glass card treatment (rounded-2xl, border, backdrop-blur), with hydro/blaze ambient glow orbs behind it
-- Keep the scroll-parallax and opacity fade on the whole block
-- Preserve mobile: image stacks below CTAs, scaled down
+### Goal
+Redesign the 404 page to feel like a polished HydroBlaze experience — dark cinematic, glassmorphism, ambient gradients, and helpful next steps — while keeping the SPA fallback intact.
 
-### 2. How We Work section
-Give each of the two methodology cards (Hydro Strategy, Blaze Creative) a visual header image at the top of the card:
-- Hydro Strategy: abstract blueprint / data-grid visual in cyan-blue tones
-- Blaze Creative: abstract content/creative visual in orange-red tones
-- Image sits in a `rounded-xl` frame above the icon, ~16:10 aspect, with subtle inner border and gradient tint overlay to blend with the card
+### What I Will Build
 
-## Assets to generate
-Using the agent-side `generate_image` tool (premium quality, saved to `src/assets/` as `.asset.json` pointers):
+1. **Visual redesign of `src/pages/NotFound.tsx`**
+   - Apply the existing dark background with subtle ambient orbs / gradient tints.
+   - Use a frosted-glass card container (`backdrop-blur-xl`, `bg-card/70`, border ring).
+   - Display a large, stylized "404" using the brand gradient (Hydro cyan → Blaze orange).
+   - Add a friendly, on-brand message: "Lost in the digital wilderness? Let's get you back on track."
+   - Include a primary CTA button: "Back to Home".
+   - Add a secondary row of quick links: Services, Portfolio, About, Contact, Blog.
 
-1. `hero-dashboard.png` — dark premium analytics dashboard mockup with cyan and orange accent charts, glassmorphic UI, floating on transparent-friendly dark bg
-2. `hydro-strategy.png` — abstract blueprint grid with data nodes and flow lines, cyan/blue palette, minimal dark bg
-3. `blaze-creative.png` — abstract collage of content shapes (reels frames, spark bursts), orange/red palette, minimal dark bg
+2. **Light-mode consistency**
+   - Ensure the card background, text contrast, and gradients work in both themes using the existing semantic tokens.
+   - Avoid hardcoded colors; use `primary`, `foreground`, `muted-foreground`, `card`, `border` tokens.
 
-All images will look correct in both light and dark themes (dark backgrounds framed inside cards work in both — matches the pattern already used in PortfolioSection).
+3. **Keep SEO and fallback intact**
+   - Preserve `noindex` and `Seo` title/description.
+   - Leave `public/404.html` unchanged so GitHub Pages SPA fallback still works.
 
-## Files to change
+4. **Verification**
+   - Check the page renders at `/nonexistent-route` in both dark and light modes.
+   - Verify the home link and quick navigation links work correctly.
+   - Confirm no console errors or broken imports.
 
-- `src/components/Hero.tsx` — restructure to two-column grid, add image column
-- `src/components/PagePreviewSection.tsx` — add image header to each of the two "How We Work" cards
-- `src/assets/hero-dashboard.png.asset.json` (new, via `lovable-assets`)
-- `src/assets/hydro-strategy.png.asset.json` (new)
-- `src/assets/blaze-creative.png.asset.json` (new)
+### Files to Modify
+- `src/pages/NotFound.tsx`
 
-## Out of scope
-- No changes to "What We Do" cards, Results, Why Us, or Final CTA sections
-- No new sections, no featured-work strip
-- No copy changes
+### Files to Leave Unchanged
+- `public/404.html`
+- `src/App.tsx`
+- `src/lib/seo.tsx`
+
+Let me know if you'd like me to add an animated element (e.g., a slow-pulsing orb or a floating hydro/flame icon) or keep it static.
