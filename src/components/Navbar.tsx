@@ -51,7 +51,7 @@ const Navbar = () => {
           <Link to="/" className="flex items-center gap-3">
             <img
               src={isDark ? logoDark : logoLight}
-              alt="HydroBlaze Media"
+              alt="HydroBlaze Media — digital marketing agency logo"
               className={`${isDark ? 'h-12 w-auto' : 'h-12 w-auto'} object-contain`}
             />
           </Link>
