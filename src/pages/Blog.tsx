@@ -74,6 +74,40 @@ const Blog = () => {
   const featuredPosts = useMemo(() => filtered.slice(0, 2), [filtered]);
   const regularPosts = useMemo(() => filtered.slice(2), [filtered]);
 
+  const blogJsonLd = useMemo(
+    () => ({
+      '@context': 'https://schema.org',
+      '@type': 'Blog',
+      name: 'HydroBlaze Media Blog',
+      url: 'https://hydroblazemedia.com/blog',
+      description:
+        'Strategy breakdowns, creative inspiration, and technical deep-dives from the HydroBlaze team.',
+      publisher: {
+        '@type': 'Organization',
+        name: 'HydroBlaze Media',
+        url: 'https://hydroblazemedia.com',
+      },
+      blogPost: posts.slice(0, 20).map((p) => ({
+        '@type': 'BlogPosting',
+        headline: p.title,
+        url: `https://hydroblazemedia.com/blog/${p.slug}`,
+        ...(p.excerpt ? { description: p.excerpt } : {}),
+        ...(p.published_at ? { datePublished: p.published_at } : {}),
+        ...(p.author ? { author: { '@type': 'Person', name: p.author } } : {}),
+      })),
+    }),
+    [posts],
+  );
+
+  const breadcrumbJsonLd = {
+    '@context': 'https://schema.org',
+    '@type': 'BreadcrumbList',
+    itemListElement: [
+      { '@type': 'ListItem', position: 1, name: 'Home', item: 'https://hydroblazemedia.com/' },
+      { '@type': 'ListItem', position: 2, name: 'Blog', item: 'https://hydroblazemedia.com/blog' },
+    ],
+  };
+
   return (
     <PageTransition>
       <Helmet>
@@ -86,6 +120,11 @@ const Blog = () => {
         <meta property="og:type" content="website" />
         <meta property="og:image" content="https://hydroblazemedia.com/og-image.png" />
         <meta name="twitter:card" content="summary_large_image" />
+        <meta name="twitter:title" content="Blog — HydroBlaze Media" />
+        <meta name="twitter:description" content="Strategy breakdowns, creative inspiration, and technical deep-dives from the HydroBlaze team." />
+        <meta name="twitter:image" content="https://hydroblazemedia.com/og-image.png" />
+        <script type="application/ld+json">{JSON.stringify(blogJsonLd)}</script>
+        <script type="application/ld+json">{JSON.stringify(breadcrumbJsonLd)}</script>
       </Helmet>
       <div className="noise-overlay" />
       <Navbar />

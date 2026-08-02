@@ -132,7 +132,9 @@ const BlogSection = () => {
                       {post.excerpt}
                     </p>
                     <span className="inline-flex items-center gap-1.5 text-sm font-medium text-hydro group-hover:gap-2.5 transition-all duration-300">
-                      Read More <ArrowRight className="w-4 h-4" />
+                      Read <span className="sr-only">{post.title}</span>
+                      <span aria-hidden="true">more</span>
+                      <ArrowRight className="w-4 h-4" aria-hidden="true" />
                     </span>
                   </div>
                 </Link>
