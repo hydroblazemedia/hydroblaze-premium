@@ -17,6 +17,7 @@ const Blog = lazy(() => import("./pages/Blog"));
 const BlogPost = lazy(() => import("./pages/BlogPost"));
 const Portfolio = lazy(() => import("./pages/Portfolio"));
 const PortfolioDetail = lazy(() => import("./pages/PortfolioDetail"));
+const AmscCaseStudy = lazy(() => import("./pages/AmscCaseStudy"));
 const PrivacyPolicy = lazy(() => import("./pages/PrivacyPolicy"));
 const NotFound = lazy(() => import("./pages/NotFound"));
 const PortalShell = lazy(() => import("@/portal/PortalShell"));
@@ -68,6 +69,7 @@ const App = () => (
             <Route path="/about" element={<About />} />
             
             <Route path="/portfolio" element={<Portfolio />} />
+            <Route path="/portfolio/amsc-motorsport" element={<AmscCaseStudy />} />
             <Route path="/portfolio/:slug" element={<PortfolioDetail />} />
             <Route path="/privacy-policy" element={<PrivacyPolicy />} />
             <Route path="/blog" element={<Blog />} />
