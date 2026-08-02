@@ -3,9 +3,7 @@ import { Dialog, DialogContent, DialogHeader, DialogTitle, DialogDescription } f
 import { Send, CheckCircle2, AlertCircle, Loader2, Sparkles } from 'lucide-react';
 import { z } from 'zod';
 import { motion, AnimatePresence } from 'framer-motion';
-
-// Deployed Google Apps Script Web App URL
-const GOOGLE_SHEET_URL = 'https://script.google.com/macros/s/AKfycbzkex-NlLu7qDYzoEu5FvLILHLCTeNdYnml3x0BYYyFro4nvgJsPjAOJAezq2SP1b1zZA/exec';
+import { getOptionalSupabase } from '@/lib/optionalSupabase';
 
 const contactSchema = z.object({
   name: z.string().trim().min(1, 'Name is required').max(100, 'Name must be under 100 characters'),
@@ -79,21 +77,24 @@ export const ContactDialogProvider = ({ children }: { children: React.ReactNode 
 
     setIsSubmitting(true);
 
-    // Send to Google Sheets (fire and forget with no-cors)
-    if (GOOGLE_SHEET_URL) {
-      fetch(GOOGLE_SHEET_URL, {
-        method: 'POST',
-        mode: 'no-cors',
-        headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({
-          name: result.data.name,
-          company: result.data.company || '',
-          email: result.data.email,
-          phone: result.data.phone,
-          message: result.data.message,
-          source,
-        }),
-      }).catch(() => {});
+    // Submissions are proxied through a backend function that validates and
+    // sanitizes the payload server-side before it reaches the lead sheet.
+    try {
+      const supabase = await getOptionalSupabase();
+      if (supabase) {
+        await supabase.functions.invoke('contact-lead', {
+          body: {
+            name: result.data.name,
+            company: result.data.company || '',
+            email: result.data.email,
+            phone: result.data.phone,
+            message: result.data.message,
+            source,
+          },
+        });
+      }
+    } catch {
+      // Keep the user-facing flow clean; details stay in server logs.
     }
 
     setIsSubmitting(false);
