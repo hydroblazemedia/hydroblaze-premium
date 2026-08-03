@@ -487,53 +487,6 @@ const CultfitCaseStudy = () => {
           </div>
         </section>
 
-        {/* CREATIVE SHOWCASE */}
-        <section className="mt-24 md:mt-32 px-4 md:px-8 lg:px-12">
-          <div className="max-w-7xl mx-auto">
-            <motion.div {...reveal} className="mb-12 max-w-2xl">
-              <SectionLabel>Creative Output</SectionLabel>
-              <h2 className="font-display text-3xl md:text-5xl font-bold tracking-tight mb-4">Creative Showcase</h2>
-              <p className="text-muted-foreground">
-                Ad creatives, carousels, story designs and organic content — produced as one connected
-                performance system.
-              </p>
-            </motion.div>
-
-            <div className="grid lg:grid-cols-2 gap-10 lg:gap-14">
-              {[
-                { src: shotMetaCreative, title: 'Lead Generation Ads & Performance Creatives', body: 'Offer-led creative sets tested continuously against CTR and cost per lead, with the strongest concepts scaled across audiences.', tags: ['Lead Ads', 'Carousel Posts', 'Performance Creatives'] },
-                { src: shotSocial, title: 'Social Media Creatives & Story Designs', body: 'A content system built on transformations, trainers and member experience — driving 2.56M organic views and 4,623 net new followers.', tags: ['Instagram Growth', 'Story Designs', 'Community Content'] },
-              ].map((block, i) => (
-                <motion.article
-                  key={block.title}
-                  initial={{ opacity: 0, y: 28 }}
-                  whileInView={{ opacity: 1, y: 0 }}
-                  viewport={{ once: true, margin: '-60px' }}
-                  transition={{ duration: 0.7, delay: i * 0.1 }}
-                >
-                  <div className="relative rounded-[26px] p-3 bg-gradient-to-br from-hydro/25 via-foreground/5 to-blaze/25">
-                    <div className="rounded-[20px] overflow-hidden bg-card border border-foreground/10">
-                      <img
-                        src={block.src}
-                        alt={block.title}
-                        loading="lazy"
-                        decoding="async"
-                        className="w-full h-auto transition-transform duration-700 hover:scale-[1.04]"
-                      />
-                    </div>
-                  </div>
-                  <h3 className="font-display text-xl md:text-2xl font-semibold mt-7 mb-3">{block.title}</h3>
-                  <p className="text-muted-foreground text-sm md:text-base leading-relaxed mb-5">{block.body}</p>
-                  <ul className="flex flex-wrap gap-2">
-                    {block.tags.map((t) => (
-                      <li key={t} className="px-3 py-1.5 rounded-full text-[11px] font-medium border border-foreground/10 bg-card/60 text-muted-foreground">{t}</li>
-                    ))}
-                  </ul>
-                </motion.article>
-              ))}
-            </div>
-          </div>
-        </section>
 
         {/* BUSINESS IMPACT */}
         <section className="mt-24 md:mt-32 px-4 md:px-8 lg:px-12">
