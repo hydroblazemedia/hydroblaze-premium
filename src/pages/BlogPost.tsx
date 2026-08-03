@@ -9,6 +9,7 @@ import { Calendar, Clock, ArrowLeft, ArrowRight, Twitter, Linkedin, Facebook, Li
 import { extractHeadings, formatDate, injectHeadingIds } from "@/lib/blog";
 import { getOptionalSupabase } from "@/lib/optionalSupabase";
 import { resolveBlogContentImages, resolveBlogImageUrl } from "@/lib/blogImages";
+import { sanitizeRichHtml } from "@/lib/sanitizeHtml";
 import { toast } from "sonner";
 
 interface Blog {
@@ -60,7 +61,7 @@ const BlogPost = () => {
     })();
   }, [slug, preview]);
 
-  const contentWithIds = useMemo(() => post ? injectHeadingIds(post.content) : "", [post]);
+  const contentWithIds = useMemo(() => post ? sanitizeRichHtml(injectHeadingIds(post.content)) : "", [post]);
   const headings = useMemo(() => post ? extractHeadings(post.content) : [], [post]);
 
   const url = typeof window !== "undefined" ? window.location.href : "";
