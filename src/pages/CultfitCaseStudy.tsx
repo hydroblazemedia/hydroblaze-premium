@@ -457,11 +457,6 @@ const CultfitCaseStudy = () => {
                 </motion.div>
               ))}
             </div>
-            <p className="mt-6 text-xs text-muted-foreground/70 max-w-3xl">
-              Figures sourced from the account's Meta Ads Manager reporting and Instagram professional
-              insights (90-day window): 924 form leads, ₹1,27,779 spend, ₹138.29 average cost per lead,
-              4.65 average frequency.
-            </p>
           </div>
         </section>
 
