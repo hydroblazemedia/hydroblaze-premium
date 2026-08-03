@@ -20,10 +20,10 @@ import shotMetaCreative from '@/assets/cdn/cultfit-meta-ads.webp';
 import shotSocial from '@/assets/cdn/cultfit-social.webp';
 
 const gallery = [
-  { src: shotAds, label: 'Meta Campaign Dashboard', note: '924 form leads at ₹138.29 average cost per lead' },
-  { src: shotInsights, label: 'Instagram Growth Insights', note: '2.56M views and 1.63M accounts reached in 90 days' },
-  { src: shotMetaCreative, label: 'Performance Ad Creatives', note: 'Offer-led creatives built for high CTR' },
-  { src: shotSocial, label: 'Social Content System', note: 'Trainer, transformation and community content' },
+  { src: shotAds, label: 'Meta Campaign Dashboard', note: '924 form leads at ₹138.29 average cost per lead', focus: '50% 20%' },
+  { src: shotInsights, label: 'Instagram Growth Insights', note: '2.56M views and 4,623 net new followers in 90 days', focus: '50% 20%' },
+  { src: shotMetaCreative, label: 'Performance Ad Creatives', note: 'Offer-led creatives built for high CTR', focus: '50% 50%' },
+  { src: shotSocial, label: 'Social Content System', note: 'Trainer, transformation and community content', focus: '50% 50%' },
 ];
 
 const infoCards = [
@@ -47,7 +47,7 @@ const kpis = [
   { icon: Users, value: 924, suffix: '+', prefix: '', label: 'Qualified Leads Generated' },
   { icon: Eye, value: 392, suffix: 'K+', prefix: '', label: 'Accounts Reached (Ads)' },
   { icon: MousePointerClick, value: 1.83, suffix: 'M+', prefix: '', decimals: 2, label: 'Ad Impressions Delivered' },
-  { icon: TrendingUp, value: 2.56, suffix: 'M+', prefix: '', decimals: 2, label: 'Organic Content Views' },
+  { icon: TrendingUp, value: 2.56, suffix: 'M+', prefix: '', decimals: 2, label: 'Content Views' },
   { icon: IndianRupee, value: 138, suffix: '', prefix: '₹', label: 'Average Cost Per Lead' },
   { icon: BadgeCheck, value: 4623, suffix: '', prefix: '+', label: 'Net New Followers (90 days)' },
 ];
@@ -394,7 +394,7 @@ const CultfitCaseStudy = () => {
               </p>
             </motion.div>
 
-            <div className="columns-1 sm:columns-2 lg:columns-3 gap-5 [column-fill:_balance]">
+            <div className="grid grid-cols-1 sm:grid-cols-2 gap-5 lg:gap-6">
               {gallery.map((item, i) => (
                 <motion.button
                   key={item.label}
@@ -405,19 +405,25 @@ const CultfitCaseStudy = () => {
                   whileInView={{ opacity: 1, y: 0 }}
                   viewport={{ once: true, margin: '-40px' }}
                   transition={{ duration: 0.6, delay: (i % 3) * 0.08 }}
-                  className="group relative block w-full mb-5 break-inside-avoid rounded-2xl overflow-hidden border border-foreground/10 hover:border-hydro/45 bg-card/40 backdrop-blur-md transition-all duration-500 hover:shadow-[0_24px_60px_-24px_hsl(var(--hydro)/0.5)] focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-hydro"
+                  className="group relative flex w-full flex-col rounded-2xl overflow-hidden border border-foreground/10 hover:border-hydro/45 bg-card/40 backdrop-blur-md transition-all duration-500 hover:shadow-[0_24px_60px_-24px_hsl(var(--hydro)/0.5)] focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-hydro"
                 >
-                  <img
-                    src={item.src}
-                    alt={`Cult.fit Rajajinagar campaign — ${item.label}`}
-                    loading="lazy"
-                    decoding="async"
-                    className="w-full h-auto transition-transform duration-700 group-hover:scale-[1.05]"
-                  />
-                  <span className="absolute inset-0 bg-gradient-to-t from-background/90 via-background/10 to-transparent opacity-70 group-hover:opacity-100 transition-opacity duration-500" />
-                  <span className="absolute bottom-4 left-4 right-4 text-left">
+                  <span className="relative block w-full aspect-[4/3] overflow-hidden">
+                    <img
+                      src={item.src}
+                      alt={`Cult.fit Rajajinagar campaign — ${item.label}`}
+                      loading="lazy"
+                      decoding="async"
+                      style={{ objectPosition: item.focus }}
+                      className="absolute inset-0 w-full h-full object-cover transition-transform duration-700 group-hover:scale-[1.05]"
+                    />
+                    <span className="absolute inset-x-0 bottom-0 h-1/3 bg-gradient-to-t from-background/70 to-transparent opacity-60 group-hover:opacity-90 transition-opacity duration-500" />
+                    <span className="absolute top-3 right-3 rounded-full border border-foreground/15 bg-background/70 px-2.5 py-1 text-[10px] uppercase tracking-widest text-muted-foreground opacity-0 group-hover:opacity-100 transition-opacity duration-300">
+                      View full
+                    </span>
+                  </span>
+                  <span className="block px-5 py-4 text-left border-t border-foreground/10">
                     <span className="block font-display text-sm font-semibold text-foreground">{item.label}</span>
-                    <span className="block text-[11px] text-muted-foreground mt-1">{item.note}</span>
+                    <span className="block text-xs text-muted-foreground mt-1.5 leading-relaxed">{item.note}</span>
                   </span>
                 </motion.button>
               ))}
