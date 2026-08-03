@@ -15,7 +15,6 @@ import { useContactDialog } from '@/components/ContactFormDialog';
 
 import heroCover from '@/assets/cultfit/hero-cover.jpg';
 import shotInsights from '@/assets/cultfit/instagram-insights.webp';
-import shotAudience from '@/assets/cultfit/audience-targeting.webp';
 import shotAds from '@/assets/cultfit/meta-ads-dashboard.webp';
 import shotMetaCreative from '@/assets/cdn/cultfit-meta-ads.webp';
 import shotSocial from '@/assets/cdn/cultfit-social.webp';
@@ -23,7 +22,6 @@ import shotSocial from '@/assets/cdn/cultfit-social.webp';
 const gallery = [
   { src: shotAds, label: 'Meta Campaign Dashboard', note: '924 form leads at ₹138.29 average cost per lead' },
   { src: shotInsights, label: 'Instagram Growth Insights', note: '2.56M views and 1.63M accounts reached in 90 days' },
-  { src: shotAudience, label: 'Hyperlocal Audience Build', note: 'Location-radius targeting with interest layering' },
   { src: shotMetaCreative, label: 'Performance Ad Creatives', note: 'Offer-led creatives built for high CTR' },
   { src: shotSocial, label: 'Social Content System', note: 'Trainer, transformation and community content' },
 ];
@@ -291,13 +289,31 @@ const CultfitCaseStudy = () => {
             </motion.div>
             <motion.div {...reveal} transition={{ ...reveal.transition, delay: 0.12 }} className="relative">
               <div className="absolute -inset-6 rounded-[32px] bg-[radial-gradient(circle_at_50%_50%,hsl(var(--blaze)/0.18),transparent_70%)] pointer-events-none" />
-              <img
-                src={shotAudience}
-                alt="Meta audience builder showing hyperlocal radius targeting"
-                loading="lazy"
-                decoding="async"
-                className="relative w-full max-h-[520px] object-contain rounded-2xl border border-foreground/10 bg-card/50 shadow-[0_30px_70px_-30px_hsl(var(--foreground)/0.35)]"
-              />
+              <div className="relative p-8 rounded-2xl border border-foreground/10 bg-card/50 shadow-[0_30px_70px_-30px_hsl(var(--foreground)/0.35)]">
+                <ul className="space-y-5">
+                  <li className="flex items-start gap-3">
+                    <span className="mt-1 w-2 h-2 rounded-full bg-hydro shrink-0" />
+                    <div>
+                      <p className="text-foreground font-semibold">Hyperlocal targeting</p>
+                      <p className="text-sm text-muted-foreground">Radius and interest-layered audience builds around Rajajinagar.</p>
+                    </div>
+                  </li>
+                  <li className="flex items-start gap-3">
+                    <span className="mt-1 w-2 h-2 rounded-full bg-blaze shrink-0" />
+                    <div>
+                      <p className="text-foreground font-semibold">High-intent lead flow</p>
+                      <p className="text-sm text-muted-foreground">Form and call-based campaigns optimized for membership enquiries.</p>
+                    </div>
+                  </li>
+                  <li className="flex items-start gap-3">
+                    <span className="mt-1 w-2 h-2 rounded-full bg-hydro shrink-0" />
+                    <div>
+                      <p className="text-foreground font-semibold">Scalable creative system</p>
+                      <p className="text-sm text-muted-foreground">Offer-led performance creatives and organic social content.</p>
+                    </div>
+                  </li>
+                </ul>
+              </div>
             </motion.div>
           </div>
         </section>
