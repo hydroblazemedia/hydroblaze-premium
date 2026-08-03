@@ -20,10 +20,10 @@ import shotMetaCreative from '@/assets/cdn/cultfit-meta-ads.webp';
 import shotSocial from '@/assets/cdn/cultfit-social.webp';
 
 const gallery = [
-  { src: shotAds, label: 'Meta Campaign Dashboard', note: '924 form leads at ₹138.29 average cost per lead' },
-  { src: shotInsights, label: 'Instagram Growth Insights', note: '2.56M views and 1.63M accounts reached in 90 days' },
-  { src: shotMetaCreative, label: 'Performance Ad Creatives', note: 'Offer-led creatives built for high CTR' },
-  { src: shotSocial, label: 'Social Content System', note: 'Trainer, transformation and community content' },
+  { src: shotAds, label: 'Meta Campaign Dashboard', note: '924 form leads at ₹138.29 average cost per lead', focus: '50% 20%' },
+  { src: shotInsights, label: 'Instagram Growth Insights', note: '2.56M views and 4,623 net new followers in 90 days', focus: '50% 20%' },
+  { src: shotMetaCreative, label: 'Performance Ad Creatives', note: 'Offer-led creatives built for high CTR', focus: '50% 50%' },
+  { src: shotSocial, label: 'Social Content System', note: 'Trainer, transformation and community content', focus: '50% 50%' },
 ];
 
 const infoCards = [
@@ -47,7 +47,7 @@ const kpis = [
   { icon: Users, value: 924, suffix: '+', prefix: '', label: 'Qualified Leads Generated' },
   { icon: Eye, value: 392, suffix: 'K+', prefix: '', label: 'Accounts Reached (Ads)' },
   { icon: MousePointerClick, value: 1.83, suffix: 'M+', prefix: '', decimals: 2, label: 'Ad Impressions Delivered' },
-  { icon: TrendingUp, value: 2.56, suffix: 'M+', prefix: '', decimals: 2, label: 'Organic Content Views' },
+  { icon: TrendingUp, value: 2.56, suffix: 'M+', prefix: '', decimals: 2, label: 'Content Views' },
   { icon: IndianRupee, value: 138, suffix: '', prefix: '₹', label: 'Average Cost Per Lead' },
   { icon: BadgeCheck, value: 4623, suffix: '', prefix: '+', label: 'Net New Followers (90 days)' },
 ];
