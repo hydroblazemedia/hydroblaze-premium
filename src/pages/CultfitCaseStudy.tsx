@@ -593,7 +593,7 @@ const CultfitCaseStudy = () => {
                 creatives, and conversion-focused campaigns.
               </p>
               <button
-                onClick={openContact}
+                onClick={() => openContact()}
                 className="inline-flex items-center gap-2 px-8 py-4 rounded-full font-semibold bg-gradient-to-r from-hydro to-blaze text-background hover:shadow-[0_20px_50px_-15px_hsl(var(--hydro)/0.6)] transition-all duration-500 hover:scale-[1.03]"
               >
                 Start Your Project <ArrowRight className="w-4 h-4" aria-hidden="true" />
