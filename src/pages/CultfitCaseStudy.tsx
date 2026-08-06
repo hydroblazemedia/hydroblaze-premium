@@ -68,16 +68,39 @@ const reveal = {
   transition: { duration: 0.7, ease: [0.22, 1, 0.36, 1] as [number, number, number, number] },
 };
 
+const SectionLabel = ({ children }: { children: string }) => (
+  <span className="inline-block text-[11px] uppercase tracking-[0.28em] text-hydro font-semibold mb-4">{children}</span>
+);
+
+const Counter = ({ target, suffix, prefix = '', decimals = 0 }: { target: number; suffix: string; prefix?: string; decimals?: number }) => {
+  const ref = useRef<HTMLSpanElement>(null);
+  const inView = useInView(ref, { once: true, margin: '-60px' });
+  const [n, setN] = useState(0);
+
+  useEffect(() => {
+    if (!inView) return;
+    const start = performance.now();
+    const dur = 1700;
+    let raf = 0;
+    const tick = (now: number) => {
+      const p = Math.min((now - start) / dur, 1);
+      setN((1 - Math.pow(1 - p, 3)) * target);
+      if (p < 1) raf = requestAnimationFrame(tick);
+    };
+    raf = requestAnimationFrame(tick);
+    return () => cancelAnimationFrame(raf);
+  }, [inView, target]);
+
+  const formatted = decimals > 0 ? n.toFixed(decimals) : Math.round(n).toLocaleString('en-IN');
+  return <span ref={ref}>{prefix}{formatted}{suffix}</span>;
+};
+
 const CultfitCaseStudy = () => {
   const { open: openContact } = useContactDialog();
   const heroRef = useRef<HTMLDivElement>(null);
   const { scrollYProgress } = useScroll({ target: heroRef, offset: ['start start', 'end start'] });
   const parallaxY = useTransform(scrollYProgress, [0, 1], ['0%', '18%']);
   const heroScale = useTransform(scrollYProgress, [0, 1], [1, 1.12]);
-
-  const [lightbox, setLightbox] = useState<number | null>(null);
-  const prev = useCallback(() => setLightbox((i) => (i === null ? i : (i - 1 + gallery.length) % gallery.length)), []);
-  const next = useCallback(() => setLightbox((i) => (i === null ? i : (i + 1) % gallery.length)), []);
 
   return (
     <PageTransition>
