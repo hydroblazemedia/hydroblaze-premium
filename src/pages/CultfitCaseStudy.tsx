@@ -300,56 +300,6 @@ const CultfitCaseStudy = () => {
           </div>
         </section>
 
-        {/* PERFORMANCE DASHBOARD GALLERY */}
-        <section className="mt-24 md:mt-36 px-4 md:px-8 lg:px-12">
-          <div className="max-w-7xl mx-auto">
-            <motion.div {...reveal} className="mb-12 max-w-2xl">
-              <SectionLabel>The Work</SectionLabel>
-              <h2 className="font-display text-3xl md:text-5xl font-bold tracking-tight mb-4">
-                Performance <span className="text-gradient">Dashboard</span>
-              </h2>
-              <p className="text-muted-foreground">
-                Real campaign dashboards, audience builds and creative assets. Click any panel to open it
-                fullscreen — arrow keys navigate, click again to zoom.
-              </p>
-            </motion.div>
-
-            <div className="grid grid-cols-1 sm:grid-cols-2 gap-5 lg:gap-6">
-              {gallery.map((item, i) => (
-                <motion.button
-                  key={item.label}
-                  type="button"
-                  onClick={() => setLightbox(i)}
-                  aria-label={`Open ${item.label} fullscreen`}
-                  initial={{ opacity: 0, y: 24 }}
-                  whileInView={{ opacity: 1, y: 0 }}
-                  viewport={{ once: true, margin: '-40px' }}
-                  transition={{ duration: 0.6, delay: (i % 3) * 0.08 }}
-                  className="group relative flex w-full flex-col rounded-2xl overflow-hidden border border-foreground/10 hover:border-hydro/45 bg-card/40 backdrop-blur-md transition-all duration-500 hover:shadow-[0_24px_60px_-24px_hsl(var(--hydro)/0.5)] focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-hydro"
-                >
-                  <span className="relative block w-full aspect-[4/3] overflow-hidden">
-                    <img
-                      src={item.src}
-                      alt={`Cult.fit Rajajinagar campaign — ${item.label}`}
-                      loading="lazy"
-                      decoding="async"
-                      style={{ objectPosition: item.focus }}
-                      className="absolute inset-0 w-full h-full object-cover transition-transform duration-700 group-hover:scale-[1.05]"
-                    />
-                    <span className="absolute inset-x-0 bottom-0 h-1/3 bg-gradient-to-t from-background/70 to-transparent opacity-60 group-hover:opacity-90 transition-opacity duration-500" />
-                    <span className="absolute top-3 right-3 rounded-full border border-foreground/15 bg-background/70 px-2.5 py-1 text-[10px] uppercase tracking-widest text-muted-foreground opacity-0 group-hover:opacity-100 transition-opacity duration-300">
-                      View full
-                    </span>
-                  </span>
-                  <span className="block px-5 py-4 text-left border-t border-foreground/10">
-                    <span className="block font-display text-sm font-semibold text-foreground">{item.label}</span>
-                    <span className="block text-xs text-muted-foreground mt-1.5 leading-relaxed">{item.note}</span>
-                  </span>
-                </motion.button>
-              ))}
-            </div>
-          </div>
-        </section>
 
         {/* RESULTS */}
         <section className="mt-24 md:mt-32 px-4 md:px-8 lg:px-12">
