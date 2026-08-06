@@ -444,9 +444,6 @@ const CultfitCaseStudy = () => {
       </main>
 
       <Footer />
-      {lightbox !== null && (
-        <Lightbox index={lightbox} onClose={() => setLightbox(null)} onPrev={prev} onNext={next} />
-      )}
     </PageTransition>
   );
 };
