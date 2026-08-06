@@ -1,8 +1,8 @@
-import { useState, useEffect, useRef } from 'react';
+import { useState, useEffect, useCallback, useRef } from 'react';
 import { Link } from 'react-router-dom';
 import { motion, useScroll, useTransform, useInView } from 'framer-motion';
 import {
-  ArrowLeft, ArrowRight, Check, Instagram,
+  ArrowLeft, ArrowRight, Check, X, ChevronLeft, ChevronRight, Instagram,
   Briefcase, Layers, Package, Target, Users, Eye, MousePointerClick,
   IndianRupee, TrendingUp, Sparkles, Search, Megaphone, Palette, LineChart,
   BadgeCheck, HeartHandshake, Gauge, Crown,
@@ -14,6 +14,17 @@ import { Seo } from '@/lib/seo';
 import { useContactDialog } from '@/components/ContactFormDialog';
 
 import heroCover from '@/assets/cultfit/hero-cover.jpg';
+import shotInsights from '@/assets/cultfit/instagram-insights.webp';
+import shotAds from '@/assets/cultfit/meta-ads-dashboard.webp';
+import shotMetaCreative from '@/assets/cdn/cultfit-meta-ads.webp';
+import shotSocial from '@/assets/cdn/cultfit-social.webp';
+
+const gallery = [
+  { src: shotAds, label: 'Meta Campaign Dashboard', note: '924 form leads at ₹138.29 average cost per lead', focus: '50% 20%' },
+  { src: shotInsights, label: 'Instagram Growth Insights', note: '2.56M views and 4,623 net new followers in 90 days', focus: '50% 20%' },
+  { src: shotMetaCreative, label: 'Performance Ad Creatives', note: 'Offer-led creatives built for high CTR', focus: '50% 50%' },
+  { src: shotSocial, label: 'Social Content System', note: 'Trainer, transformation and community content', focus: '50% 50%' },
+];
 
 const infoCards = [
   { icon: Briefcase, title: 'Industry', items: ['Fitness & Wellness'] },
@@ -95,12 +106,81 @@ const Counter = ({ target, suffix, prefix = '', decimals = 0 }: { target: number
   return <span ref={ref}>{prefix}{formatted}{suffix}</span>;
 };
 
+const Lightbox = ({ index, onClose, onPrev, onNext }: { index: number; onClose: () => void; onPrev: () => void; onNext: () => void }) => {
+  const [zoom, setZoom] = useState(false);
+
+  useEffect(() => {
+    const onKey = (e: KeyboardEvent) => {
+      if (e.key === 'Escape') onClose();
+      if (e.key === 'ArrowLeft') onPrev();
+      if (e.key === 'ArrowRight') onNext();
+    };
+    window.addEventListener('keydown', onKey);
+    document.body.style.overflow = 'hidden';
+    return () => {
+      window.removeEventListener('keydown', onKey);
+      document.body.style.overflow = '';
+    };
+  }, [onClose, onPrev, onNext]);
+
+  useEffect(() => setZoom(false), [index]);
+
+  const item = gallery[index];
+
+  return (
+    <motion.div
+      role="dialog"
+      aria-modal="true"
+      aria-label={`${item.label} — image ${index + 1} of ${gallery.length}`}
+      initial={{ opacity: 0 }}
+      animate={{ opacity: 1 }}
+      className="fixed inset-0 z-[100] bg-background/95 backdrop-blur-2xl flex flex-col"
+    >
+      <div className="flex items-center justify-between gap-4 px-5 md:px-8 py-4 border-b border-foreground/10">
+        <p className="text-sm text-muted-foreground truncate">
+          <span className="text-foreground font-semibold">{item.label}</span>
+          <span className="mx-2 opacity-40">/</span>{index + 1} of {gallery.length}
+        </p>
+        <button onClick={onClose} aria-label="Close gallery" className="shrink-0 w-10 h-10 rounded-full border border-foreground/15 flex items-center justify-center hover:border-blaze hover:text-blaze transition-colors">
+          <X className="w-5 h-5" />
+        </button>
+      </div>
+
+      <div className="flex-1 flex items-center justify-center gap-3 md:gap-6 px-3 md:px-8 py-6 min-h-0">
+        <button onClick={onPrev} aria-label="Previous image" className="shrink-0 w-11 h-11 rounded-full border border-foreground/15 flex items-center justify-center hover:border-hydro hover:text-hydro transition-colors">
+          <ChevronLeft className="w-5 h-5" />
+        </button>
+        <div className={`flex-1 h-full flex items-center justify-center ${zoom ? 'overflow-auto' : 'overflow-hidden'}`}>
+          <motion.img
+            key={index}
+            initial={{ opacity: 0, scale: 0.98 }}
+            animate={{ opacity: 1, scale: 1 }}
+            transition={{ duration: 0.35 }}
+            src={item.src}
+            alt={`Cult.fit Rajajinagar campaign — ${item.label}`}
+            onClick={() => setZoom((z) => !z)}
+            className={`rounded-xl border border-foreground/10 shadow-[0_30px_80px_-20px_hsl(var(--hydro)/0.35)] ${zoom ? 'max-w-none w-auto h-auto scale-150 cursor-zoom-out' : 'max-h-full max-w-full object-contain cursor-zoom-in'}`}
+          />
+        </div>
+        <button onClick={onNext} aria-label="Next image" className="shrink-0 w-11 h-11 rounded-full border border-foreground/15 flex items-center justify-center hover:border-hydro hover:text-hydro transition-colors">
+          <ChevronRight className="w-5 h-5" />
+        </button>
+      </div>
+      <p className="px-6 pb-5 text-center text-xs text-muted-foreground">{item.note} — click the image to zoom</p>
+    </motion.div>
+  );
+};
+
 const CultfitCaseStudy = () => {
   const { open: openContact } = useContactDialog();
   const heroRef = useRef<HTMLDivElement>(null);
   const { scrollYProgress } = useScroll({ target: heroRef, offset: ['start start', 'end start'] });
   const parallaxY = useTransform(scrollYProgress, [0, 1], ['0%', '18%']);
   const heroScale = useTransform(scrollYProgress, [0, 1], [1, 1.12]);
+
+  const [lightbox, setLightbox] = useState<number | null>(null);
+  const prev = useCallback(() => setLightbox((i) => (i === null ? i : (i - 1 + gallery.length) % gallery.length)), []);
+  const next = useCallback(() => setLightbox((i) => (i === null ? i : (i + 1) % gallery.length)), []);
 
   return (
     <PageTransition>
@@ -300,6 +380,56 @@ const CultfitCaseStudy = () => {
           </div>
         </section>
 
+        {/* PERFORMANCE DASHBOARD GALLERY */}
+        <section className="mt-24 md:mt-36 px-4 md:px-8 lg:px-12">
+          <div className="max-w-7xl mx-auto">
+            <motion.div {...reveal} className="mb-12 max-w-2xl">
+              <SectionLabel>The Work</SectionLabel>
+              <h2 className="font-display text-3xl md:text-5xl font-bold tracking-tight mb-4">
+                Performance <span className="text-gradient">Dashboard</span>
+              </h2>
+              <p className="text-muted-foreground">
+                Real campaign dashboards, audience builds and creative assets. Click any panel to open it
+                fullscreen — arrow keys navigate, click again to zoom.
+              </p>
+            </motion.div>
+
+            <div className="grid grid-cols-1 sm:grid-cols-2 gap-5 lg:gap-6">
+              {gallery.map((item, i) => (
+                <motion.button
+                  key={item.label}
+                  type="button"
+                  onClick={() => setLightbox(i)}
+                  aria-label={`Open ${item.label} fullscreen`}
+                  initial={{ opacity: 0, y: 24 }}
+                  whileInView={{ opacity: 1, y: 0 }}
+                  viewport={{ once: true, margin: '-40px' }}
+                  transition={{ duration: 0.6, delay: (i % 3) * 0.08 }}
+                  className="group relative flex w-full flex-col rounded-2xl overflow-hidden border border-foreground/10 hover:border-hydro/45 bg-card/40 backdrop-blur-md transition-all duration-500 hover:shadow-[0_24px_60px_-24px_hsl(var(--hydro)/0.5)] focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-hydro"
+                >
+                  <span className="relative block w-full aspect-[4/3] overflow-hidden">
+                    <img
+                      src={item.src}
+                      alt={`Cult.fit Rajajinagar campaign — ${item.label}`}
+                      loading="lazy"
+                      decoding="async"
+                      style={{ objectPosition: item.focus }}
+                      className="absolute inset-0 w-full h-full object-cover transition-transform duration-700 group-hover:scale-[1.05]"
+                    />
+                    <span className="absolute inset-x-0 bottom-0 h-1/3 bg-gradient-to-t from-background/70 to-transparent opacity-60 group-hover:opacity-90 transition-opacity duration-500" />
+                    <span className="absolute top-3 right-3 rounded-full border border-foreground/15 bg-background/70 px-2.5 py-1 text-[10px] uppercase tracking-widest text-muted-foreground opacity-0 group-hover:opacity-100 transition-opacity duration-300">
+                      View full
+                    </span>
+                  </span>
+                  <span className="block px-5 py-4 text-left border-t border-foreground/10">
+                    <span className="block font-display text-sm font-semibold text-foreground">{item.label}</span>
+                    <span className="block text-xs text-muted-foreground mt-1.5 leading-relaxed">{item.note}</span>
+                  </span>
+                </motion.button>
+              ))}
+            </div>
+          </div>
+        </section>
 
         {/* RESULTS */}
         <section className="mt-24 md:mt-32 px-4 md:px-8 lg:px-12">
@@ -444,6 +574,9 @@ const CultfitCaseStudy = () => {
       </main>
 
       <Footer />
+      {lightbox !== null && (
+        <Lightbox index={lightbox} onClose={() => setLightbox(null)} onPrev={prev} onNext={next} />
+      )}
     </PageTransition>
   );
 };
