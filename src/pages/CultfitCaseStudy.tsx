@@ -16,14 +16,10 @@ import { useContactDialog } from '@/components/ContactFormDialog';
 import heroCover from '@/assets/cultfit/hero-cover.jpg';
 import shotInsights from '@/assets/cultfit/instagram-insights.webp';
 import shotAds from '@/assets/cultfit/meta-ads-dashboard.webp';
-import shotMetaCreative from '@/assets/cdn/cultfit-meta-ads.webp';
-import shotSocial from '@/assets/cdn/cultfit-social.webp';
 
 const gallery = [
   { src: shotAds, label: 'Meta Campaign Dashboard', note: '924 form leads at ₹138.29 average cost per lead', focus: '50% 20%' },
   { src: shotInsights, label: 'Instagram Growth Insights', note: '2.56M views and 4,623 net new followers in 90 days', focus: '50% 20%' },
-  { src: shotMetaCreative, label: 'Performance Ad Creatives', note: 'Offer-led creatives built for high CTR', focus: '50% 50%' },
-  { src: shotSocial, label: 'Social Content System', note: 'Trainer, transformation and community content', focus: '50% 50%' },
 ];
 
 const infoCards = [
