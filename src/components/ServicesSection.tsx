@@ -11,7 +11,7 @@ import serviceAds from '@/assets/service-meta-google-ads.jpg';
 import serviceSocial from '@/assets/service-social-mgmt.jpg';
 import serviceContent from '@/assets/service-content-creation.jpg';
 import serviceFunnels from '@/assets/service-lead-funnels.jpg';
-import serviceWebsite from '@/assets/service-website-design.jpg';
+
 import serviceStrategy from '@/assets/service-strategy.jpg';
 import portfolioBlr from '@/assets/portfolio-blrkabab.jpg';
 import portfolioCultfit from '@/assets/portfolio-cultfit.png';
@@ -53,15 +53,6 @@ const services = [
     image: serviceFunnels,
     proof: { metric: '+68%', label: 'Lead-to-Customer Rate' },
     icon: Zap,
-  },
-  {
-    title: 'Websites That Turn Visitors Into Revenue',
-    tagline: 'Web Design',
-    description: 'Fast, elegant, mobile-first websites and landing pages built on modern stacks with conversion at the core.',
-    deliverables: ['Custom Website', 'Landing Pages', 'Mobile Optimization', 'SEO Ready', 'Fast Loading'],
-    image: serviceWebsite,
-    proof: { metric: '<1.2s', label: 'Median Page Load' },
-    icon: Gauge,
   },
   {
     title: 'Marketing Strategy That Compounds',
