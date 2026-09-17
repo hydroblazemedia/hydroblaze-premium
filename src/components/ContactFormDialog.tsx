@@ -1,4 +1,4 @@
-import { createContext, useContext, useState, useCallback } from 'react';
+import { createContext, useContext, useState, useCallback, useRef } from 'react';
 import { Dialog, DialogContent, DialogHeader, DialogTitle, DialogDescription } from '@/components/ui/dialog';
 import { Send, CheckCircle2, AlertCircle, Loader2, Sparkles } from 'lucide-react';
 import { z } from 'zod';
@@ -27,11 +27,14 @@ export const ContactDialogProvider = ({ children }: { children: React.ReactNode 
   const [touched, setTouched] = useState<Partial<Record<keyof ContactFormData, boolean>>>({});
   const [submitted, setSubmitted] = useState(false);
   const [isSubmitting, setIsSubmitting] = useState(false);
+  const [submitError, setSubmitError] = useState<string | null>(null);
   const [source, setSource] = useState<string>('');
+  const inFlight = useRef(false);
 
   const open = useCallback((src?: string) => {
     setIsOpen(true);
     setSubmitted(false);
+    setSubmitError(null);
     setSource(src || 'Direct');
     setFormData({ name: '', company: '', email: '', phone: '', message: '' });
     setErrors({});
@@ -63,6 +66,7 @@ export const ContactDialogProvider = ({ children }: { children: React.ReactNode 
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
+    if (inFlight.current) return; // guards accidental double-clicks / double submits
     const result = contactSchema.safeParse(formData);
     if (!result.success) {
       const fieldErrors: FormErrors = {};
@@ -75,30 +79,36 @@ export const ContactDialogProvider = ({ children }: { children: React.ReactNode 
       return;
     }
 
+    inFlight.current = true;
     setIsSubmitting(true);
+    setSubmitError(null);
 
     // Submissions are proxied through a backend function that validates and
-    // sanitizes the payload server-side before it reaches the lead sheet.
+    // sanitizes the payload server-side before it reaches the CRM and lead sheet.
     try {
       const supabase = await getOptionalSupabase();
-      if (supabase) {
-        await supabase.functions.invoke('contact-lead', {
-          body: {
-            name: result.data.name,
-            company: result.data.company || '',
-            email: result.data.email,
-            phone: result.data.phone,
-            message: result.data.message,
-            source,
-          },
-        });
-      }
-    } catch {
-      // Keep the user-facing flow clean; details stay in server logs.
-    }
+      if (!supabase) throw new Error('backend unavailable');
 
-    setIsSubmitting(false);
-    setSubmitted(true);
+      const { error } = await supabase.functions.invoke('contact-lead', {
+        body: {
+          name: result.data.name,
+          company: result.data.company || '',
+          email: result.data.email,
+          phone: result.data.phone,
+          message: result.data.message,
+          source,
+        },
+      });
+      if (error) throw error;
+
+      setSubmitted(true);
+    } catch (err) {
+      console.error('contact submission failed:', err);
+      setSubmitError("We couldn't send your message just now. Please try again, or email us at hello@hydroblazemedia.com.");
+    } finally {
+      inFlight.current = false;
+      setIsSubmitting(false);
+    }
   };
 
   const inputClass = (hasError?: boolean) =>
@@ -173,6 +183,7 @@ export const ContactDialogProvider = ({ children }: { children: React.ReactNode 
               <button
                 onClick={() => {
                   setSubmitted(false);
+                  setSubmitError(null);
                   setFormData({ name: '', company: '', email: '', phone: '', message: '' });
                   setErrors({});
                   setTouched({});
@@ -203,6 +214,23 @@ export const ContactDialogProvider = ({ children }: { children: React.ReactNode 
                     <p className="text-destructive">
                       Please fix the {errorCount} {errorCount === 1 ? 'error' : 'errors'} below.
                     </p>
+                  </motion.div>
+                )}
+              </AnimatePresence>
+
+              {/* Submission failure */}
+              <AnimatePresence>
+                {submitError && (
+                  <motion.div
+                    initial={{ opacity: 0, y: -8, height: 0 }}
+                    animate={{ opacity: 1, y: 0, height: 'auto' }}
+                    exit={{ opacity: 0, y: -8, height: 0 }}
+                    transition={{ duration: 0.25 }}
+                    role="alert"
+                    className="flex items-start gap-3 p-3 rounded-xl bg-destructive/10 border border-destructive/30 text-sm"
+                  >
+                    <AlertCircle className="w-4 h-4 text-destructive flex-shrink-0 mt-0.5" />
+                    <p className="text-destructive">{submitError}</p>
                   </motion.div>
                 )}
               </AnimatePresence>
