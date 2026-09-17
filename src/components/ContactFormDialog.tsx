@@ -66,6 +66,7 @@ export const ContactDialogProvider = ({ children }: { children: React.ReactNode 
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
+    if (inFlight.current) return; // guards accidental double-clicks / double submits
     const result = contactSchema.safeParse(formData);
     if (!result.success) {
       const fieldErrors: FormErrors = {};
@@ -78,30 +79,36 @@ export const ContactDialogProvider = ({ children }: { children: React.ReactNode 
       return;
     }
 
+    inFlight.current = true;
     setIsSubmitting(true);
+    setSubmitError(null);
 
     // Submissions are proxied through a backend function that validates and
-    // sanitizes the payload server-side before it reaches the lead sheet.
+    // sanitizes the payload server-side before it reaches the CRM and lead sheet.
     try {
       const supabase = await getOptionalSupabase();
-      if (supabase) {
-        await supabase.functions.invoke('contact-lead', {
-          body: {
-            name: result.data.name,
-            company: result.data.company || '',
-            email: result.data.email,
-            phone: result.data.phone,
-            message: result.data.message,
-            source,
-          },
-        });
-      }
-    } catch {
-      // Keep the user-facing flow clean; details stay in server logs.
-    }
+      if (!supabase) throw new Error('backend unavailable');
 
-    setIsSubmitting(false);
-    setSubmitted(true);
+      const { error } = await supabase.functions.invoke('contact-lead', {
+        body: {
+          name: result.data.name,
+          company: result.data.company || '',
+          email: result.data.email,
+          phone: result.data.phone,
+          message: result.data.message,
+          source,
+        },
+      });
+      if (error) throw error;
+
+      setSubmitted(true);
+    } catch (err) {
+      console.error('contact submission failed:', err);
+      setSubmitError("We couldn't send your message just now. Please try again, or email us at hello@hydroblazemedia.com.");
+    } finally {
+      inFlight.current = false;
+      setIsSubmitting(false);
+    }
   };
 
   const inputClass = (hasError?: boolean) =>
