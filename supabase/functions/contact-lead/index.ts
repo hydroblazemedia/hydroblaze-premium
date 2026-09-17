@@ -13,6 +13,11 @@ const LeadSchema = z.object({
   phone: z.string().trim().min(1).max(20).regex(/^[\d\s+\-()]+$/),
   message: z.string().trim().min(1).max(1000),
   source: z.string().trim().max(100).optional().default('Direct'),
+  utm_source: z.string().trim().max(200).optional().default(''),
+  utm_medium: z.string().trim().max(200).optional().default(''),
+  utm_campaign: z.string().trim().max(200).optional().default(''),
+  utm_term: z.string().trim().max(200).optional().default(''),
+  utm_content: z.string().trim().max(200).optional().default(''),
 });
 
 // Neutralize spreadsheet formula / CSV injection.
@@ -69,6 +74,40 @@ const splitName = (fullName: string) => {
   return { firstName: parts.slice(0, -1).join(' '), lastName: parts[parts.length - 1] };
 };
 
+const UTM_FIELD_MAP: Record<string, keyof z.infer<typeof LeadSchema>> = {
+  UTM_Source: 'utm_source',
+  UTM_Medium: 'utm_medium',
+  UTM_Campaign: 'utm_campaign',
+  UTM_Term: 'utm_term',
+  UTM_Content: 'utm_content',
+};
+
+const utmSummary = (data: z.infer<typeof LeadSchema>) => {
+  const lines = Object.entries(UTM_FIELD_MAP)
+    .map(([label, key]) => [label.replace('_', ' '), String(data[key] ?? '').trim()] as const)
+    .filter(([, value]) => value.length > 0)
+    .map(([label, value]) => `${label}: ${value}`);
+  return lines.length ? lines.join('\n') : '';
+};
+
+const postLead = async (apiDomain: string, accessToken: string, record: Record<string, unknown>) => {
+  const res = await fetch(`${apiDomain}/crm/v6/Leads`, {
+    method: 'POST',
+    headers: {
+      Authorization: `Zoho-oauthtoken ${accessToken}`,
+      'Content-Type': 'application/json',
+    },
+    body: JSON.stringify({ data: [record] }),
+  });
+  const text = await res.text();
+  let record0: { code?: string; message?: string } | undefined;
+  try {
+    record0 = (JSON.parse(text) as { data?: Array<{ code?: string; message?: string }> }).data?.[0];
+  } catch { /* non-JSON body */ }
+  const ok = res.ok && (!record0?.code || record0.code === 'SUCCESS');
+  return { ok, status: res.status, text, code: record0?.code };
+};
+
 const createZohoLead = async (data: z.infer<typeof LeadSchema>) => {
   if (!ZOHO_CLIENT_ID || !ZOHO_CLIENT_SECRET || !ZOHO_REFRESH_TOKEN) {
     return { ok: false, skipped: true, error: 'Zoho credentials not configured' };
@@ -77,44 +116,44 @@ const createZohoLead = async (data: z.infer<typeof LeadSchema>) => {
   const { accessToken, apiDomain } = await getZohoToken();
   const { firstName, lastName } = splitName(data.name);
 
-  const res = await fetch(`${apiDomain}/crm/v6/Leads`, {
-    method: 'POST',
-    headers: {
-      Authorization: `Zoho-oauthtoken ${accessToken}`,
-      'Content-Type': 'application/json',
-    },
-    body: JSON.stringify({
-      data: [
-        {
-          // Full_Name is read-only in Zoho; it is derived from First/Last name.
-          First_Name: firstName || undefined,
-          Last_Name: lastName,
-          Company: data.company || 'Not provided',
-          Email: data.email,
-          Phone: data.phone,
-          Description: data.message,
-          Lead_Source: 'Website',
-        },
-      ],
-      trigger: [],
-    }),
-  });
+  // The message must reach Zoho verbatim in the Lead's Description field.
+  const description = String(data.message ?? '');
 
-  const text = await res.text();
-  if (!res.ok) {
-    console.error(`Zoho lead create failed [${res.status}]: ${text}`);
-    return { ok: false, status: res.status, error: text };
+  const base: Record<string, unknown> = {
+    // Full_Name is read-only in Zoho; it is derived from First/Last name.
+    First_Name: firstName || undefined,
+    Last_Name: lastName,
+    Company: data.company || 'Not provided',
+    Email: data.email,
+    Phone: data.phone,
+    Description: description,
+    Lead_Source: 'Website',
+  };
+
+  const withUtm: Record<string, unknown> = { ...base };
+  for (const [apiName, key] of Object.entries(UTM_FIELD_MAP)) {
+    const value = String(data[key] ?? '').trim();
+    if (value) withUtm[apiName] = value;
   }
 
-  // Zoho reports per-record failures inside a 2xx body.
-  const parsed = JSON.parse(text) as { data?: Array<{ code?: string; message?: string }> };
-  const record = parsed.data?.[0];
-  if (record?.code && record.code !== 'SUCCESS') {
-    console.error(`Zoho lead rejected: ${text}`);
-    return { ok: false, status: 200, error: text };
+  let attempt = await postLead(apiDomain, accessToken, withUtm);
+
+  // If the custom UTM fields do not exist on this Zoho account, retry with the
+  // standard fields only and keep the campaign data inside Description.
+  if (!attempt.ok && Object.keys(withUtm).length > Object.keys(base).length) {
+    console.error(`Zoho lead with UTM fields failed [${attempt.status}] ${attempt.code ?? ''}: ${attempt.text}`);
+    const summary = utmSummary(data);
+    const fallback = { ...base, Description: summary ? `${description}\n\n---\nCampaign\n${summary}` : description };
+    attempt = await postLead(apiDomain, accessToken, fallback);
+    if (attempt.ok) return { ok: true, utmFields: false };
   }
 
-  return { ok: true };
+  if (!attempt.ok) {
+    console.error(`Zoho lead create failed [${attempt.status}] ${attempt.code ?? ''}: ${attempt.text}`);
+    return { ok: false, status: attempt.status, error: attempt.text };
+  }
+
+  return { ok: true, utmFields: true };
 };
 
 Deno.serve(async (req) => {
@@ -149,9 +188,11 @@ Deno.serve(async (req) => {
     }
 
     let zohoOk = false;
+    let zohoUtmFields: boolean | undefined;
     let zohoError: unknown = null;
     if (zohoResult.status === 'fulfilled') {
       zohoOk = zohoResult.value.ok;
+      zohoUtmFields = (zohoResult.value as { utmFields?: boolean }).utmFields;
       zohoError = zohoResult.value.ok ? null : zohoResult.value.error;
     } else {
       zohoError = zohoResult.reason instanceof Error ? zohoResult.reason.message : String(zohoResult.reason);
@@ -162,7 +203,7 @@ Deno.serve(async (req) => {
       return json({ error: 'Could not record your submission right now', crm: false, sheet: false }, 502);
     }
 
-    return json({ ok: true, crm: zohoOk, sheet: sheetOk });
+    return json({ ok: true, crm: zohoOk, sheet: sheetOk, crmUtmFields: zohoUtmFields });
   } catch (error) {
     console.error('contact-lead error:', error instanceof Error ? error.message : error);
     return json({ error: 'Could not record your submission right now' }, 500);

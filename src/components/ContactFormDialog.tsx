@@ -4,6 +4,7 @@ import { Send, CheckCircle2, AlertCircle, Loader2, Sparkles } from 'lucide-react
 import { z } from 'zod';
 import { motion, AnimatePresence } from 'framer-motion';
 import { getOptionalSupabase } from '@/lib/optionalSupabase';
+import { getUtmParams } from '@/lib/utm';
 
 const contactSchema = z.object({
   name: z.string().trim().min(1, 'Name is required').max(100, 'Name must be under 100 characters'),
@@ -97,6 +98,7 @@ export const ContactDialogProvider = ({ children }: { children: React.ReactNode 
           phone: result.data.phone,
           message: result.data.message,
           source,
+          ...getUtmParams(),
         },
       });
       if (error) throw error;
