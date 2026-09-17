@@ -188,9 +188,11 @@ Deno.serve(async (req) => {
     }
 
     let zohoOk = false;
+    let zohoUtmFields: boolean | undefined;
     let zohoError: unknown = null;
     if (zohoResult.status === 'fulfilled') {
       zohoOk = zohoResult.value.ok;
+      zohoUtmFields = (zohoResult.value as { utmFields?: boolean }).utmFields;
       zohoError = zohoResult.value.ok ? null : zohoResult.value.error;
     } else {
       zohoError = zohoResult.reason instanceof Error ? zohoResult.reason.message : String(zohoResult.reason);
@@ -201,7 +203,7 @@ Deno.serve(async (req) => {
       return json({ error: 'Could not record your submission right now', crm: false, sheet: false }, 502);
     }
 
-    return json({ ok: true, crm: zohoOk, sheet: sheetOk });
+    return json({ ok: true, crm: zohoOk, sheet: sheetOk, crmUtmFields: zohoUtmFields });
   } catch (error) {
     console.error('contact-lead error:', error instanceof Error ? error.message : error);
     return json({ error: 'Could not record your submission right now' }, 500);
