@@ -108,6 +108,15 @@ const postLead = async (apiDomain: string, accessToken: string, record: Record<s
   return { ok, status: res.status, text, code: record0?.code };
 };
 
+// Derive a meaningful Lead Source from the captured UTM parameters so Zoho
+// shows "Meta Ads" / "Google Ads" instead of a blanket "Website".
+const detectLeadSource = (data: z.infer<typeof LeadSchema>): string => {
+  const src = String(data.utm_source ?? '').toLowerCase();
+  if (/(^|[^a-z])(meta|facebook|fb|instagram|ig)([^a-z]|$)/.test(src)) return 'Meta Ads';
+  if (src.includes('google')) return 'Google Ads';
+  return 'Website';
+};
+
 const createZohoLead = async (data: z.infer<typeof LeadSchema>) => {
   if (!ZOHO_CLIENT_ID || !ZOHO_CLIENT_SECRET || !ZOHO_REFRESH_TOKEN) {
     return { ok: false, skipped: true, error: 'Zoho credentials not configured' };
@@ -118,6 +127,7 @@ const createZohoLead = async (data: z.infer<typeof LeadSchema>) => {
 
   // The message must reach Zoho verbatim in the Lead's Description field.
   const description = String(data.message ?? '');
+  const leadSource = detectLeadSource(data);
 
   const base: Record<string, unknown> = {
     // Full_Name is read-only in Zoho; it is derived from First/Last name.
@@ -127,7 +137,7 @@ const createZohoLead = async (data: z.infer<typeof LeadSchema>) => {
     Email: data.email,
     Phone: data.phone,
     Description: description,
-    Lead_Source: 'Website',
+    Lead_Source: leadSource,
   };
 
   const withUtm: Record<string, unknown> = { ...base };
@@ -138,12 +148,17 @@ const createZohoLead = async (data: z.infer<typeof LeadSchema>) => {
 
   let attempt = await postLead(apiDomain, accessToken, withUtm);
 
-  // If the custom UTM fields do not exist on this Zoho account, retry with the
-  // standard fields only and keep the campaign data inside Description.
-  if (!attempt.ok && Object.keys(withUtm).length > Object.keys(base).length) {
-    console.error(`Zoho lead with UTM fields failed [${attempt.status}] ${attempt.code ?? ''}: ${attempt.text}`);
+  // If the custom UTM fields or the derived Lead Source do not exist on this
+  // Zoho account (picklist mismatch), retry with safe standard values and keep
+  // the campaign data inside Description.
+  if (!attempt.ok) {
+    console.error(`Zoho lead attempt failed [${attempt.status}] ${attempt.code ?? ''}: ${attempt.text}`);
     const summary = utmSummary(data);
-    const fallback = { ...base, Description: summary ? `${description}\n\n---\nCampaign\n${summary}` : description };
+    const fallback = {
+      ...base,
+      Lead_Source: 'Website',
+      Description: summary ? `${description}\n\n---\nCampaign\n${summary}` : description,
+    };
     attempt = await postLead(apiDomain, accessToken, fallback);
     if (attempt.ok) return { ok: true, utmFields: false };
   }
