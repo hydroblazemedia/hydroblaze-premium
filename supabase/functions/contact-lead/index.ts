@@ -112,7 +112,6 @@ const postLead = async (apiDomain: string, accessToken: string, record: Record<s
 // shows "Meta Ads" / "Google Ads" instead of a blanket "Website".
 const detectLeadSource = (data: z.infer<typeof LeadSchema>): string => {
   const src = String(data.utm_source ?? '').toLowerCase();
-  const med = String(data.utm_medium ?? '').toLowerCase();
   if (/(^|[^a-z])(meta|facebook|fb|instagram|ig)([^a-z]|$)/.test(src)) return 'Meta Ads';
   if (src.includes('google')) return 'Google Ads';
   return 'Website';
