@@ -183,6 +183,7 @@ export const ContactDialogProvider = ({ children }: { children: React.ReactNode 
               <button
                 onClick={() => {
                   setSubmitted(false);
+                  setSubmitError(null);
                   setFormData({ name: '', company: '', email: '', phone: '', message: '' });
                   setErrors({});
                   setTouched({});
@@ -213,6 +214,23 @@ export const ContactDialogProvider = ({ children }: { children: React.ReactNode 
                     <p className="text-destructive">
                       Please fix the {errorCount} {errorCount === 1 ? 'error' : 'errors'} below.
                     </p>
+                  </motion.div>
+                )}
+              </AnimatePresence>
+
+              {/* Submission failure */}
+              <AnimatePresence>
+                {submitError && (
+                  <motion.div
+                    initial={{ opacity: 0, y: -8, height: 0 }}
+                    animate={{ opacity: 1, y: 0, height: 'auto' }}
+                    exit={{ opacity: 0, y: -8, height: 0 }}
+                    transition={{ duration: 0.25 }}
+                    role="alert"
+                    className="flex items-start gap-3 p-3 rounded-xl bg-destructive/10 border border-destructive/30 text-sm"
+                  >
+                    <AlertCircle className="w-4 h-4 text-destructive flex-shrink-0 mt-0.5" />
+                    <p className="text-destructive">{submitError}</p>
                   </motion.div>
                 )}
               </AnimatePresence>
