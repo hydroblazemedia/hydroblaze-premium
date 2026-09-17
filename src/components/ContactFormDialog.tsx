@@ -1,4 +1,4 @@
-import { createContext, useContext, useState, useCallback } from 'react';
+import { createContext, useContext, useState, useCallback, useRef } from 'react';
 import { Dialog, DialogContent, DialogHeader, DialogTitle, DialogDescription } from '@/components/ui/dialog';
 import { Send, CheckCircle2, AlertCircle, Loader2, Sparkles } from 'lucide-react';
 import { z } from 'zod';
@@ -27,11 +27,14 @@ export const ContactDialogProvider = ({ children }: { children: React.ReactNode 
   const [touched, setTouched] = useState<Partial<Record<keyof ContactFormData, boolean>>>({});
   const [submitted, setSubmitted] = useState(false);
   const [isSubmitting, setIsSubmitting] = useState(false);
+  const [submitError, setSubmitError] = useState<string | null>(null);
   const [source, setSource] = useState<string>('');
+  const inFlight = useRef(false);
 
   const open = useCallback((src?: string) => {
     setIsOpen(true);
     setSubmitted(false);
+    setSubmitError(null);
     setSource(src || 'Direct');
     setFormData({ name: '', company: '', email: '', phone: '', message: '' });
     setErrors({});
