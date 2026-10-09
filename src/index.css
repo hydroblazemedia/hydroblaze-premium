@@ -394,6 +394,44 @@
   }
 }
 
+/* ── Blog article content: theme-aware typography colors ──
+   Overrides the `prose` plugin's fixed gray palette (which assumes a
+   white background) so text follows the app's light/dark tokens. */
+@layer components {
+  .blog-content {
+    --tw-prose-body: hsl(var(--foreground) / 0.85);
+    --tw-prose-headings: hsl(var(--foreground));
+    --tw-prose-lead: hsl(var(--muted-foreground));
+    --tw-prose-links: hsl(var(--hydro));
+    --tw-prose-bold: hsl(var(--foreground));
+    --tw-prose-counters: hsl(var(--muted-foreground));
+    --tw-prose-bullets: hsl(var(--hydro));
+    --tw-prose-hr: hsl(var(--foreground) / 0.12);
+    --tw-prose-quotes: hsl(var(--foreground));
+    --tw-prose-quote-borders: hsl(var(--hydro) / 0.5);
+    --tw-prose-captions: hsl(var(--muted-foreground));
+    --tw-prose-code: hsl(var(--foreground));
+    --tw-prose-pre-code: hsl(var(--foreground));
+    --tw-prose-th-borders: hsl(var(--foreground) / 0.12);
+    --tw-prose-td-borders: hsl(var(--foreground) / 0.08);
+    color: hsl(var(--foreground) / 0.85);
+  }
+  .blog-content :where(h1, h2, h3, h4, h5, h6) {
+    color: hsl(var(--foreground));
+  }
+  .blog-content :where(a) {
+    color: hsl(var(--hydro));
+    text-decoration: underline;
+    text-underline-offset: 3px;
+  }
+  .blog-content :where(a:hover) {
+    color: hsl(var(--blaze));
+  }
+  .blog-content :where(img) {
+    border-radius: 1rem;
+  }
+}
+
 /* Animations */
 @keyframes shimmer {
   0% { background-position: 0% center; }
