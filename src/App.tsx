@@ -20,6 +20,7 @@ const PortfolioDetail = lazy(() => import("./pages/PortfolioDetail"));
 const AmscCaseStudy = lazy(() => import("./pages/AmscCaseStudy"));
 const CultfitCaseStudy = lazy(() => import("./pages/CultfitCaseStudy"));
 const PrivacyPolicy = lazy(() => import("./pages/PrivacyPolicy"));
+const ThankYou = lazy(() => import("./pages/ThankYou"));
 const NotFound = lazy(() => import("./pages/NotFound"));
 const PortalShell = lazy(() => import("@/portal/PortalShell"));
 const PortalLogin = lazy(() => import("./pages/portal/Login"));
@@ -73,7 +74,8 @@ const App = () => (
             <Route path="/portfolio/amsc-motorsport" element={<AmscCaseStudy />} />
             <Route path="/portfolio/cultfit-rajajinagar" element={<CultfitCaseStudy />} />
             <Route path="/portfolio/:slug" element={<PortfolioDetail />} />
-            <Route path="/privacy-policy" element={<PrivacyPolicy />} />
+<Route path="/privacy-policy" element={<PrivacyPolicy />} />
+            <Route path="/thank-you" element={<ThankYou />} />
             <Route path="/blog" element={<Blog />} />
             <Route path="/blog/:slug" element={<BlogPost />} />
             <Route path="/portal/login" element={<BackendRequired><PortalLogin /></BackendRequired>} />

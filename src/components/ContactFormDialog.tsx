@@ -104,6 +104,8 @@ export const ContactDialogProvider = ({ children }: { children: React.ReactNode 
       if (error) throw error;
 
       setSubmitted(true);
+      setIsOpen(false);
+      window.location.assign('/thank-you');
     } catch (err) {
       console.error('contact submission failed:', err);
       setSubmitError("We couldn't send your message just now. Please try again, or email us at hello@hydroblazemedia.com.");
