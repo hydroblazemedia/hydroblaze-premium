@@ -144,7 +144,7 @@ export const ContactDialogProvider = ({ children }: { children: React.ReactNode 
     <ContactDialogContext.Provider value={{ open }}>
       {children}
       <Dialog open={isOpen} onOpenChange={setIsOpen}>
-        <DialogContent className="sm:max-w-lg bg-background/95 backdrop-blur-xl border-foreground/10 rounded-2xl p-0 overflow-hidden">
+        <DialogContent className="sm:max-w-lg max-h-[90vh] overflow-y-auto bg-background/95 backdrop-blur-xl border-foreground/10 rounded-2xl p-0">
           {submitted ? (
             <motion.div
               initial={{ opacity: 0, scale: 0.96 }}
