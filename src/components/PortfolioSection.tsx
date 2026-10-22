@@ -1,7 +1,7 @@
 import { useState, useEffect, useCallback } from 'react';
 import { Link } from 'react-router-dom';
 import { motion, AnimatePresence } from 'framer-motion';
-import { ArrowRight, ArrowLeft, Sparkles, MessageCircle, X, TrendingUp, Users, BarChart3, Eye, Target, Palette, Globe, CheckCircle2, Quote, Package, Flag, Instagram } from 'lucide-react';
+import { ArrowRight, ArrowLeft, Sparkles, MessageCircle, X, TrendingUp, Users, BarChart3, Eye, Target, Palette, Globe, CheckCircle2, Quote, Package, Flag, Instagram, Megaphone, BadgeCheck } from 'lucide-react';
 import { useContactDialog } from '@/components/ContactFormDialog';
 
 import imgCultfit from '@/assets/portfolio-cultfit.png';
