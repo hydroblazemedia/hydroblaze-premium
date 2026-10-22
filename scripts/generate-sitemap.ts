@@ -24,7 +24,7 @@ const staticEntries: Entry[] = [
 ];
 
 // Static portfolio slugs (kept in sync with src/components/PortfolioSection.tsx)
-const portfolioSlugs = ["cultfit-rajajinagar", "blr-kabab", "aayara", "aqua-splash", "amsc"];
+const portfolioSlugs = ["cultfit-rajajinagar", "blr-kabab", "aayara", "as-detailing-aqua-splash", "amsc"];
 
 async function fetchBlogEntries(): Promise<Entry[]> {
   if (!SUPABASE_KEY) return [];

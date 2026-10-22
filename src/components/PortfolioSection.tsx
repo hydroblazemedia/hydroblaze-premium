@@ -165,7 +165,7 @@ export const projects: Project[] = [
   },
   {
     id: 4,
-    slug: 'aqua-splash',
+    slug: 'as-detailing-aqua-splash',
     title: 'Aqua Splash',
     emoji: '🚗',
     category: 'Design & Branding',
