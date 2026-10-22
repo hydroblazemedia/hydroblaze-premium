@@ -70,7 +70,7 @@ const ContactForm = () => {
 
     // Build WhatsApp message
     const text = `Hi, I'm ${encodeURIComponent(result.data.name)}.%0A%0AEmail: ${encodeURIComponent(result.data.email)}%0APhone: ${encodeURIComponent(result.data.phone)}%0A%0A${encodeURIComponent(result.data.message)}`;
-    window.open(`https://wa.me/919999999999?text=${text}`, '_blank');
+    window.open(`https://wa.me/919108743203?text=${text}`, '_blank');
     setSubmitted(true);
   };
 
@@ -265,7 +265,7 @@ const ContactForm = () => {
                 value={formData.phone}
                 onChange={e => handleChange('phone', e.target.value)}
                 onBlur={() => handleBlur('phone')}
-                placeholder="+91 98765 43210"
+                placeholder="+91 91087 43203"
                 className={inputClass(!!errors.phone)}
                 aria-invalid={!!errors.phone}
                 aria-describedby={errors.phone ? 'contact-phone-error' : undefined}
