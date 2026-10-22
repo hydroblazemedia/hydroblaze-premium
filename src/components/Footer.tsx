@@ -47,8 +47,8 @@ const Footer = () => {
               <a href="mailto:hello@hydroblazemedia.com" className="block hover:text-hydro transition-colors">
                 hello@hydroblazemedia.com
               </a>
-              <a href="https://wa.me/919876543210" target="_blank" rel="noopener noreferrer" className="block hover:text-hydro transition-colors">
-                WhatsApp: +91 98765 43210
+              <a href="https://wa.me/919108743203" target="_blank" rel="noopener noreferrer" className="block hover:text-hydro transition-colors">
+                WhatsApp: +91 91087 43203
               </a>
               <address className="not-italic space-y-1">
                 <p>Bangalore, Karnataka, India</p>

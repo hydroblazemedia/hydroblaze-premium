@@ -710,7 +710,7 @@ const ServicesSection = () => {
                   <ArrowRight className="w-4 h-4 transition-transform group-hover:translate-x-1.5" />
                 </button>
                 <a
-                  href="https://wa.me/919876543210"
+                  href="https://wa.me/919108743203"
                   target="_blank"
                   rel="noopener noreferrer"
                   className="inline-flex items-center gap-2 px-7 py-4 rounded-full text-sm font-semibold border border-foreground/10 hover:border-foreground/20 text-muted-foreground hover:text-foreground transition-all duration-300"

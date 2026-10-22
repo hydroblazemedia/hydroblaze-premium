@@ -259,7 +259,7 @@ export const ContactDialogProvider = ({ children }: { children: React.ReactNode 
 
               <div>
                 <label htmlFor="dialog-phone" className="block text-sm font-medium mb-2">Phone</label>
-                <input id="dialog-phone" type="tel" value={formData.phone} onChange={e => handleChange('phone', e.target.value)} onBlur={() => handleBlur('phone')} placeholder="+91 98765 43210" className={inputClass(!!errors.phone)} aria-invalid={!!errors.phone} maxLength={20} />
+                <input id="dialog-phone" type="tel" value={formData.phone} onChange={e => handleChange('phone', e.target.value)} onBlur={() => handleBlur('phone')} placeholder="+91 91087 43203" className={inputClass(!!errors.phone)} aria-invalid={!!errors.phone} maxLength={20} />
                 {fieldError('phone')}
               </div>
 
