@@ -259,7 +259,7 @@ export const ImageSlider = ({ images, title, bg }: { images: string[]; title: st
         style={bg ? { backgroundColor: bg } : undefined}
         role="region"
         aria-roledescription="carousel"
-        aria-label={`${title} case study slideshow`}
+        aria-label={`${title} project slideshow`}
       >
         <AnimatePresence mode="wait">
           <motion.img
@@ -481,7 +481,7 @@ const PortfolioCard = ({ project }: { project: Project }) => {
     >
       <Link
         to={`/portfolio/${project.slug}`}
-        aria-label={`View ${project.title} case study`}
+        aria-label={`View ${project.title} project`}
         className="group block w-full text-left cursor-pointer rounded-2xl focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-hydro focus-visible:ring-offset-2 focus-visible:ring-offset-background"
       >
       <div className="relative rounded-2xl overflow-hidden bg-card/50 border border-foreground/5 group-hover:border-hydro/30 group-hover:shadow-[0_20px_60px_-20px_hsl(var(--hydro)/0.35)] transition-all duration-500">
