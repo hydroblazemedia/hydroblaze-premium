@@ -1,7 +1,7 @@
 import { useState, useEffect, useCallback } from 'react';
 import { Link } from 'react-router-dom';
 import { motion, AnimatePresence } from 'framer-motion';
-import { ArrowRight, ArrowLeft, Sparkles, MessageCircle, X, TrendingUp, Users, BarChart3, Eye, Target, Palette, Globe, CheckCircle2, Quote, Package, Flag, Instagram } from 'lucide-react';
+import { ArrowRight, ArrowLeft, Sparkles, MessageCircle, X, TrendingUp, Users, BarChart3, Eye, Target, Palette, Globe, CheckCircle2, Quote, Package, Flag, Instagram, Megaphone, BadgeCheck } from 'lucide-react';
 import { useContactDialog } from '@/components/ContactFormDialog';
 
 import imgCultfit from '@/assets/portfolio-cultfit.png';
@@ -165,39 +165,39 @@ export const projects: Project[] = [
   },
   {
     id: 4,
-    slug: 'aqua-splash',
+    slug: 'as-detailing-aqua-splash',
     title: 'Aqua Splash',
     emoji: '🚗',
     category: 'Design & Branding',
-    service: 'Product Label & Packaging Design',
-    description: 'Created high-impact product labels for an automotive care brand that stand out on shelves and communicate quality instantly.',
-    objective: 'Create high-impact product labels that stand out on shelves and instantly communicate product function, quality, and performance',
+    service: 'Product Label & Campaign Design',
+    description: 'Designed FOMAXX product labels for AS Detailing Supplies and offer-led promotional campaign creatives for Aqua Splash Auto Detailing Studio.',
+    objective: 'Design bold product labels and offer-led campaign creatives for automotive care brands',
     image: imgAquasplash.url,
     featured: true,
     imageFit: 'contain',
     imageBg: '#ffffff',
     whatWeDid: [
-      'Bold, performance-oriented label design tailored for automotive buyers',
-      'Distinct visual identity across multiple SKUs (cleaners, polish, lubricants)',
-      'Strategic use of color, contrast, and typography for strong shelf visibility',
-      'Information hierarchy designed for quick product understanding',
+      'Bold, performance-oriented label design for the FOMAXX car care range',
+      'Offer-led promotional creatives for Aqua Splash detailing services',
+      'Service campaign designs — polishing, graphene coating and headlight restoration',
+      'A consistent visual language across product and studio touchpoints',
     ],
     impact: [
-      'Enhanced on-shelf differentiation',
-      'Elevated perceived product quality',
-      'Consistent visual system across product line',
+      'Shelf-ready label artwork for FOMAXX',
+      'A cohesive set of offer-led campaign creatives',
+      'Before-and-after proof visuals that build trust',
     ],
     details: {
-      industry: 'Automotive Care',
-      services: ['Label Design', 'Packaging Design', 'Brand Identity', 'Visual Strategy'],
-      objective: 'Create high-impact product labels that stand out on shelves and instantly communicate product function, quality, and performance',
+      industry: 'Automotive Care & Detailing',
+      services: ['Label Design', 'Promotional Creatives', 'Service Campaigns', 'Brand Communication'],
+      objective: 'Design bold product labels and offer-led campaign creatives for automotive care brands',
       results: [
-        { label: 'Shelf Impact', value: 'Enhanced', icon: Eye },
-        { label: 'Brand Trust', value: 'Elevated', icon: Target },
-        { label: 'Visual System', value: 'Consistent', icon: Palette },
-        { label: 'Product Quality', value: 'Premium', icon: Package },
+        { label: 'Label Artwork', value: 'Shelf-Ready', icon: Package },
+        { label: 'Campaigns', value: 'Offer-Led', icon: Megaphone },
+        { label: 'Visual Language', value: 'Consistent', icon: Palette },
+        { label: 'Proof Content', value: 'Trust-Building', icon: BadgeCheck },
       ],
-      strategy: 'Developed bold, performance-oriented label designs with strategic use of color, contrast, and typography. Created a distinct visual identity across multiple SKUs with information hierarchy designed for quick product understanding.',
+      strategy: 'Designed bold, performance-led product labels for the FOMAXX range and clear, offer-driven promotional campaigns for Aqua Splash detailing services — one visual language across shelf and social.',
     },
   },
   {
@@ -259,7 +259,7 @@ export const ImageSlider = ({ images, title, bg }: { images: string[]; title: st
         style={bg ? { backgroundColor: bg } : undefined}
         role="region"
         aria-roledescription="carousel"
-        aria-label={`${title} case study slideshow`}
+        aria-label={`${title} project slideshow`}
       >
         <AnimatePresence mode="wait">
           <motion.img
@@ -481,7 +481,7 @@ const PortfolioCard = ({ project }: { project: Project }) => {
     >
       <Link
         to={`/portfolio/${project.slug}`}
-        aria-label={`View ${project.title} case study`}
+        aria-label={`View ${project.title} project`}
         className="group block w-full text-left cursor-pointer rounded-2xl focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-hydro focus-visible:ring-offset-2 focus-visible:ring-offset-background"
       >
       <div className="relative rounded-2xl overflow-hidden bg-card/50 border border-foreground/5 group-hover:border-hydro/30 group-hover:shadow-[0_20px_60px_-20px_hsl(var(--hydro)/0.35)] transition-all duration-500">
