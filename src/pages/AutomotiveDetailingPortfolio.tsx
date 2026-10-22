@@ -19,7 +19,7 @@ import headlight from '@/assets/as-detailing/aquasplash-headlight.webp';
 
 type Art = { src: string; label: string; alt: string; w: number; h: number };
 
-const labelArt: Art = { src: fomaxxHero, label: 'FOMAXX Product Label', alt: 'FOMAXX car care product bottle with a bold blue and red performance label design', w: 1024, h: 1536 };
+const labelArt: Art = { src: fomaxxHero, label: 'FOMAXX Product Label', alt: 'FOMAXX concentrated hi-foam car and bike shampoo bottle with a premium black and gold label design', w: 1024, h: 1536 };
 const labelDetailArt: Art = { src: fomaxxDetail, label: 'FOMAXX Label Detail', alt: 'Close-up of the FOMAXX car care label showing product name, icons and finish details', w: 1024, h: 1536 };
 const promo: Art[] = [
   { src: servicesOffer, label: 'Services & Offers Creative', alt: 'Aqua Splash Auto Detailing Studio offer creative listing polishing, graphene coating, water spot treatment and interior cleaning services', w: 1677, h: 779 },
