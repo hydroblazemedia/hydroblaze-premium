@@ -145,7 +145,7 @@ const AayaraBoutiquePortfolio = () => {
             <div className="grid lg:grid-cols-[1.15fr_1fr] gap-10 lg:gap-16 items-center">
               <motion.div initial={{ opacity: 0, y: 24 }} animate={{ opacity: 1, y: 0 }} transition={{ duration: 0.7 }}>
                 <div className="ivory-surface inline-flex rounded-xl border border-foreground/10 px-4 py-2 mb-8">
-                  <img src={logo} alt="Aayara — Weaving Dreams logo" width={1536} height={1024} fetchPriority="high" className="h-20 md:h-24 w-auto object-contain" />
+                  <img src={logo} alt="Aayara — Weaving Dreams logo" width={1536} height={1024} fetchPriority="high" className="h-20 md:h-24 w-auto object-contain mix-blend-multiply" />
                 </div>
                 <span className="block text-[11px] uppercase tracking-[0.28em] text-hydro font-semibold mb-4">Aayara Boutique</span>
                 <h1 className="font-display font-bold tracking-tight text-4xl md:text-6xl leading-[1.05] text-foreground">
@@ -192,10 +192,10 @@ const AayaraBoutiquePortfolio = () => {
             <DeliverableHead n="01" title="Brand Identity"
               body="An elegant identity built around gold detailing, floral motifs, and the timeless character of Indian ethnic fashion." />
             <div className="grid md:grid-cols-[1.6fr_1fr] gap-5">
-              <ArtButton art={logoArt} index={0} onOpen={setLightbox} className="ivory-surface" />
+              <ArtButton art={logoArt} index={0} onOpen={setLightbox} className="ivory-surface" imgClass="mix-blend-multiply" />
               <motion.div {...reveal} className="ivory-surface rounded-xl border border-foreground/10 overflow-hidden relative min-h-[220px]">
                 <img src={logo} alt="" aria-hidden="true" loading="lazy"
-                  className="absolute inset-0 w-full h-full object-cover scale-[2.4] origin-[30%_55%]" />
+                  className="absolute inset-0 w-full h-full object-cover scale-[1.9] origin-[22%_62%] mix-blend-multiply" />
                 <span className="absolute bottom-3 left-3 text-[11px] uppercase tracking-[0.2em] font-semibold px-3 py-1 rounded-full bg-background/80 text-foreground">Detail — tassel mark</span>
               </motion.div>
             </div>
