@@ -21,6 +21,7 @@ const AmscCaseStudy = lazy(() => import("./pages/AmscCaseStudy"));
 const CultfitCaseStudy = lazy(() => import("./pages/CultfitCaseStudy"));
 const BlrKababCaseStudy = lazy(() => import("./pages/BlrKababCaseStudy"));
 const AutomotiveDetailingPortfolio = lazy(() => import("./pages/AutomotiveDetailingPortfolio"));
+const AayaraBoutiquePortfolio = lazy(() => import("./pages/AayaraBoutiquePortfolio"));
 const PrivacyPolicy = lazy(() => import("./pages/PrivacyPolicy"));
 const ThankYou = lazy(() => import("./pages/ThankYou"));
 const NotFound = lazy(() => import("./pages/NotFound"));
@@ -77,6 +78,7 @@ const App = () => (
             <Route path="/portfolio/cultfit-rajajinagar" element={<CultfitCaseStudy />} />
             <Route path="/portfolio/blr-kabab" element={<BlrKababCaseStudy />} />
             <Route path="/portfolio/as-detailing-aqua-splash" element={<AutomotiveDetailingPortfolio />} />
+            <Route path="/portfolio/aayara-boutique" element={<AayaraBoutiquePortfolio />} />
             <Route path="/portfolio/:slug" element={<PortfolioDetail />} />
 <Route path="/privacy-policy" element={<PrivacyPolicy />} />
             <Route path="/thank-you" element={<ThankYou />} />

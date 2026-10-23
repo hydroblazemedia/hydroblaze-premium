@@ -488,3 +488,6 @@
 .animation-delay-400 { animation-delay: 0.4s; }
 .animation-delay-500 { animation-delay: 0.5s; }
 .animation-delay-600 { animation-delay: 0.6s; }
+
+/* Warm ivory gallery surface for the Aayara artwork (matches the brand's own paper tone in both themes) */
+.ivory-surface { background-color: hsl(36 45% 94%); }
