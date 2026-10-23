@@ -491,3 +491,4 @@
 
 /* Warm ivory gallery surface for the Aayara artwork (matches the brand's own paper tone in both themes) */
 .ivory-surface { background-color: hsl(36 45% 94%); }
+.ivory-caption { color: hsl(20 30% 25%); }

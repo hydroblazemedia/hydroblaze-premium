@@ -3,7 +3,7 @@ import { Toaster } from "@/components/ui/toaster";
 import { Toaster as Sonner } from "@/components/ui/sonner";
 import { TooltipProvider } from "@/components/ui/tooltip";
 import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
-import { BrowserRouter, Routes, Route } from "react-router-dom";
+import { BrowserRouter, Routes, Route, Navigate } from "react-router-dom";
 import { ContactDialogProvider } from "@/components/ContactFormDialog";
 import ScrollToTop from "@/components/ScrollToTop";
 import { Button } from "@/components/ui/button";
@@ -78,7 +78,8 @@ const App = () => (
             <Route path="/portfolio/cultfit-rajajinagar" element={<CultfitCaseStudy />} />
             <Route path="/portfolio/blr-kabab" element={<BlrKababCaseStudy />} />
             <Route path="/portfolio/as-detailing-aqua-splash" element={<AutomotiveDetailingPortfolio />} />
-            <Route path="/portfolio/aayara-boutique" element={<AayaraBoutiquePortfolio />} />
+            <Route path="/portfolio/aayara" element={<AayaraBoutiquePortfolio />} />
+            <Route path="/portfolio/aayara-boutique" element={<Navigate to="/portfolio/aayara" replace />} />
             <Route path="/portfolio/:slug" element={<PortfolioDetail />} />
 <Route path="/privacy-policy" element={<PrivacyPolicy />} />
             <Route path="/thank-you" element={<ThankYou />} />
