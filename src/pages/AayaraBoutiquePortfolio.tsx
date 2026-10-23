@@ -232,7 +232,7 @@ const AayaraBoutiquePortfolio = () => {
               <ArtButton art={bagArt} index={BAG_I} onOpen={setLightbox} />
               <div>
                 <ArtButton art={bagDetailArt} index={BAG_I + 1} onOpen={setLightbox} />
-                <p className="mt-3 text-sm text-ivory-foreground/70">Detail — logo print, floral motif and finishing.</p>
+                <p className="mt-3 text-sm ivory-caption">Detail — logo print, floral motif and finishing.</p>
               </div>
             </div>
           </div>
