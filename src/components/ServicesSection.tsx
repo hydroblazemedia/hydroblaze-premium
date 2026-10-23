@@ -99,7 +99,7 @@ const caseStudies = [
     results: ['−42% cost per lead', '+68% trial conversions', '2.3× monthly signups'],
   },
   {
-    name: 'Aayara Boutique',
+    name: 'Aayara',
     image: portfolioAayara,
     challenge: 'Beautiful product, invisible online presence.',
     solution: 'Brand-led social system, product shoots, and shoppable Instagram funnels.',

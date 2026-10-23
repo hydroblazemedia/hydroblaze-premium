@@ -127,8 +127,8 @@ export const projects: Project[] = [
   },
   {
     id: 3,
-    slug: 'aayara-boutique',
-    title: 'Aayara Boutique',
+    slug: 'aayara',
+    title: 'Aayara',
     emoji: '👗',
     category: 'Brand Building',
     service: 'Brand Strategy & Digital Presence',
@@ -553,9 +553,9 @@ const testimonials = [
     logoBg: '#E30613',
   },
   {
-    quote: "HydroBlaze helped us build Aayara Boutique's brand from scratch with a clear premium positioning. From identity development to social media setup, their aesthetic-first approach gave us a strong foundation even before launch. Highly recommended!",
-    name: "Aayara Boutique Team",
-    business: "Aayara Boutique",
+    quote: "HydroBlaze helped us build Aayara's brand from scratch with a clear premium positioning. From identity development to social media setup, their aesthetic-first approach gave us a strong foundation even before launch. Highly recommended!",
+    name: "Aayara Team",
+    business: "Aayara",
     emoji: "👗",
     logo: imgAayara,
     logoBg: '#ffffff',

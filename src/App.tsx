@@ -78,7 +78,8 @@ const App = () => (
             <Route path="/portfolio/cultfit-rajajinagar" element={<CultfitCaseStudy />} />
             <Route path="/portfolio/blr-kabab" element={<BlrKababCaseStudy />} />
             <Route path="/portfolio/as-detailing-aqua-splash" element={<AutomotiveDetailingPortfolio />} />
-            <Route path="/portfolio/aayara-boutique" element={<AayaraBoutiquePortfolio />} />
+            <Route path="/portfolio/aayara" element={<AayaraBoutiquePortfolio />} />
+            <Route path="/portfolio/aayara-boutique" element={<Navigate to="/portfolio/aayara" replace />} />
             <Route path="/portfolio/:slug" element={<PortfolioDetail />} />
 <Route path="/privacy-policy" element={<PrivacyPolicy />} />
             <Route path="/thank-you" element={<ThankYou />} />
